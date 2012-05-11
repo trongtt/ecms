@@ -224,6 +224,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <executions>
           <execution>
+            <id>doc-jaxrs</id>
             <phase>package</phase>
             <goals>
               <goal>jar</goal>
@@ -235,6 +236,19 @@
               </includes>
             </configuration>
           </execution>
+          <execution>
+           <id>doc-api</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+            <configuration>
+              <classifier>doc-api</classifier>
+              <includes>
+                <include>**/generatedapi/*</include>
+             </includes>
+           </configuration>
+         </execution>
         </executions>
       </plugin>
       <!-- END GENERATED DOC-->

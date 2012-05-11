@@ -51,15 +51,17 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * PublicationGetDocumentRESTService.java <br />
+ * PublicationGetDocumentRESTService
  *
- * Return a list of published documents.  <br />
+ * Return a list of published documents.
  * 
  * See methods for more api details.
- * GET: /publication/presentation/{repository}/{workspace}/{state}/ <br />
- * GET: /publication/presentation/{repository}/{workspace}/{publicationPluginName}/{state}/ <br />
+ * GET: /publication/presentation/{repository}/{workspace}/{state}/
+ * GET: /publication/presentation/{repository}/{workspace}/{publicationPluginName}/{state}/
  * 
  * @author Ly Dinh Quang <quang.ly@exoplatform.com>
  * @since      May 17, 2009
@@ -68,6 +70,7 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.PublicationGetDocumentRESTService
  */
 @Path("/publication/presentation/")
+@LevelAPI(LevelType.PLATFORM)
 public class PublicationGetDocumentRESTService implements ResourceContainer {
 
   private RepositoryService  repositoryService_;

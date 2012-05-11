@@ -58,14 +58,16 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * GadgetConnector.java <br />
+ * GadgetConnector
  *
- * Instantiate a new gadget connector.  <br />
+ * Instantiate a new gadget connector.  
  * 
  * See methods for more api details.
- * GET: /wcmGadget/getFoldersAndFiles/ <br />
+ * GET: /wcmGadget/getFoldersAndFiles/
  * 
  * @author <chuong_phan@exoplatform.com>
  * @since      Jan 21, 2009
@@ -74,6 +76,7 @@ import org.w3c.dom.Element;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.GadgetConnector
  */
 @Path("/wcmGadget/")
+@LevelAPI(LevelType.PLATFORM)
 public class GadgetConnector extends ExoDefaultSecurityTokenGenerator implements ResourceContainer {
 
   /** The Constant FCK_RESOURCE_BUNDLE_FILE. */

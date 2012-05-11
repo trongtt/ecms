@@ -42,17 +42,19 @@ import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * FCKCoreRESTConnector.java <br />
+ * FCKCoreRESTConnector
  * 
  * Get a list of files and folders, and create a folder and upload files.
  *
  * See methods for more api details.
- * GET: /getFoldersAndFiles/ <br />
- * GET: /createFolder/ <br />
- * GET: /uploadFile/upload/ <br />
- * GET: /uploadFile/control/ <br />
+ * GET: /getFoldersAndFiles/ 
+ * GET: /createFolder/ 
+ * GET: /uploadFile/upload/ 
+ * GET: /uploadFile/control/ 
  * 
  * @author Hoa.Pham <hoa.pham@exoplatform.com>
  * @since      Jun 23, 2008
@@ -61,6 +63,7 @@ import org.w3c.dom.Element;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.FCKCoreRESTConnector
  */
 @Path("/fckconnector/jcr/")
+@LevelAPI(LevelType.PLATFORM)
 public class FCKCoreRESTConnector implements ResourceContainer {
 
   private FCKFileHandler fileHandler;

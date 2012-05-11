@@ -20,20 +20,23 @@ import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * DownloadConnector.java <br />
+ * DownloadConnector
  *
- * Enable downloading the content of nt:file.  <br />
+ * Enable downloading the content of nt:file.
  * 
  * See methods for more api details.
- * GET: /contents//download/{workspace}/{path:.*}/ <br />
+ * GET: /contents//download/{workspace}/{path:.*}/ 
  * 
  * @copyright  eXo Platform SEA
  * 
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.DownloadConnector
  */
 @Path("/contents/")
+@LevelAPI(LevelType.PLATFORM)
 public class DownloadConnector implements ResourceContainer{
   
   /**

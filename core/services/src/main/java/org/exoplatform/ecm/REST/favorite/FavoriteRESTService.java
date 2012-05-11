@@ -27,12 +27,12 @@ import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 
 /**
- * FavoriteRESTService.java <br />
+ * FavoriteRESTService
  *
- * Return a list of favourite documents of a given user.  <br />
+ * Return a list of favourite documents of a given user. 
  * 
  * See methods for more api details.
- * GET: /favorite/all/{repoName}/{workspaceName}/{userName}/ <br />
+ * GET: /favorite/all/{repoName}/{workspaceName}/{userName}/
  *     
  * @author lamphan
  * @since      AUG 01, 2010

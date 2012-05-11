@@ -21,22 +21,25 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * LifecycleConnector.java <br />
+ * LifecycleConnector
  *
- * Return a list of contents in a given state range of the publication lifecycle.  <br />
+ * Return a list of contents in a given state range of the publication lifecycle. 
  * 
  * See methods for more api details.
- * GET: /authoring/bystate/ <br />
- * GET: /authoring/tostate/ <br />
- * GET: /authoring/bydate/ <br />
+ * GET: /authoring/bystate/ 
+ * GET: /authoring/tostate/ 
+ * GET: /authoring/bydate/ 
  * 
  * @copyright  eXo Platform SEA
  * 
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.LifecycleConnector
  */
 @Path("/authoring/")
+@LevelAPI(LevelType.PLATFORM)
 public class LifecycleConnector implements ResourceContainer {
 
   /** The Constant LAST_MODIFIED_PROPERTY. */

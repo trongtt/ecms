@@ -61,14 +61,16 @@ import org.exoplatform.services.wcm.navigation.NavigationUtils;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * PortalLinkConnector.java <br />
+ * PortalLinkConnector
  *
- * Return a page URI for a given location.  <br />
+ * Return a page URI for a given location.
  * 
  * See methods for more api details.
- * GET: /portalLinks/getFoldersAndFiles/ <br />
+ * GET: /portalLinks/getFoldersAndFiles/ 
  *     
  * @author Anh Do Ngoc <anh.do@exoplatform.com>
  * @since      Jul 11, 2008
@@ -78,6 +80,7 @@ import org.w3c.dom.Element;
  */
 @SuppressWarnings("deprecation")
 @Path("/portalLinks/")
+@LevelAPI(LevelType.PLATFORM)
 public class PortalLinkConnector implements ResourceContainer {
 
   /** The PUBLI c_ access. */

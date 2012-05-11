@@ -45,14 +45,16 @@ import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.wcm.core.NodeLocation;
 import org.exoplatform.services.wcm.core.WCMService;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * RESTImagesRendererService.java <br />
+ * RESTImagesRendererService
  *
- * Get the image binary data of a given image node.  <br />
+ * Get the image binary data of a given image node. 
  * 
  * See methods for more api details.
- * GET: /images/{repositoryName}/{workspaceName}/{nodeIdentifier}/ <br />
+ * GET: /images/{repositoryName}/{workspaceName}/{nodeIdentifier}/ 
  * 
  * @author Hoa Pham <hoa.phamvu@exoplatform.com>
  * @since      Mar 31, 2009
@@ -61,6 +63,7 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.RESTImagesRendererService
  */
 @Path("/images/")
+@LevelAPI(LevelType.PLATFORM)
 public class RESTImagesRendererService implements ResourceContainer{
 
   /** The session provider service. */

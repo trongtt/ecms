@@ -45,9 +45,21 @@
     </dependency>
     <dependency>
       <groupId>org.exoplatform.ecms</groupId>
+      <artifactId>exo-ecms-core-services</artifactId>
+      <version>${project.version}</version>
+      <classifier>doc-api</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.ecms</groupId>
       <artifactId>exo-ecms-core-connector</artifactId>
       <version>${project.version}</version>
       <classifier>doc-jaxrs</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.ecms</groupId>
+      <artifactId>exo-ecms-core-connector</artifactId>
+      <version>${project.version}</version>
+      <classifier>doc-api</classifier>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.ecms</groupId>
@@ -57,15 +69,33 @@
     </dependency>
     <dependency>
       <groupId>org.exoplatform.ecms</groupId>
+      <artifactId>exo-ecms-core-publication</artifactId>
+      <version>${project.version}</version>
+      <classifier>doc-api</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.ecms</groupId>
       <artifactId>exo-ecms-core-viewer</artifactId>
       <version>${project.version}</version>
       <classifier>doc-jaxrs</classifier>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.ecms</groupId>
+      <artifactId>exo-ecms-core-viewer</artifactId>
+      <version>${project.version}</version>
+      <classifier>doc-api</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.exoplatform.ecms</groupId>
       <artifactId>exo-ecms-ext-authoring-services</artifactId>
       <version>${project.version}</version>
       <classifier>doc-jaxrs</classifier>
+    </dependency>  
+    <dependency>
+      <groupId>org.exoplatform.ecms</groupId>
+      <artifactId>exo-ecms-ext-authoring-services</artifactId>
+      <version>${project.version}</version>
+      <classifier>doc-api</classifier>
     </dependency>       
   </dependencies>
 
@@ -157,14 +187,15 @@
                    <goal>unpack-dependencies</goal>
                  </goals>
                  <configuration>
-                 
                    <includeGroupIds>org.exoplatform.ecms</includeGroupIds>
-                   <includeArtifactIds>exo-ecms-core-services,exo-ecms-core-connector,exo-ecms-core-publication,exo-ecms-core-viewer,exo-ecms-ext-authoring-services</includeArtifactIds>
-                   <includeClassifiers>doc-jaxrs</includeClassifiers>
+                   <includeArtifactIds>exo-ecms-core-services,exo-ecms-core-publication,exo-ecms-core-viewer,exo-ecms-ext-authoring-services,exo-ecms-core-connector</includeArtifactIds>
+                   <includeClassifiers>doc-jaxrs,doc-api</includeClassifiers>
                    <excludes>META-INF/**</excludes>
-                   <outputDirectory>${project.build.directory}/wikbook-src/en/en-US/pages/DeveloperReference/jaxrs</outputDirectory>
+                   <outputDirectory>${project.build.directory}/wikbook-src/en/en-US/pages/DeveloperReference/jaxrs/</outputDirectory>
+                   <useSubDirectoryPerArtifact>true</useSubDirectoryPerArtifact>
+                   <stripVersion>true</stripVersion>
                  </configuration>
-               </execution>
+              </execution>
 	         </executions>
 	       </plugin>
 	

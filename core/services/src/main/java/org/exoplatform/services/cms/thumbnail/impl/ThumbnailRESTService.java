@@ -46,24 +46,24 @@ import org.exoplatform.services.jcr.ext.app.SessionProviderService;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
 import org.exoplatform.services.jcr.impl.core.NodeImpl;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * ThumbnailRESTService.java <br />
+ * ThumbnailRESTService 
  *
- * Return a responding data as a thumbnail image.  <br />
+ * Return a responding data as a thumbnail image. 
  * {repoName} Repository name
  * {workspaceName} Name of workspace
- * {nodePath} The node path
- * Example:
- * <img src="/portal/rest/thumbnailImage/repository/collaboration/test.gif" /> 
+ * {nodePath} The node path 
  * 
  * See methods for more api details.
- * GET: /medium/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
- * GET: /big/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
- * GET: /large/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
- * GET: /small/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
- * GET: /custom/{size}/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
- * GET: /origin/{repoName}/{workspaceName}/{nodePath:.*}/ <br />
+ * GET: /medium/{repoName}/{workspaceName}/{nodePath:.*}/ 
+ * GET: /big/{repoName}/{workspaceName}/{nodePath:.*}/ 
+ * GET: /large/{repoName}/{workspaceName}/{nodePath:.*}/ 
+ * GET: /small/{repoName}/{workspaceName}/{nodePath:.*}/ 
+ * GET: /custom/{size}/{repoName}/{workspaceName}/{nodePath:.*}/
+ * GET: /origin/{repoName}/{workspaceName}/{nodePath:.*}/ 
  *     
  * {portalname}: The name of the portal.
  * {restcontextname}: The context name of rest webapplication which is deployed to the "{portalname}" portal.
@@ -75,6 +75,7 @@ import org.exoplatform.services.rest.resource.ResourceContainer;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.ThumbnailRESTService
  */
 @Path("/thumbnailImage/")
+@LevelAPI(LevelType.PLATFORM)
 public class ThumbnailRESTService implements ResourceContainer {
 
   /** The Constant LAST_MODIFIED_PROPERTY. */

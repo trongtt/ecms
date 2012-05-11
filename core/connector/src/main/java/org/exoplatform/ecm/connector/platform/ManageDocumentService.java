@@ -70,20 +70,22 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 import org.exoplatform.wcm.connector.FileUploadHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * ManageDocumentService.java <br />
+ * ManageDocumentService 
  *
  * The service which is used to perform some actions on a folder or a file, 
- * such as creating, deleting a folder/file, or uploading a file.
+ * such as creating, deleting a folder/file, or uploading a file. 
  * 
  * See methods for more api details.
- * GET: {portalname}/{restcontextname}/managedocument/getDrives/ <br /> 	
- * GET: {portalname}/{restcontextname}/managedocument/getFoldersAndFiles/ <br /> 	
- * GET: {portalname}/{restcontextname}/managedocument/createFolder/ <br /> 	
- * GET: {portalname}/{restcontextname}/managedocument/deleteFolderOrFile/ <br />} 	
- * GET: {portalname}/{restcontextname}/managedocument/uploadFile/upload/ <br /> 	
- * GET: {portalname}/{restcontextname}/managedocument/uploadFile/control/ <br />
+ * GET: {portalname}/{restcontextname}/managedocument/getDrives/ 	
+ * GET: {portalname}/{restcontextname}/managedocument/getFoldersAndFiles/ 	
+ * GET: {portalname}/{restcontextname}/managedocument/createFolder/ 
+ * GET: {portalname}/{restcontextname}/managedocument/deleteFolderOrFile/  	
+ * GET: {portalname}/{restcontextname}/managedocument/uploadFile/upload/ 	
+ * GET: {portalname}/{restcontextname}/managedocument/uploadFile/control/ 
  *     
  * @author Lai Trung Hieu <hieu.lai@exoplatform.com>
  * @since      6 Apr 2011
@@ -92,6 +94,7 @@ import org.w3c.dom.Element;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.ManageDocumentService
  */
 @Path("/managedocument/")
+@LevelAPI(LevelType.PLATFORM)
 public class ManageDocumentService implements ResourceContainer {
   
   /** The Constant IF_MODIFIED_SINCE_DATE_FORMAT. */
@@ -415,7 +418,7 @@ public class ManageDocumentService implements ResourceContainer {
    *
    * @throws Exception the exception
    * 
-   * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.ManageDocumentService.uploadFile
+   * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.ManageDocumentService.processUpload
    */
   @GET
   @Path("/uploadFile/control/")

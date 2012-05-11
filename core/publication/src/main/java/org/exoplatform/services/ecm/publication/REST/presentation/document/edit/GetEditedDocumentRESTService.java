@@ -54,14 +54,16 @@ import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * GetEditedDocumentRESTService.java <br />
+ * GetEditedDocumentRESTService
  *
- * Return the latest edited documents.  <br />
+ * Return the latest edited documents. 
  * 
  * See methods for more api details.
- * GET: /presentation/document/edit/{repository}/ <br />
+ * GET: /presentation/document/edit/{repository}/ 
  * 
  * @author Hoang Van Hung <hunghvit@gmail.com>
  * @since      May 17, 2009
@@ -70,6 +72,7 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.GetEditedDocumentRESTService
  */
 @Path("/presentation/document/edit/")
+@LevelAPI(LevelType.PLATFORM)
 public class GetEditedDocumentRESTService implements ResourceContainer {
 
   /** The Constant LAST_MODIFIED_PROPERTY. */

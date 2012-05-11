@@ -52,14 +52,16 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.feed.synd.SyndFeedImpl;
 import com.sun.syndication.io.SyndFeedOutput;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * RssConnector.java <br />
+ * RssConnecto 
  *
- * Generate an RSS feed. <br />
+ * Generate an RSS feed.
  * 
  * See methods for more api details.
- * GET: /rss/ <br />
+ * GET: /rss/
  * 
  * @author chuong_phan@exoplatform.com, phan.le.thanh.chuong@gmail.com
  * @since      29-08-2009
@@ -68,6 +70,7 @@ import com.sun.syndication.io.SyndFeedOutput;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.RssConnector
  */
 @Path("/feed/")
+@LevelAPI(LevelType.PLATFORM)
 public class RssConnector extends BaseConnector implements ResourceContainer {
 
   /** The WORKSPACE. */

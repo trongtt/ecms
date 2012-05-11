@@ -56,11 +56,13 @@ import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * PDFViewerRESTService.java <br />
+ * PDFViewerRESTService.java \n
  *
- * Return the pdf content to display on the web page.
+ * Return the pdf content to display on the web page. \n
  * 
  * {repoName} Repository name
  * {workspaceName} Workspace name
@@ -68,10 +70,9 @@ import org.icepdf.core.util.GraphicsRenderingHints;
  * {pageNumber} Page number
  * {rotation} Page rotation, values are valid: 0.0f, 90.0f, 180.0f, 270.0f
  * {scale} Zoom factor to be applied to the rendered page
- * Example: <img src="/portal/rest/pdfviewer/repository/collaboration/test.pdf/1/0.0f/1.0f">
  *
  * See methods for more api details.
- * GET: /pdfviewer/{repoName}/{workspaceName}/{pageNumber}/{rotation}/{scale}/{uuid}/ <br />
+ * GET: /pdfviewer/{repoName}/{workspaceName}/{pageNumber}/{rotation}/{scale}/{uuid}/ 
  *     
  * @author Dang Van Minh <minh.dang@exoplatform.com>
  * @since Sep 3, 2009 7:33:30 AM
@@ -80,6 +81,7 @@ import org.icepdf.core.util.GraphicsRenderingHints;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.PDFViewerRESTService
  */
 @Path("/pdfviewer/{repoName}/{workspaceName}/{pageNumber}/{rotation}/{scale}/{uuid}/")
+@LevelAPI(LevelType.PLATFORM)
 public class PDFViewerRESTService implements ResourceContainer {
 
   private static final String LASTMODIFIED = "Last-Modified";

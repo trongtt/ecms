@@ -165,6 +165,8 @@ h3. Authoring Extension {anchor:id=CONTref.Extensions.AuthoringExtension}
 
 h2. Public REST APIs {anchor:id=CONTref.Devref.PublicRestAPIs}
 {include:document="pages/Rest-api.wiki" /}
+h2. LevelAPIs {anchor:id=CONTref.Devref.LevelAPIs}
+{include:document="pages/Level-api.wiki" /}
 h2. Public Java APIs {anchor:id=CONTref.JavaServices}
 h3. TaxonomyService {anchor:id=CONTref.JavaServices.TaxonomyService}
   {include:document="pages/services/taxonomy.wiki" /}

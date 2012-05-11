@@ -1,50 +1,50 @@
-h1. ThumbnailRESTService {anchor:id=CONTref.Devref.PublicRestAPIs.ThumnailRestService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.services.cms.thumbnail.impl.ThumbnailRESTService.wiki" /}
+h1. ThumbnailRESTService {anchor:id=CONTref.Devref.PublicRestAPIs.ThumbnailRestService}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-services-doc-jaxrs-jar/generated/org.exoplatform.services.cms.thumbnail.impl.ThumbnailRESTService.wiki" /}
 
 h1. RssConnector     {anchor:id=CONTref.Devref.PublicRestAPIs.RssConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.collaboration.RssConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.collaboration.RssConnector.wiki" /}
 
 h1. FCKCoreRESTConnector {anchor:id=CONTref.Devref.PublicRestAPIs.FCKCoreRESTConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.ecm.connector.fckeditor.FCKCoreRESTConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.ecm.connector.fckeditor.FCKCoreRESTConnector.wiki" /}
 
 h1. ResourceBundleConnector     {anchor:id=CONTref.Devref.PublicRestAPIs.ResourceBundleConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.collaboration.ResourceBundleConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.collaboration.ResourceBundleConnector.wiki" /}
 
 h1. VoteConnector     {anchor:id=CONTref.Devref.PublicRestAPIs.VoteConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.collaboration.VoteConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.collaboration.VoteConnector.wiki" /}
 
 h1. DriverConnector   {anchor:id=CONTref.Devref.PublicRestAPIs.DriverConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.fckeditor.DriverConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.fckeditor.DriverConnector.wiki" /}
 
 h1. GadgetConnector    {anchor:id=CONTref.Devref.PublicRestAPIs.GadgetConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.fckeditor.GadgetConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.fckeditor.GadgetConnector.wiki" /}
 
 h1. PortalLinkConnector   {anchor:id=CONTref.Devref.PublicRestAPIs.PortalLinkConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.fckeditor.PortalLinkConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.fckeditor.PortalLinkConnector.wiki" /}
 
 h1. GetEditedDocumentRESTService  {anchor:id=CONTref.Devref.PublicRestAPIs.GetEditedDocumentRESTService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.services.ecm.publication.REST.presentation.document.edit.GetEditedDocumentRESTService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-publication-doc-jaxrs-jar/generated/org.exoplatform.services.ecm.publication.REST.presentation.document.edit.GetEditedDocumentRESTService.wiki" /}
 
 h1. PublicationGetDocumentRESTService   {anchor:id=CONTref.Devref.PublicRestAPIs.PublicationGetDocumentRESTService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.services.ecm.publication.REST.presentation.document.publication.PublicationGetDocumentRESTService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-publication-doc-jaxrs-jar/generated/org.exoplatform.services.ecm.publication.REST.presentation.document.publication.PublicationGetDocumentRESTService.wiki" /}
 
 h1. FavoriteRESTService  {anchor:id=CONTref.Devref.PublicRestAPIs.FavoriteRESTService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.ecm.REST.favorite.FavoriteRESTService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-services-doc-jaxrs-jar/generated/org.exoplatform.ecm.REST.favorite.FavoriteRESTService.wiki" /}
 
 h1. RESTImagesRendererService   {anchor:id=CONTref.Devref.PublicRestAPIs.RESTImagesRendererService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.services.wcm.images.RESTImagesRendererService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-services-doc-jaxrs-jar/generated/org.exoplatform.services.wcm.images.RESTImagesRendererService.wiki" /}
 
 h1. LifecycleConnector  {anchor:id=CONTref.Devref.PublicRestAPIs.LifecycleConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.extensions.component.rest.LifecycleConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-ext-authoring-services-doc-jaxrs-jar/generated/org.exoplatform.wcm.extensions.component.rest.LifecycleConnector.wiki" /}
 
 h1. CopyContentFile {anchor:id=CONTref.Devref.PublicRestAPIs.CopyContentFile}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.extensions.component.rest.CopyContentFile.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-ext-authoring-services-doc-jaxrs-jar/generated/org.exoplatform.wcm.extensions.component.rest.CopyContentFile.wiki" /}
 
 h1. PDFViewerRESTService   {anchor:id=CONTref.Devref.PublicRestAPIs.PDFViewerRESTService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.ecm.REST.viewer.PDFViewerRESTService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-viewer-doc-jaxrs-jar/generated/org.exoplatform.ecm.REST.viewer.PDFViewerRESTService.wiki" /}
 
 h1. ManageDocumentService {anchor:id=CONTref.JavaServices.ManageDocumentService}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.ecm.connector.platform.ManageDocumentService.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.ecm.connector.platform.ManageDocumentService.wiki" /}
 
 h1. DownloadConnector {anchor:id=CONTref.JavaServices.DownloadConnector}
-{include:document="DeveloperReference/jaxrs/generated/org.exoplatform.wcm.connector.collaboration.DownloadConnector.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-jaxrs-jar/generated/org.exoplatform.wcm.connector.collaboration.DownloadConnector.wiki" /}

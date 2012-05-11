@@ -79,17 +79,19 @@ import org.exoplatform.wcm.connector.handler.FCKFileHandler;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * DriverConnector.java <br />
+ * DriverConnector
  *
- * Return a drive list, a folder list and a document list in a specified location for a given user. Also, it processes the file uploading action.   <br />
+ * Return a drive list, a folder list and a document list in a specified location for a given user. Also, it processes the file uploading action.
  * 
  * See methods for more api details.
- * GET: {portalname}/{restcontextname}/wcmDriver/getDrivers/ <br />
- * GET: {portalname}/{restcontextname}/wcmDriver/getFoldersAndFiles/ <br />
- * GET: {portalname}/{restcontextname}/wcmDriver/uploadFile/upload/ <br />
- * GET: {portalname}/{restcontextname}/wcmDriver/uploadFile/control/ <br />
+ * GET: {portalname}/{restcontextname}/wcmDriver/getDrivers/
+ * GET: {portalname}/{restcontextname}/wcmDriver/getFoldersAndFiles/ 
+ * GET: {portalname}/{restcontextname}/wcmDriver/uploadFile/upload/ 
+ * GET: {portalname}/{restcontextname}/wcmDriver/uploadFile/control/
  *     
  * {portalname}: The name of the portal.
  * {restcontextname}: The context name of rest webapplication which is deployed to the "{portalname}" portal.
@@ -101,6 +103,7 @@ import org.w3c.dom.NodeList;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.DriverConnector
  */
 @Path("/wcmDriver/")
+@LevelAPI(LevelType.PLATFORM)
 public class DriverConnector extends BaseConnector implements ResourceContainer {
 
   /** The Constant FILE_TYPE_WEBCONTENT. */

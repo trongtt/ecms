@@ -39,16 +39,18 @@ import org.exoplatform.services.wcm.webcontent.WebContentSchemaHandler;
 import org.exoplatform.wcm.connector.BaseConnector;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.exoplatform.doc.gen.annotation.LevelAPI;
+import org.exoplatform.doc.gen.annotation.LevelAPI.LevelType;
 
 /**
- * VoteConnector.java <br />
+ * VoteConnector
  *
- * Return and set a vote value of a given node in the sent parameter.  <br />
+ * Return and set a vote value of a given node in the sent parameter. 
  * 
  * See methods for more api details.
- * GET: /{portalname}/{restcontextname}/contents/vote/star/ <br />
- * GET: /{portalname}/{restcontextname}/contents/vote/postVote/ <br />
- * GET: /{portalname}/{restcontextname}/contents/vote/getVote/ <br />
+ * GET: /{portalname}/{restcontextname}/contents/vote/star/
+ * GET: /{portalname}/{restcontextname}/contents/vote/postVote/
+ * GET: /{portalname}/{restcontextname}/contents/vote/getVote/
  *     
  * {portalname}: The name of the portal.
  * {restcontextname}: The context name of rest webapplication which is deployed to the "{portalname}" portal.
@@ -60,6 +62,7 @@ import org.w3c.dom.Element;
  * @anchor ECMSref.DevelopersReferences.RestService_APIs_v1alpha1.VoteConnector
  */
 @Path("/contents/vote/")
+@LevelAPI(LevelType.PLATFORM)
 public class VoteConnector extends BaseConnector implements ResourceContainer {
 
   /**
