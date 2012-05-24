@@ -1,0 +1,7 @@
+
+|Name|Level
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-connector-doc-api-jar/generatedapi/org.exoplatform.doc.gen.APITemplateProcessor.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-publication-doc-api-jar/generatedapi/org.exoplatform.doc.gen.APITemplateProcessor.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-services-doc-api-jar/generatedapi/org.exoplatform.doc.gen.APITemplateProcessor.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-core-viewer-doc-api-jar/generatedapi/org.exoplatform.doc.gen.APITemplateProcessor.wiki" /}
+{include:document="DeveloperReference/jaxrs/exo-ecms-ext-authoring-services-doc-api-jar/generatedapi/org.exoplatform.doc.gen.APITemplateProcessor.wiki" /}
