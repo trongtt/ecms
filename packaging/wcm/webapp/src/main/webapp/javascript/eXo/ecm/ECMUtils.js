@@ -1,16 +1,14 @@
- function ECMUtils() {
+function ECMUtils() {
 	var Self = this;
 	var showSideBar = true;
 	var editFullScreen = false;
 	//set private property;
-	var DOM = eXo.core.DOMUtil;
 	var Browser = eXo.core.Browser;
 	var RightClick = eXo.webui.UIRightClickPopupMenu;
-	if (eXo.require && !RightClick) {
-		eXo.require('eXo.webui.UIRightClickPopupMenu');
+	if (!RightClick) {
 	    RightClick = eXo.webui.UIRightClickPopupMenu;
 	}
-	DOM.hideElements();
+//	DOM.hideElements();
 	ECMUtils.prototype.popupArray = [];
 	ECMUtils.prototype.voteRate = 0;
 	ECMUtils.prototype.init = function(portletId) {
@@ -22,14 +20,14 @@
 		}
     portlet.onkeydown = function(event) {
       eXo.ecm.ECMUtils.closeAllPopup() ;
-    }		
+    }
 		if(document.getElementById("UIPageDesktop")) {
 			Self.fixHeight(portletId) ;
 			var uiPageDeskTop = document.getElementById("UIPageDesktop");
-			var uiJCRExplorers = DOM.findDescendantsByClass(uiPageDeskTop, 'div', 'UIJCRExplorer') ;
+			var uiJCRExplorers = gj(uiPageDeskTop).find('div.UIJCRExplorer') ;
 			if (uiJCRExplorers.length) {
 				for (var i = 0; i < uiJCRExplorers.length; i++) {
-					var uiResizeBlock = DOM.findAncestorByClass(uiJCRExplorers[i], "UIResizableBlock");
+					var uiResizeBlock = gj(uiJCRExplorers[i]).parents(".UIResizableBlock:first")[0];
 					if (uiResizeBlock) uiResizeBlock.style.overflow = "hidden";
 				}
 			}
@@ -42,11 +40,42 @@
 				}
 			);
 		}
+		Self.loadContainerWidth();
 	};
 
+  /**
+   * @function   getCookie
+   * @return     return a saved cookie with given name or return null if that cookie's field haven't been saved
+   * @author     vinh_nguyen@exoplatform.com
+   */
+	ECMUtils.prototype.getCookie = function(c_name)	{
+		var i,x,y,ARRcookies=document.cookie.split(";");
+		for (i=0;i<ARRcookies.length;i++) {
+		  x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
+		  y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
+		  x=x.replace(/^\s+|\s+$/g,"");
+		  if (x==c_name) {
+		    return unescape(y);
+		  }
+		}
+		return null;
+	}
+	
+	/**
+   * @function   setCookie
+   * @return     saved cookie with given name
+   * @author     vinh_nguyen@exoplatform.com
+   */
+	ECMUtils.prototype.setCookie = function(c_name,value,exdays) {
+	  var exdate=new Date();
+	  exdate.setDate(exdate.getDate() + exdays);
+	  var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+	  document.cookie=c_name + "=" + c_value;
+	}
+	
 	ECMUtils.prototype.fixHeight = function(portletId) {
 		var portlet = document.getElementById(portletId);
- 	 	var refElement = DOM.findAncestorByClass(portlet, "UIApplication");
+ 	 	var refElement = gj(portlet).parents(".UIApplication:first")[0];
  	 	if (!refElement) return;
 
  	 	// 30/06/2009
@@ -56,10 +85,10 @@
  	 	var uiControl = document.getElementById('UIControl');
  	 	var uiSideBar = document.getElementById('UISideBar');
  	 	if(!uiControl || !uiSideBar) return;
- 	 	var uiSideBarControl = DOM.findFirstDescendantByClass(uiSideBar, 'div', 'UISideBarControl');
+ 	 	var uiSideBarControl = gj(uiSideBar).find('div.UISideBarControl:first')[0];
  	 	if(!uiSideBarControl) return;
  	 	var deltaH = refElement.offsetHeight - uiControl.offsetHeight - uiSideBarControl.offsetHeight;
- 	 	var resizeObj = DOM.findDescendantsByClass(portlet, 'div', 'UIResizableBlock');
+ 	 	var resizeObj = gj(portlet).find('div.UIResizableBlock');
  	 	if(resizeObj.length) {
 	 	 	for(var i = 0; i < resizeObj.length; i++) {
 	 	 	  resizeObj[i].style.display = 'block';
@@ -71,12 +100,12 @@
 	ECMUtils.prototype.controlLayout = function(portletId) {
 
 		var portlet = document.getElementById(portletId) ;
-		var uiWorkingArea = DOM.findFirstDescendantByClass(portlet, 'div', 'UIWorkingArea');
+		var uiWorkingArea = gj(portlet).find('div.UIWorkingArea:first')[0];
 		var actionBar = document.getElementById('UIActionBar');		
 		if (!uiWorkingArea) return;
-		var delta = document.body.scrollHeight - eXo.core.Browser.getBrowserHeight();
+		var delta = document.body.scrollHeight - gj(window).height();
 		if (delta < 0) {
-			var resizeObj = DOM.findDescendantsByClass(portlet, 'div', 'UIResizableBlock');
+			var resizeObj = gj(portlet).find('div.UIResizableBlock');
 			if(resizeObj.length) {
 				for(var i = 0; i < resizeObj.length; i++) {
 					resizeObj[i].style.height = resizeObj[i].offsetHeight - delta + "px" ;
@@ -89,8 +118,8 @@
 	ECMUtils.prototype.clickLeftMouse = function(event, clickedElement, position, option) {
 		var event = event || window.event;
 		event.cancelBubble = true;
-		popupSelector = DOM.findAncestorByClass(clickedElement, "UIPopupSelector");
-		showBlock = DOM.findFirstDescendantByClass(popupSelector,"div", "UISelectContent");
+		popupSelector = gj(clickedElement).parents(".UIPopupSelector:first")[0];
+		showBlock = gj(popupSelector).find("div.UISelectContent:first")[0];
 		if(option == 1) {
 			showBlock.style.width = (popupSelector.offsetWidth - 2) + "px";
 		}
@@ -121,16 +150,16 @@
 	ECMUtils.prototype.initVote = function(voteId, rate) {
 		var vote = document.getElementById(voteId) ;
 		voteRate = vote.rate = rate = parseInt(rate) ;
-		var optsContainer = DOM.findFirstDescendantByClass(vote, "div", "OptionsContainer") ;
-		var options = DOM.getChildrenByTagName(optsContainer, "div") ;
+		var optsContainer = gj(vote).find("div.OptionsContainer:first")[0];
+		var options = gj(optsContainer).children("div") ;
 		for(var i = 0; i < options.length; i++) {
 			options[i].onmouseover = Self.overVote ;
 			if(i < rate) options[i].className = "RatedVote" ;
 		}
 
 		vote.onmouseover = function() {
-			var optsCon= DOM.findFirstDescendantByClass(this, "div", "OptionsContainer") ;
-			var opts = DOM.getChildrenByTagName(optsCon, "div") ;
+			var optsCon= gj(this).find("div.OptionsContainer:first")[0];
+			var opts = gj(optsCon).children("div") ;
 			for(var j = 0; j < opts.length; j++) {
 				if(j < this.rate) opts[j].className = "RatedVote" ;
 				else opts[j].className = "NormalVote" ;
@@ -143,8 +172,8 @@
 	};
 
 	ECMUtils.prototype.overVote = function(event) {
-		var optionsContainer = DOM.findAncestorByClass(this, "OptionsContainer") ;
-		var opts = DOM.getChildrenByTagName(optionsContainer, "div") ;
+		var optionsContainer = gj(this).parents(".OptionsContainer:first")[0];
+		var opts = gj(optionsContainer).children("div") ;
 		var i = opts.length;
 		for(--i; i >= 0; i--) {
 			if(opts[i] == this) break ;
@@ -168,13 +197,12 @@
 	  } else {
 	    elemt.style.display = 'none' ;
 	  }
-	  DOM.listHideElements(elemt);
 	}
 
 	ECMUtils.prototype.showHideComponent = function(elemtClicked) {
 
-		var nodeReference = DOM.findAncestorByClass(elemtClicked,  "ShowHideContainer");
-		var elemt = DOM.findFirstDescendantByClass(nodeReference, "div", "ShowHideComponent") ;
+		var nodeReference = gj(elemtClicked).parents(".ShowHideContainer:first")[0];
+		var elemt = gj(nodeReference).find("div.ShowHideComponent:first")[0] ;
 
 		if(elemt.style.display == 'none') {
 			elemtClicked.childNodes[0].style.display = 'none' ;
@@ -193,7 +221,7 @@
       var elementWorkingArea = document.getElementById('UIWorkingArea');
       var parent = document.getElementById('TabContainerParent');
       if(parent!=null)	{
-        var elements  = eXo.core.DOMUtil.findDescendantsByClass(parent,"div", "UITabContent");
+        var elements  = gj(parent).find("div.UITabContent");
         if(elements!=null)	{
 					for(i=0;i<elements.length;i++)
 					{
@@ -215,10 +243,10 @@
 
 	ECMUtils.prototype.showHideContentOnRow = function(elemtClicked) {
 
-		var nodeReference = DOM.findAncestorByClass(elemtClicked,  "Text");
-		var elemt = DOM.findFirstDescendantByClass(nodeReference, "div", "ShowHideComponent") ;
-		var shortContent = DOM.findFirstDescendantByClass(elemt, "div", "ShortContentPermission") ;
-		var fullContent = DOM.findFirstDescendantByClass(elemt, "div", "FullContentPermission") ;
+		var nodeReference = gj(elemtClicked).parents(".Text:first")[0];
+		var elemt = gj(nodeReference).find("div.ShowHideComponent:first")[0];
+		var shortContent = gj(elemt).find("div.ShortContentPermission:first")[0];
+		var fullContent = gj(elemt).find("div.FullContentPermission:first")[0];
 
 		if(shortContent.style.display == 'none') {
 			fullContent.style.display = 'none';
@@ -248,7 +276,7 @@
 
 	ECMUtils.prototype.collapseExpand = function(element) {
 		var node = element.parentNode ;
-		var subGroup = DOM.findFirstChildByClass(node, "div", "NodeGroup") ;
+		var subGroup = gj(node).children("div.NodeGroup:first")[0];
 		if(!subGroup) return false;
 		if(subGroup.style.display == "none") {
 			if (element.className.match("ExpandIcon")) element.className = element.className.replace("ExpandIcon", "CollapseIcon");
@@ -262,8 +290,8 @@
 
 	ECMUtils.prototype.collapseExpandPart = function(element) {
 		var node = element.parentNode ;
-		var subGroup1 = DOM.findFirstChildByClass(node, "div", "NodeGroup1") ;
-		var subGroup2 = DOM.findFirstChildByClass(node, "div", "NodeGroup2") ;
+		var subGroup1 = gj(node).children("div.NodeGroup1:first")[0];
+		var subGroup2 = gj(node).children("div.NodeGroup2:first")[0];
 		if (subGroup1.style.display == "none") {
 			if (element.className == "CollapseIcon") 	element.className = "ExpandIcon";
 			subGroup1.style.display = "block";
@@ -364,35 +392,6 @@
 		} catch (ex) {}
   };
 
-
-	ECMUtils.prototype.replaceToIframe = function(txtAreaId) {
-		if (!document.getElementById(txtAreaId)) {
-			/*
-			 * minh.js.exo
-			 * fix bug ECM-1419
-			 * this is Java bug.
-			 * double call this method.
-			 */
-			return ;
-		}
-		var txtArea = document.getElementById(txtAreaId) ;
-		var ifrm = document.createElement("IFRAME") ;
-		with(ifrm) {
-			className = 'ECMIframe' ;
-			src = 'javascript:void(0)' ;
-			frameBorder = 0 ;
-			scrolling = "auto" ;
-		}
-		var strValue = txtArea.value ;
-		txtArea.parentNode.replaceChild(ifrm, txtArea) ;
-		try {
-			var doc = ifrm.contentWindow.document ;
-			doc.open() ;
-			doc.write(strValue) ;
-			doc.close() ;
-		} catch (ex) {}
-	} ;
-
 	ECMUtils.prototype.generatePublicWebDAVLink = function(serverInfo, restContextName, repository, workspace, nodePath) {
 	  // query parameter s must be encoded.
 	  var path = "/";
@@ -414,7 +413,7 @@
 	  }
 	  if(fEncode)
 	  	path = path.substr(0,path.length-1);
-	  if(eXo.core.Browser.getBrowserType() == "ie") {
+	  if(eXo.core.Browser.isIE()) {
 	    if(mimetype == "application/xls" || mimetype == "application/msword" || mimetype =="application/ppt") {
 	      window.open(serverInfo + "/" + restContextName + "/private/lnkproducer/openit.lnk?path=/" + repository + "/" + workspace + path, '_new');
 	    } else {
@@ -433,7 +432,7 @@
 
 	var clip=null;
 	ECMUtils.prototype.initClipboard = function(id, level, size) {
-		if(eXo.core.Browser.getBrowserType() != "ie") {
+		if(eXo.core.Browser.isIE()) {
 			if (size > 0) {
 				for(var i=1; i <= size; i++) {
 					clip = new ZeroClipboard.Client();
@@ -486,11 +485,11 @@
 		var actionBar = document.getElementById('UIActionBar');
 		if (!actionBar) return;
 		var prtNode = document.getElementById('DMSMenuItemContainer');
-		var uiTabs = DOM.findDescendantsByClass(prtNode, "div", "SubTabItem");
+		var uiTabs = gj(prtNode).find("div.SubTabItem");
 		var listHideIcon = document.getElementById('IconListHideElement');
 		var viewBarContainer = document.getElementById("UIViewBarContainer");
 		var elementSpace = 9;
-		var portletFrag = DOM.findAncestorByClass(actionBar, "RightContainer");
+		var portletFrag = gj(actionBar).parents(".RightContainer:first")[0];
 		var maxSpace = 0;
 		if(eXo.core.Browser.browserType == 'ie') {
 			maxSpace = parseInt(actionBar.offsetWidth) - parseInt(viewBarContainer.offsetWidth);
@@ -511,17 +510,17 @@
 				listHideIcon.className = "IconListHideElement ShowElementIcon";
 				listHideIcon.style.visibility = "hidden" ;
 				uiTabs[i].style.display = 'block';
-				var split = DOM.findFirstDescendantByClass(uiTabs[i], "div", "Non-Split");
+				var split = gj(uiTabs[i]).find("div.Non-Split:first")[0];
 				if (split) {
 				  split.className = 'Split';
 				}
 				elementSpace += uiTabs[i].offsetWidth + 10;
-				var subItem = DOM.findFirstDescendantByClass(uiTabs[i], "a", "SubTabIcon");
+				var subItem = gj(uiTabs[i]).find("div.SubTabIcon:first")[0];
 				eXo.ecm.ECMUtils.removeElementListHide(subItem);
 				lastIndex = i;
 			}
 		}
-    var split = DOM.findFirstDescendantByClass(uiTabs[lastIndex], "div", "Split");
+    var split = gj(uiTabs[lastIndex]).find("div.Split:first")[0];
     if (split) {
       split.className = 'Non-Split';
     }
@@ -530,13 +529,13 @@
 
 	ECMUtils.prototype.addElementListHide = function(obj) {
 		var tmpNode = obj.cloneNode(true);
-		var subItem = DOM.findFirstDescendantByClass(tmpNode, "a", "SubTabIcon");
-		var split = DOM.findFirstDescendantByClass(tmpNode, "div", "Split");
+		var subItem = gj(tmpNode).find("div.SubTabIcon:first")[0];
+		var split = gj(tmpNode).find("div.Split:first")[0];
 		var listHideIcon = document.getElementById('IconListHideElement');
-		var listHideContainer = DOM.findFirstDescendantByClass(listHideIcon, "div", "ListHideContainer");
-		var uiTabs = DOM.findDescendantsByClass(listHideContainer, "div", "SubTabItem");
+		var listHideContainer = gj(listHideIcon).find("div.ListHideContainer:first")[0];
+		var uiTabs = gj(listHideContainer).find("div.SubTabItem");
 		for(var i = 0; i < uiTabs.length; i++) {
-			var hideSubItem = DOM.findFirstDescendantByClass(uiTabs[i], "a", "SubTabIcon");
+			var hideSubItem = gj(uiTabs[i]).find("div.SubTabIcon:first")[0];
 			if(hideSubItem.className == subItem.className) {
 				return;
 			}
@@ -558,11 +557,11 @@
 	ECMUtils.prototype.removeElementListHide = function(obj) {
 		if(!obj) return;
 		var listHideIcon = document.getElementById('IconListHideElement');
-		var listHideContainer = DOM.findFirstDescendantByClass(listHideIcon, "div", "ListHideContainer");
-		var uiTabs = DOM.findDescendantsByClass(listHideContainer, "div", "SubTabItem");
+		var listHideContainer = gj(listHideIcon).find("div.ListHideContainer:first")[0];
+		var uiTabs = gj(listHideContainer).find("div.SubTabItem");
 		var tmpNode = false;
 		for(var i = 0; i < uiTabs.length; i++) {
-			tmpNode = DOM.findFirstDescendantByClass(uiTabs[i], "a", "SubTabIcon");
+			tmpNode = gj(uiTabs[i]).find("div.SubTabIcon:first")[0];
 			if(tmpNode.className == obj.className) {
 				listHideContainer.removeChild(uiTabs[i]);
 			}
@@ -572,8 +571,8 @@
 	ECMUtils.prototype.showListHideElements = function(obj,event) {
 		event = event || window.event;
 		event.cancelBubble = true;
-		var listHideContainer = DOM.findFirstDescendantByClass(obj, "div", "ListHideContainer");
-		var listItems = DOM.findDescendantsByClass(listHideContainer, "div", "SubTabItem");
+		var listHideContainer = gj(obj).find("div.ListHideContainer:first")[0];
+		var listItems = gj(listHideContainer).find("div.SubTabItem");
 		if(listItems && listItems.length > 0) {
 			if(listHideContainer.style.display != 'block') {
 				obj.style.position = 'relative';
@@ -584,14 +583,14 @@
 				 obj.style.position = 'static';
 				 listHideContainer.style.display = 'none';
 			 }
-			DOM.listHideElements(listHideContainer);
+//			DOM.listHideElements(listHideContainer);
 		}
 	};
 	
 	ECMUtils.prototype.showListTrigger = function() {
 		var listHideIcon = document.getElementById('IconListHideElement');
 		if (listHideIcon ==null) return;
-    var listHideContainer = DOM.findFirstDescendantByClass(listHideIcon, "div", "ListHideContainer");
+    var listHideContainer = gj(listHideIcon).find("div.ListHideContainer:first")[0];
     if (listHideContainer ==null) return;
     var currentClassName = listHideIcon.className;
     if (listHideContainer.style.display != 'none') {
@@ -613,7 +612,7 @@
 	  } else {
   	  infor.style.display = 'none';
 	  }
-	  DOM.listHideElements(infor);
+//	  DOM.listHideElements(infor);
 	};
 
 	ECMUtils.prototype.onKeyPDFViewerPress = function() {
@@ -636,59 +635,59 @@
 		var event = event || window.event;
 		eXo.ecm.ECMUtils.currentMouseX = event.clientX;
 		var container = document.getElementById("LeftContainer");
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
+		var resizableBlock = gj(container).find("div.UIResizableBlock:first")[0];
 		eXo.ecm.ECMUtils.resizableBlockWidth = resizableBlock.offsetWidth;
 		eXo.ecm.ECMUtils.currentWidth = container.offsetWidth;
-		var sideBarContent = DOM.findFirstDescendantByClass(container, "div", "SideBarContent");
-		var title = DOM.findFirstDescendantByClass(sideBarContent, "div", "Title");
+		var sideBarContent = gj(container).find("div.SideBarContent:first")[0];
+		var title = gj(sideBarContent).find("div.Title:first")[0];
 		eXo.ecm.ECMUtils.currentTitleWidth = title.offsetWidth;
-
+    
 		if(container.style.display == '' || container.style.display == 'block') {
 			document.onmousemove = eXo.ecm.ECMUtils.resizeMouseMoveSideBar;
 			document.onmouseup = eXo.ecm.ECMUtils.resizeMouseUpSideBar;
 		}
+		//VinhNT disable selection of text
+    var jcrExpPortlet = document.getElementById("UIJCRExplorer");
+    if (!jcrExpPortlet.hasClass("UIJCRExplorerNoSelect"))jcrExpPortlet.addClass("UIJCRExplorerNoSelect");
 	}
 
 	ECMUtils.prototype.resizeMouseMoveSideBar = function(event) {
 		var event = event || window.event;
 		var container = document.getElementById("LeftContainer");
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
+		var resizableBlock = gj(container).find("div.UIResizableBlock:first")[0];
 		var deltaX = event.clientX - eXo.ecm.ECMUtils.currentMouseX ;
 		eXo.ecm.ECMUtils.savedResizeDistance = deltaX;
-		var sideBarContent = DOM.findFirstDescendantByClass(container, "div", "SideBarContent");
-		// container.style.width = eXo.ecm.ECMUtils.currentWidth + deltaX + "px";
-		// resizableBlock.style.width = eXo.ecm.ECMUtils.resizableBlockWidth + deltaX + "px";
+		var sideBarContent = gj(container).find("div.SideBarContent:first")[0];
 		eXo.ecm.ECMUtils.savedResizableMouseX = eXo.ecm.ECMUtils.resizableBlockWidth + deltaX + "px";
 		eXo.ecm.ECMUtils.savedLeftContainer = eXo.ecm.ECMUtils.currentWidth + deltaX + "px";
 		eXo.ecm.ECMUtils.isResizedLeft = false;
-
+    var workingArea = gj(container).parents(".UIWorkingArea:first")[0];
+    
 		var resizeDiv = document.getElementById("ResizeSideBarDiv");
 		if (resizeDiv == null) {
 			resizeDiv = document.createElement("div");
 			resizeDiv.className = "ResizeHandle";
 			resizeDiv.id = "ResizeSideBarDiv";
-			var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
 			resizeDiv.style.height = container.offsetHeight + "px";
 			workingArea.appendChild(resizeDiv);
 		}
-		var X_Resize = eXo.core.Browser.findMouseRelativeX(workingArea,event);
-		var Y_Resize = eXo.core.Browser.findPosYInContainer(container,workingArea);
-		eXo.core.Browser.setPositionInContainer(workingArea, resizeDiv, X_Resize, Y_Resize);
+		
+		eXo.core.Browser.setPositionInContainer(workingArea, resizeDiv, 0, 0);
+		var X_Pos = eXo.core.Browser.findMouseRelativeX(workingArea,event);
+    resizeDiv.style.width = X_Pos + "px";
 	}
 
 	ECMUtils.prototype.resizeVisibleComponent = function() {
 				
 		var container = document.getElementById("LeftContainer");
-		var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
-    var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
-    if(showSideBar) rightContainer.style.marginLeft = '264px';    
-    else rightContainer.style.marginLeft = '0px';
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
-		var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
+		var workingArea = gj(container).parents(".UIWorkingArea:first")[0];
+    var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
+		var resizableBlock = gj(container).find("div.UIResizableBlock:first")[0];
+		var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
 		
-		var selectedItem = DOM.findFirstDescendantByClass(selectContent, "div", "SelectedItem");
-		var lstNormalItem = DOM.findDescendantsByClass(selectContent, "div", "NormalItem");
-		var moreButton = DOM.findFirstDescendantByClass(selectContent, "div", "MoreItem");
+		var selectedItem = gj(selectContent).find("div.SelectedItem:first")[0];
+		var lstNormalItem = gj(selectContent).find("div.NormalItem");
+		var moreButton = gj(selectContent).find("div.MoreItem:first")[0];
 		
 		//count the visible items
 		var visibleItemsCount = 0;		
@@ -722,7 +721,7 @@
 			}			
 		} else {
 			var lstExtendedComponent = document.getElementById('ListExtendedComponent');
-			var lstHiddenComponent = DOM.getChildrenByTagName(lstExtendedComponent, 'a');			
+			var lstHiddenComponent = gj(lstExtendedComponent).children('a');			
 			
 			if (lstHiddenComponent.length > 0) {
 				var movedComponentCount = (newVisibleItemCount - visibleItemsCount) > lstHiddenComponent.length ? lstHiddenComponent.length : (newVisibleItemCount - visibleItemsCount);  
@@ -730,25 +729,31 @@
 					eXo.ecm.ECMUtils.moveItemToVisible(lstHiddenComponent[i]);
 				}
 				
-				lstHiddenComponent = DOM.getChildrenByTagName(lstExtendedComponent, 'a');
+				lstHiddenComponent = gj(lstExtendedComponent).children('a');
 				if (lstHiddenComponent.length <= 0) {
 					moreButton.style.display = 'none';
 				}
 			}			
 		}
-
+		var leftContainerWidth = 0;
+    var workingArea = gj(container).parents(".UIWorkingArea:first")[0];
+    var resizeSideBar = gj(workingArea).find("div.ResizeSideBar:first")[0];
 		if(!showSideBar) {
-			var container = document.getElementById("LeftContainer");
-			var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
-			var resizeButton = DOM.findFirstDescendantByClass(workingArea, "div", "ResizeButton");
 			container.style.display = 'none';
+			var resizeButton = gj(workingArea).find("div.ResizeButton:first")[0];
 			resizeButton.className = "ResizeButton ShowLeftContent";			
+		} else {
+			leftContainerWidth = container.offsetWidth;
 		}
+		var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
+    rightContainer.style.width = (workingArea.offsetWidth - ( leftContainerWidth + resizeSideBar.offsetWidth)) + "px";
+    Self.clearFillOutElement();    
+    Self.adjustFillOutElement();
 	}
 
 	ECMUtils.prototype.moveItemToDropDown = function(movedItem) {
 		var lstExtendedComponent = document.getElementById('ListExtendedComponent');
-		var iconOfMovedItem = DOM.getChildrenByTagName(movedItem, 'div')[0];
+		var iconOfMovedItem = gj(movedItem).children('div')[0];
 		var classesOfIcon = iconOfMovedItem.className.split(' ');		
 		
 		var link = document.createElement('a');
@@ -757,7 +762,7 @@
 		link.setAttribute('onclick', movedItem.getAttribute('onclick'));
 		link.setAttribute('href', 'javascript:void(0);');
 		
-		var lstHiddenComponent = DOM.getChildrenByTagName(lstExtendedComponent, 'a');
+		var lstHiddenComponent = gj(lstExtendedComponent).children('a');
 		if (lstHiddenComponent.length > 0) {
 			lstExtendedComponent.insertBefore(link, lstHiddenComponent[0]);
 		} else {		
@@ -772,9 +777,9 @@
 	ECMUtils.prototype.moveItemToVisible = function(movedItem) {
 		
 		var container = document.getElementById("LeftContainer");
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
-		var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
-		var moreButton = DOM.findFirstDescendantByClass(selectContent, "div", "MoreItem");
+		var resizableBlock = gj(container).find("div.UIResizableBlock:first")[0];
+		var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
+		var moreButton = gj(selectContent).find("div.MoreItem:first")[0];
 		
 		var normalItem = document.createElement('div');
 		normalItem.className = 'NormalItem';
@@ -796,40 +801,52 @@
 		var parentOfMovedNode = movedItem.parentNode;
 		parentOfMovedNode.removeChild(movedItem);
 	}
-
+	/**
+	 * @function   loadContainerWidth
+	 * @purpose    Load container width from cookies
+	 * @author     vinh_nguyen@exoplatform.com
+	 */
+  ECMUtils.prototype.loadContainerWidth = function(leftWidth) {  	
+  	var leftContainer = document.getElementById("LeftContainer");
+  	var leftContainerWidth;
+  	if (leftWidth) {
+  	 leftContainerWidth = leftWidth;
+  	}else {
+  		leftContainerWidth = Self.getCookie("leftContainerWidth");
+  	}
+    if (leftContainerWidth) {
+	    leftContainer.style.width = leftContainerWidth;
+	  	eXo.ecm.ECMUtils.resizeVisibleComponent();
+	  	eXo.ecm.ECMUtils.checkAvailableSpace();
+    }
+  }
+  
 	ECMUtils.prototype.resizeMouseUpSideBar = function(event) {
 		document.onmousemove = null;
-
-		// Case of increase width
-		if (eXo.ecm.ECMUtils.savedResizeDistance > 0) {
-			var documentInfo = document.getElementById("UIDocumentInfo");
-			var listGrid = DOM.findFirstDescendantByClass(documentInfo, "div", "UIListGrid");
-			if (listGrid)
-				listGrid.style.width = listGrid.offsetWidth + eXo.ecm.ECMUtils.savedResizeDistance + "px";
-		}
-
-		var container = document.getElementById("LeftContainer");
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
-  var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
+		var leftContainer = document.getElementById("LeftContainer");
+    var workingArea = gj(leftContainer).parents(".UIWorkingArea:first")[0];
 		var allowedWidth = parseInt(workingArea.offsetWidth) / 2;
-		// Fix minimium width can be resized
-		if ((eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance > 100) &
-				  (eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance <= allowedWidth)) {
-			eXo.ecm.ECMUtils.isResizedLeft = true;
-			container.style.width = eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance + "px";
-			resizableBlock.style.width = eXo.ecm.ECMUtils.resizableBlockWidth + eXo.ecm.ECMUtils.savedResizeDistance + "px";
-		}
 		
-		eXo.ecm.ECMUtils.resizeVisibleComponent();
-
-		// Remove new added div
-		var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
-		if (workingArea) {
-			var resizeDiv = document.getElementById("ResizeSideBarDiv");
-			if (resizeDiv)
-				workingArea.removeChild(resizeDiv);
-		}
-
+		
+		// Fix minimium width can be resized
+    if ((eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance > 100) &
+          (eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance <= allowedWidth)) {
+      eXo.ecm.ECMUtils.isResizedLeft = true;
+      Self.setCookie("leftContainerWidth", eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance + "px", 20);
+      Self.loadContainerWidth(eXo.ecm.ECMUtils.currentWidth + eXo.ecm.ECMUtils.savedResizeDistance + "px");
+    }
+    // Remove new added div
+    var workingArea = gj(leftContainer).parents(".UIWorkingArea:first")[0];
+    if (workingArea) {
+      var resizeDiv = document.getElementById("ResizeSideBarDiv");
+      if (resizeDiv)
+        workingArea.removeChild(resizeDiv);
+    }
+    
+    //VinhNT Reenable selection of text
+    var jcrExpPortlet = document.getElementById("UIJCRExplorer");
+    jcrExpPortlet.removeClass("UIJCRExplorerNoSelect");
+        
 		delete eXo.ecm.ECMUtils.currentWidth;
 		delete eXo.ecm.ECMUtils.currentMouseX;
 		delete eXo.ecm.ECMUtils.resizableBlockWidth;
@@ -837,35 +854,31 @@
 	}
 
 	ECMUtils.prototype.showHideSideBar = function(event) {
-	  var container = document.getElementById("LeftContainer");
-	  var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
-	  var resizeButton = DOM.findFirstDescendantByClass(workingArea, "div", "ResizeButton");
-	  if(container.style.display == 'none') {
-	    container.style.display = 'block';
+	  var leftContainer = document.getElementById("LeftContainer");
+	  var workingArea = gj(leftContainer).parents(".UIWorkingArea:first")[0];
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
+	  var resizeButton = gj(workingArea).find("div.ResizeButton:first")[0];
+	  if(leftContainer.style.display == 'none') {
+	    leftContainer.style.display = 'block';
 		  resizeButton.className = "ResizeButton";
 		  showSideBar = true;
-		  rightContainer.style.marginLeft = '264px';
 	  } else {
-		  container.style.display = 'none';
+		  leftContainer.style.display = 'none';
 		  resizeButton.className = "ResizeButton ShowLeftContent";
 		  showSideBar = false;
-		  rightContainer.style.marginLeft = '0px';
 	  }
-
-	  Self.checkAvailableSpace();
-	  Self.updateListGridWidth();
+	  eXo.ecm.ECMUtils.resizeVisibleComponent();
+	  eXo.ecm.ECMUtils.checkAvailableSpace();
 	}
 
 	ECMUtils.prototype.loadEffectedSideBar = function(id) {
-		var container = document.getElementById("LeftContainer");
-		var resizableBlock = DOM.findFirstDescendantByClass(container, "div", "UIResizableBlock");
+		var leftContainer = document.getElementById("LeftContainer");
+		var resizableBlock = gj(leftContainer).find("div.UIResizableBlock:first")[0];
 		if(eXo.ecm.ECMUtils.savedLeftContainer && eXo.ecm.ECMUtils.savedResizableMouseX) {
 			if (eXo.ecm.ECMUtils.isResizedLeft==true)
-					container.style.width = eXo.ecm.ECMUtils.savedLeftContainer;
-			resizableBlock.style.width = eXo.ecm.ECMUtils.savedResizableMouseX;
+					leftContainer.style.width = eXo.ecm.ECMUtils.savedLeftContainer;
 			var documentInfo = document.getElementById("UIDocumentInfo");
-			var listGrid = DOM.findFirstDescendantByClass(documentInfo, "div", "UIListGrid");
+			var listGrid = gj(documentInfo).find("div.UIListGrid:first")[0];
 			if (listGrid)
 				listGrid.style.width = listGrid.offsetWidth + 200 + parseInt(eXo.ecm.ECMUtils.savedResizableMouseX) + "px";
 		}
@@ -876,12 +889,12 @@
 		var event = event || window.event;
 		eXo.ecm.ECMUtils.currentMouseY = event.clientY;
 		var workingArea = document.getElementById('UIWorkingArea');
-		var uiResizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
+		var uiResizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
 		var container = document.getElementById("UITreeExplorer");
 		//var isOtherTabs=false;
 		var listContainers;
 		if (!container) {
-			listContainers = DOM.findDescendantsByClass(uiResizableBlock, "div", "SideBarContent");
+			listContainers = gj(uiResizableBlock).find("div.SideBarContent");
 			for (var k=0; k < listContainers.length; k++) {
 				if (listContainers[k].parentNode.className!="UIResizableBlock") {
 					container = listContainers[k-1];
@@ -911,8 +924,8 @@
 			resizeDiv = document.createElement("div");
 			resizeDiv.className = "VResizeHandle";
 			resizeDiv.id = "ResizeVerticalSideBarDiv";
-			var workingArea = DOM.findAncestorByClass(container, "UIWorkingArea");
-			var uiResizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
+			var workingArea = gj(container).parents(".UIWorkingArea:first")[0];
+			var uiResizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
 			resizeDiv.style.width = container.offsetWidth + "px";
 			uiResizableBlock.appendChild(resizeDiv);
 		}
@@ -927,11 +940,11 @@
 
 		// The block are updated
 		var workingArea = document.getElementById('UIWorkingArea');
-		var resizeSideBar = DOM.findFirstDescendantByClass(workingArea, "div", "ResizeSideBar");
-		var sizeBarContainer = DOM.findFirstDescendantByClass(workingArea, "div", "UISideBarContainer");
+		var resizeSideBar = gj(workingArea).find("div.ResizeSideBar:first")[0];
+		var sizeBarContainer = gj(workingArea).find("div.UISideBarContainer:first")[0];
 
 		// Remove new added div
-		var uiResizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
+		var uiResizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
 		if (uiResizableBlock) {
 			var resizeDiv = document.getElementById("ResizeVerticalSideBarDiv");
 			if (resizeDiv)
@@ -978,8 +991,8 @@
 	  var itemArea = document.getElementById("SelectItemArea"); 
 	  
 	  var workingArea = document.getElementById('UIWorkingArea');
-	  var resizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
-	  var resizeTreeButton = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeButton");
+	  var resizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
+	  var resizeTreeButton = gj(resizableBlock).find("div.ResizeTreeButton:first")[0];
 	  
 	  if (treeExplorer) {
 	  	Self.collapseTreeExplorer()
@@ -997,8 +1010,8 @@
 	  var itemArea = document.getElementById("SelectItemArea"); 
 	  
 	  var workingArea = document.getElementById('UIWorkingArea');
-	  var resizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
-	  var resizeTreeButton = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeButton");
+	  var resizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
+	  var resizeTreeButton = gj(resizableBlock).find("div.ResizeTreeButton:first")[0];
 	  		
 	  if (treeExplorer) {
 		Self.expandTreeExplorer();
@@ -1019,13 +1032,13 @@
 	ECMUtils.prototype.expandTreeExplorer = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
 	  
-	  var resizableBlock = DOM.findFirstDescendantByClass(leftContainer, "div", "UIResizableBlock");	  
-	  var sideBarContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "SideBarContent");
-	  var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
-	  var resizeTreeExplorer = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeExplorer");	  	  
-	  var barContent = DOM.findFirstDescendantByClass(sideBarContent, "div", "BarContent");
+	  var resizableBlock = gj(leftContainer).find("div.UIResizableBlock:first")[0];	  
+	  var sideBarContent = gj(resizableBlock).find("div.SideBarContent:first")[0];
+	  var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
+	  var resizeTreeExplorer = gj(resizableBlock).find("div.ResizeTreeExplorer:first")[0];	  	  
+	  var barContent = gj(sideBarContent).find("div.BarContent:first")[0];
 	  
 	  var treeExplorer = document.getElementById("UITreeExplorer");	 
 	  var itemArea = document.getElementById("SelectItemArea");	  
@@ -1060,12 +1073,12 @@
 	ECMUtils.prototype.expandSideBarContent = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");	   
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];	   
 	  
-	  var resizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");		  
-	  var sideBarContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "SideBarContent");
-	  var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
-	  var resizeTreeExplorer = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeExplorer");	
+	  var resizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];		  
+	  var sideBarContent = gj(resizableBlock).find("div.SideBarContent:first")[0];
+	  var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
+	  var resizeTreeExplorer = gj(resizableBlock).find("div.ResizeTreeExplorer:first")[0];	
 	  
 	  var itemArea = document.getElementById("SelectItemArea");
 	  	    
@@ -1075,7 +1088,7 @@
 	  if (leftContainer.offsetHeight > rightContainer.offsetHeight) {
 	  	container.style.height = container.offsetHeight + itemArea.offsetHeight + "px";
 	  } else {	 	  		  
-	  	var previousElement = DOM.findPreviousElementByTagName(container, "div");
+	  	var previousElement = gj(container).prevAll("div:first")[0];
 	  	var containerHeight = rightContainer.offsetHeight;
 	  	
 	  	if (selectContent) {
@@ -1102,9 +1115,9 @@
 	  }
 	  
 	  var workingArea = document.getElementById('UIWorkingArea');
-	  var resizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");
+	  var resizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];
 	  
-	  listContainers = DOM.findDescendantsByClass(resizableBlock, "div", "SideBarContent");
+	  listContainers = gj(resizableBlock).find("div.SideBarContent");
 	  for (var k=0; k < listContainers.length; k++) {
 		if (listContainers[k].parentNode.className!="UIResizableBlock") {
 		  return listContainers[k-1];
@@ -1148,14 +1161,14 @@
 	ECMUtils.prototype.adjustTreeExplorer = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
 	  
-	  var resizableBlock = DOM.findFirstDescendantByClass(leftContainer, "div", "UIResizableBlock");	  
-	  var sideBarContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "SideBarContent");
-	  var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
-	  var resizeTreeExplorer = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeExplorer");	  	
-	  var resizeTreeButton = DOM.findFirstDescendantByClass(resizeTreeExplorer, "div", "ResizeTreeButton");  
-	  var barContent = DOM.findFirstDescendantByClass(sideBarContent, "div", "BarContent");
+	  var resizableBlock = gj(leftContainer).find("div.UIResizableBlock:first")[0];	  
+	  var sideBarContent = gj(resizableBlock).find("div.SideBarContent:first")[0];
+	  var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
+	  var resizeTreeExplorer = gj(resizableBlock).find("div.ResizeTreeExplorer:first")[0];	  	
+	  var resizeTreeButton = gj(resizeTreeExplorer).find("div.ResizeTreeButton:first")[0];  
+	  var barContent = gj(sideBarContent).find("div.BarContent:first")[0];
 	  
 	  var treeExplorer = document.getElementById("UITreeExplorer");
 	  var itemArea = document.getElementById("SelectItemArea");	
@@ -1206,7 +1219,7 @@
 		  treeExplorerHeight -= barContent.offsetHeight;
 		}
 		
-		var treeExplorerFull = DOM.getChildrenByTagName(treeExplorer, "div")[0];
+		var treeExplorerFull = gj(treeExplorer).children("div")[0];
 		if (treeExplorerFull.offsetHeight > eXo.ecm.ECMUtils.initialHeightOfTreeExplorer 
 		    && treeExplorerHeight > treeExplorerFull.offsetHeight){
 		  treeExplorerHeight = treeExplorerFull.offsetHeight
@@ -1225,13 +1238,13 @@
 	ECMUtils.prototype.adjustAnotherTab = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
 	  
-	  var resizableBlock = DOM.findFirstDescendantByClass(workingArea, "div", "UIResizableBlock");		  
-	  var sideBarContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "SideBarContent");
-	  var selectContent = DOM.findFirstDescendantByClass(resizableBlock, "div", "UISelectContent");
-	  var resizeTreeExplorer = DOM.findFirstDescendantByClass(resizableBlock, "div", "ResizeTreeExplorer");
-	  var resizeTreeButton = DOM.findFirstDescendantByClass(resizeTreeExplorer, "div", "ResizeTreeButton");	
+	  var resizableBlock = gj(workingArea).find("div.UIResizableBlock:first")[0];		  
+	  var sideBarContent = gj(resizableBlock).find("div.SideBarContent:first")[0];
+	  var selectContent = gj(resizableBlock).find("div.UISelectContent:first")[0];
+	  var resizeTreeExplorer = gj(resizableBlock).find("div.ResizeTreeExplorer:first")[0];
+	  var resizeTreeButton = gj(resizeTreeExplorer).find("div.ResizeTreeButton:first")[0];	
 	  
 	  var itemArea = document.getElementById("SelectItemArea");
 	  var container = Self.getContainerToResize();
@@ -1255,7 +1268,7 @@
 	  //adjust the height of container
 	  if (itemArea.style.display == 'none') {
 	    if (rightContainer.offsetHeight > eXo.ecm.ECMUtils.initialHeightOfLeftContainerAnotherTab) {
-	  	  var previousElement = DOM.findPreviousElementByTagName(container, "div");
+	  	  var previousElement = gj(container).prevAll("div:first")[0];
 	  	  var containerHeight = rightContainer.offsetHeight;
 	  	
 	  	  if (selectContent) {
@@ -1292,7 +1305,7 @@
 	ECMUtils.prototype.adjustFillOutElement = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
 	  if (rightContainer.offsetHeight < leftContainer.offsetHeight) {
 		var fillOutElement = document.getElementById('FillOutElement');		
 		if (fillOutElement) {
@@ -1305,23 +1318,21 @@
 	ECMUtils.prototype.adjustResizeSideBar = function() {
 	  var workingArea = document.getElementById('UIWorkingArea');
 	  var leftContainer = document.getElementById("LeftContainer");
-	  var rightContainer = DOM.findFirstDescendantByClass(workingArea, "div", "RightContainer");
-	  var resizeSideBar = DOM.findFirstDescendantByClass(workingArea, "div", "ResizeSideBar");
-	  var resizeButton = DOM.findFirstDescendantByClass(resizeSideBar, "div", "ResizeButton");
+	  var rightContainer = gj(workingArea).find("div.RightContainer:first")[0];
+	  var resizeSideBar = gj(workingArea).find("div.ResizeSideBar:first")[0];
+	  var resizeButton = gj(resizeSideBar).find("div.ResizeButton:first")[0];
 	  
 	  if (rightContainer.offsetHeight < leftContainer.offsetHeight){
 	    resizeSideBar.style.height = leftContainer.offsetHeight + "px";
-	    resizeButton.style.height = leftContainer.offsetHeight + "px";
 	  } else {
 	  	resizeSideBar.style.height = rightContainer.offsetHeight + "px";
-	    resizeButton.style.height = rightContainer.offsetHeight + "px";
 	  }
 	}
 
 	ECMUtils.prototype.disableAutocomplete = function(id) {
 		var clickedElement = document.getElementById(id);
-		tagNameInput = DOM.findFirstDescendantByClass(clickedElement,"div", "UITagNameInput");
-		DOM.findDescendantById(tagNameInput, "names").setAttribute("autocomplete", "off");
+		tagNameInput = gj(clickedElement).find("div.UITagNameInput:first")[0];
+		gj(tagNameInput).find("#names:first")[0].setAttribute("autocomplete", "off");
 	}
 
 	ECMUtils.prototype.selectedPath = function(id) {
@@ -1339,7 +1350,7 @@
 	  } else {
 	    elemt.style.display = 'none' ;
 	  }
-	  DOM.listHideElements(elemt);
+//	  DOM.listHideElements(elemt);
 	}	
 
 	//private method
@@ -1355,7 +1366,7 @@
 			}
 			
 		} else {
-			root = eXo.core.DOMUtil.findFirstDescendantByClass(workingArea, "div", "RightContainer");
+			root = gj(workingArea).find("div.RightContainer:first")[0];
 		  eXo.ecm.ECMUtils.defaultHeight = root.offsetHeight;
 		}
 		return root;
@@ -1363,7 +1374,7 @@
 	
 	ECMUtils.prototype.updateListGridWidth = function() {
 		var documentInfo = document.getElementById("UIDocumentInfo");
-		var listGrid = eXo.core.DOMUtil.findFirstDescendantByClass(documentInfo, "div", "UIListGrid");
+		var listGrid = gj(documentInfo).find("div.UIListGrid:first")[0];
 		if (listGrid){
 			var minimumWidth = Self.getMinimumWidthOfUIListGrid(listGrid);
 			listGrid.style.width = (documentInfo.offsetWidth < minimumWidth) ? minimumWidth + 'px' : 'auto';
@@ -1372,9 +1383,9 @@
 
 	ECMUtils.prototype.getMinimumWidthOfUIListGrid = function(listGrid) {
 		if (!listGrid) return 0;
-		var titleTable = eXo.core.DOMUtil.findFirstDescendantByClass(listGrid, "div", "TitleTable");
+		var titleTable = gj(listGrid).find("div.TitleTable:first")[0];
 	
-		var chidrenItems = eXo.core.DOMUtil.getChildrenByTagName(titleTable, "div");
+		var chidrenItems = gj(titleTable).children("div");
 	
 		var minimumWidth = 0;
 		for (var i = 0; i < chidrenItems.length; i++) {
@@ -1391,7 +1402,7 @@
 
 ECMUtils.prototype.showInContextHelp = function(){
   var parentElm = document.getElementById("idAllDrivers");
-  var inContextContentHelp = eXo.core.DOMUtil.findFirstDescendantByClass(parentElm,"div","InContextHelpContent");
+  var inContextContentHelp = gj(parentElm).find("div.InContextHelpContent:first")[0];
   if(inContextContentHelp) {
 	   setTimeout(function(){
 	      inContextContentHelp.style.display = "none";
@@ -1409,13 +1420,13 @@ ECMUtils.prototype.onDbClickOnTreeExplorer = function(){
     }
   }
 };
-
+ 
 ECMUtils.prototype.displayFullAlternativeText = function(displayDiv) {
   if (displayDiv) {
-    var parentDiv = eXo.core.DOMUtil.findAncestorByTagName(displayDiv, "div");
+    var parentDiv = gj(displayDiv).parents("div:first")[0];
     if (parentDiv) {
       parentDiv.style.display="none";
-      var closeDiv = eXo.core.DOMUtil.findNextElementByTagName(parentDiv, "div");
+      var closeDiv = gj(parentDiv).nextAll("div:first")[0];
       if (closeDiv) {
     	  closeDiv.style.display="block";
       }
@@ -1425,10 +1436,10 @@ ECMUtils.prototype.displayFullAlternativeText = function(displayDiv) {
 
 ECMUtils.prototype.collapseAlternativeText = function(displayDiv) {
   if (displayDiv) {
-    var parentDiv = eXo.core.DOMUtil.findAncestorByTagName(displayDiv, "div");
+    var parentDiv = gj(displayDiv).parents("div:first")[0];
     if (parentDiv) {
       parentDiv.style.display="none";
-      var closeDiv = eXo.core.DOMUtil.findPreviousElementByTagName(parentDiv, "div");
+      var closeDiv = gj(parentDiv).prevAll("div:first")[0];
       if (closeDiv) {
     	  closeDiv.style.display="block";
       }

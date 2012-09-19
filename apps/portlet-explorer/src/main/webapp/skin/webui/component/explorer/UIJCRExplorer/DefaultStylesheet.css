@@ -11,6 +11,15 @@
 .UIJCRExplorerPortlet .UIJCRExplorer {
 }
 
+.UIJCRExplorerPortlet .UIJCRExplorerNoSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 #fileexplorer .UIApplication {
 	overflow:hidden;
 }
@@ -41,26 +50,30 @@
 	float: left; /* orientation=lt */
 	float: right; /* orientation=rt */
 	width: 24px;
-	/*cursor:col-resize;*/
+	cursor:col-resize;
 	height: 475px;
 	position: relative;
+	border-right: solid 1px #E1E1E1;
 }
 
 .UIJCRExplorerPortlet .UIJCRExplorer .UIWorkingArea .ResizeButton{
-	background: url('DefaultSkin/background/ResizeButton.gif') no-repeat center center;
-	width: 24px;
-	height: 14px;
+	background: url('DefaultSkin/background/ResizeButton.gif') no-repeat center center ;
+	width: 14px;
+	height: 26px;
+	float:right;
 	position : absolute;
 	margin : auto;
 	cursor : pointer;
+	border: 1px solid #E1E1E1;
+	border-right: none;
 }
 
 .UIJCRExplorerPortlet .UIJCRExplorer .UIWorkingArea .ShowLeftContent{
 	background: url('DefaultSkin/background/ShowLeftContent.gif') no-repeat center center;
-	width: 5px;
-	height: 10px;
-	margin : auto;
-	cursor : pointer;
+}
+
+.UIJCRExplorerPortlet .UIJCRExplorer .UIWorkingArea .ShowLeftContent:hover{
+  background-color: #f3f3f3;
 }
 
 .UIJCRExplorerPortlet .UIJCRExplorer .UIDocumentWorkspace .UIResizableBlock {
@@ -221,10 +234,12 @@
 
 .UIJCRExplorerPortlet .RightContainer {
   margin-left: 0px;
+  float:left;
 }
 
 .UIJCRExplorerPortlet .UIDocumentWorkspace {
   overflow: auto;
+  margin-left: 10px;
 }
 
 .UIJCRExplorerPortlet .UIListView {

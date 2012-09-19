@@ -524,7 +524,7 @@
 		cursor: col-resize;
 		width: 1px;
 		height: 100px; /* default height */
-		border-right: 1px dashed #000;
+		border: 1px dashed #000;
 		position: absolute;
 		top: 0;
 		left: 0;
