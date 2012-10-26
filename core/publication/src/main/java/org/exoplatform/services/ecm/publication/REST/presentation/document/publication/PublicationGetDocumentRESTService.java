@@ -100,7 +100,6 @@ public class PublicationGetDocumentRESTService implements ResourceContainer {
    * 
    * @anchor CONTref.Devref.PublicRestAPIs.PublicationGetDocumentRESTService.getPublishDocument
    */
-  @Path("/{repository}/{workspace}/{state}/")
   @GET
 //  @OutputTransformer(Bean2JsonOutputTransformer.class)
   public Response getPublishDocument(@PathParam("repository") String repoName, @PathParam("workspace")

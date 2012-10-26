@@ -119,7 +119,6 @@ public class GetEditedDocumentRESTService implements ResourceContainer {
    * 
    * @anchor CONTref.Devref.PublicRestAPIs.GetEditedDocumentRESTService.getLastEditedDoc
    */
-  @Path("/{repository}/")
   @GET
   public Response getLastEditedDoc(@PathParam("repository") String repository,
       @QueryParam("showItems") String showItems, @QueryParam("showGadgetWs") String showGadgetWs) throws Exception {

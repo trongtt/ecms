@@ -103,7 +103,6 @@ public class RESTImagesRendererService implements ResourceContainer{
    * @anchor CONTref.Devref.PublicRestAPIs.RESTImagesRendererService.serveImage
    */
   @GET
-  @Path("/{repositoryName}/{workspaceName}/{nodeIdentifier}")
   public Response serveImage(@PathParam("repositoryName") String repository,
                                      @PathParam("workspaceName") String workspace,
                                      @PathParam("nodeIdentifier") String nodeIdentifier,

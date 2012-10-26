@@ -73,7 +73,7 @@ public class FavoriteRESTService implements ResourceContainer {
    * @anchor CONTref.Devref.PublicRestAPIs.FavoriteRESTService.getFavoriteByUser
    */
   @GET
-  @Path("/all/{repoName}/{workspaceName}/{userName}")
+  @Path("/all/")
   public Response getFavoriteByUser(@PathParam("repoName") String repoName,
       @PathParam("workspaceName") String wsName,
       @PathParam("userName") String userName, @QueryParam("showItems") String showItems) throws Exception {

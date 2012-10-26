@@ -98,7 +98,7 @@ public class ThumbnailRESTService implements ResourceContainer {
  * 
  * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getThumbnailImage
  */
-  @Path("/medium/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/medium/")
   @GET
   public Response getThumbnailImage(@PathParam("repoName") String repoName,
                                     @PathParam("workspaceName") String wsName,
@@ -121,7 +121,7 @@ public class ThumbnailRESTService implements ResourceContainer {
  * 
  * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getCoverImage
  */
-  @Path("/big/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/big/")
   @GET
   public Response getCoverImage(@PathParam("repoName") String repoName,
                                 @PathParam("workspaceName") String wsName,
@@ -141,7 +141,7 @@ public class ThumbnailRESTService implements ResourceContainer {
  * 
  * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getLargeImage
  */
-  @Path("/large/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/large/")
   @GET
   public Response getLargeImage(@PathParam("repoName") String repoName,
                                 @PathParam("workspaceName") String wsName,
@@ -161,7 +161,7 @@ public class ThumbnailRESTService implements ResourceContainer {
  * 
  * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getSmallImage
  */
-  @Path("/small/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/small/")
   @GET
   public Response getSmallImage(@PathParam("repoName") String repoName,
                                 @PathParam("workspaceName") String wsName,
@@ -182,7 +182,7 @@ public class ThumbnailRESTService implements ResourceContainer {
  * 
  * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getCustomImage
  */
-  @Path("/custom/{size}/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/custom/")
   @GET
   public Response getCustomImage(@PathParam("size") String size,
                                 @PathParam("repoName") String repoName,
@@ -203,7 +203,7 @@ public class ThumbnailRESTService implements ResourceContainer {
    * 
    * @anchor CONTref.Devref.PublicRestAPIs.ThumbnailRESTService.getOriginImage
    */
-  @Path("/origin/{repoName}/{workspaceName}/{nodePath:.*}/")
+  @Path("/origin/")
   @GET
   public Response getOriginImage(@PathParam("repoName") String repoName,
                                  @PathParam("workspaceName") String wsName,

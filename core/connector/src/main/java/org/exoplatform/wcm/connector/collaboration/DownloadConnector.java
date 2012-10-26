@@ -48,7 +48,7 @@ public class DownloadConnector implements ResourceContainer{
    * @anchor CONTref.Devref.PublicRestAPIs.DownloadConnector.download
    */
   @GET
-  @Path("/download/{workspace}/{path:.*}/")
+  @Path("/download/")
   public Response download(@PathParam("workspace") String workspace,
                            @PathParam("path") String path,
                            @QueryParam("version") String version) throws Exception {
