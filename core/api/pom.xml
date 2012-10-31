@@ -16,11 +16,5 @@
       <version>${org.exoplatform.jcr.version}</version>
       <scope>compile</scope>
     </dependency>
-    <dependency>
-      <groupId>org.chromattic</groupId>
-      <artifactId>chromattic.ext</artifactId>
-      <version>${chromattic.version}</version>
-      <scope>compile</scope>
-    </dependency>
   </dependencies>
-  </project>
+</project>

@@ -15,47 +15,17 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.model.lifecycle;
 
-import java.io.InputStream;
-import java.util.List;
+import org.exoplatform.container.component.BaseComponentPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:30 PM  
+ * Oct 31, 2012
+ * 3:52:45 PM  
  */
-public class FileData extends ObjectData {
+public abstract class AbstractContentListenerPlugin extends BaseComponentPlugin {
 
-  public FileData(String name, String path) {
-    super(name, path);
-  }
-  /**
-   * 
-   * @return
-   */
-  public InputStream getData() {
-    return null;
-  }
-  
-  public String getMimeType() {
-    return null;
-    
-  }
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
-  @Override
-  public ObjectData getParent() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-   
-  
-  
 }

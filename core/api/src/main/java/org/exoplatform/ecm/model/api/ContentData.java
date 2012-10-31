@@ -17,6 +17,8 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.api;
 
+import java.util.List;
+
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
@@ -24,32 +26,59 @@ package org.exoplatform.ecm.model.api;
  * Oct 25, 2012
  * 3:26:19 PM  
  */
-public interface ContentData extends ObjectData{
+public class ContentData extends ObjectData{
 
+  public ContentData(String name, String path) {
+    super(name, path);
+  }
+  
+  public ContentData(String UUID) {
+    super(UUID);
+  }
   /**
    * Check the type of content
    * @return <code>true</code> if current node is document type and
     *         <code>otherwise</code>
    */
-  boolean isDocument();
+  public boolean isDocument() {
+    return false;
+  }
   
   /**
    * Get document type
    * @return Type of document such as exo:webContent or exo:accessibleMedia...
    */
-  String getDocumentType();
+  public String getDocumentType() {
+    return null;
+  }
   
   /**
    * 
    * @return
    */
-  String getDocumentLabel();
+  public String getDocumentLabel() {
+    return null;
+  }
   
   /**
    * 
    * @return
    */
-  String getTemplate();
+  public String getTemplate() {
+    return null;
+  }
+
+  @Override
+  public List<?> getChildren() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public ObjectData getParent() {
+    // TODO Auto-generated method stub
+    return null;
+  }
   
   
   

@@ -15,47 +15,29 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.listeners.file;
 
-import java.io.InputStream;
-import java.util.List;
+import org.exoplatform.ecm.model.api.FileData;
+import org.exoplatform.ecm.model.lifecycle.ContentLifeCycleEvent;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:30 PM  
+ * Oct 31, 2012
+ * 2:03:39 PM  
  */
-public class FileData extends ObjectData {
+public class FileLifeCycleEvent extends ContentLifeCycleEvent<FileData> {
 
-  public FileData(String name, String path) {
-    super(name, path);
-  }
-  /**
-   * 
-   * @return
-   */
-  public InputStream getData() {
-    return null;
+  public enum Type {FILE_CREATE, FILE_UPDATE, FILE_DELETE};
+  
+  private Type type;
+  
+  public FileLifeCycleEvent(Type type, FileData fileObj) {
+    super(fileObj);
+    this.type = type;
   }
   
-  public String getMimeType() {
-    return null;
-    
-  }
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
-  @Override
-  public ObjectData getParent() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-   
   
   
 }

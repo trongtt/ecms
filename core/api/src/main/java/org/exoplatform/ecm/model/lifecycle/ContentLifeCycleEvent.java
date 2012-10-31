@@ -15,15 +15,25 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.listener;
+package org.exoplatform.ecm.model.lifecycle;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:53:26 PM  
+ * Oct 31, 2012
+ * 12:07:47 PM  
  */
-public class ContentListener {
+public class ContentLifeCycleEvent<S> {
 
+  protected S source;
+  
+  public ContentLifeCycleEvent(S source) {
+    this.source = source;
+  }
+  
+  public S getSource() {
+    return source;
+  }
+  
 }

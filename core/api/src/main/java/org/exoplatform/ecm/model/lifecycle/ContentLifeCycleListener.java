@@ -15,15 +15,16 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.model.lifecycle;
+
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:43:17 PM  
+ * Oct 31, 2012
+ * 12:18:31 PM  
  */
-public interface PropertyData {
+public interface ContentLifeCycleListener<E extends ContentLifeCycleEvent<?>> {
 
 }

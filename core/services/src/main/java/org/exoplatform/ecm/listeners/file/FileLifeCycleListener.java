@@ -15,47 +15,16 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
-
-import java.io.InputStream;
-import java.util.List;
+package org.exoplatform.ecm.listeners.file;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:30 PM  
+ * Oct 31, 2012
+ * 11:23:15 AM  
  */
-public class FileData extends ObjectData {
+public interface FileLifeCycleListener {
 
-  public FileData(String name, String path) {
-    super(name, path);
-  }
-  /**
-   * 
-   * @return
-   */
-  public InputStream getData() {
-    return null;
-  }
-  
-  public String getMimeType() {
-    return null;
-    
-  }
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
-  @Override
-  public ObjectData getParent() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-   
-  
   
 }
