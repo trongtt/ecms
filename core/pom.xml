@@ -11,7 +11,6 @@
   <name>eXo ECM Suite :: Core</name>
   <description>eXo Entreprise Content Management Suite :: Core Components</description>
   <modules>
-    <module>api</module>
     <module>services</module>
     <module>viewer</module>
     <module>publication</module>

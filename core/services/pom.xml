@@ -98,12 +98,7 @@
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
-				<dependency>
-					<groupId>org.exoplatform.ecms</groupId>
-					<artifactId>ecms-core-api</artifactId>
-					<version>${project.version}</version>
-				</dependency>    
-  </dependencies>
+   </dependencies>
   <build>
     <resources>
       <resource>

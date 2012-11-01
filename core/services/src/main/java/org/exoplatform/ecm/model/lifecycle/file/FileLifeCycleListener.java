@@ -15,23 +15,16 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.indexer;
-
-import org.exoplatform.ecm.model.api.ObjectData;
+package org.exoplatform.ecm.model.lifecycle.file;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:53:43 PM  
+ * Oct 31, 2012
+ * 11:23:15 AM  
  */
-public interface ContentIndexConnector<T> {
+public interface FileLifeCycleListener {
+
   
-  T createContent(ObjectData obj);
-  
-  T updateContent(ObjectData obj);
-  
-  T removeContent(ObjectData obj);
-    
 }

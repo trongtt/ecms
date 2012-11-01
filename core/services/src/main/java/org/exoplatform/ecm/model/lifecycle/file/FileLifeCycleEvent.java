@@ -15,7 +15,7 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners.file;
+package org.exoplatform.ecm.model.lifecycle.file;
 
 import org.exoplatform.ecm.model.api.FileData;
 import org.exoplatform.ecm.model.lifecycle.ContentLifeCycleEvent;
@@ -37,7 +37,5 @@ public class FileLifeCycleEvent extends ContentLifeCycleEvent<FileData> {
     super(fileObj);
     this.type = type;
   }
-  
-  
   
 }

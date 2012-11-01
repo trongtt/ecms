@@ -15,16 +15,15 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners.file;
+package org.exoplatform.ecm.model.lifecycle.file;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
  * Oct 31, 2012
- * 11:23:15 AM  
+ * 4:44:26 PM  
  */
-public interface FileLifeCycleListener {
+public class FileLifeCycle {
 
-  
 }
