@@ -15,12 +15,14 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.api.model;
+package org.exoplatform.ecm.model.impl;
 
 import java.util.List;
 
 import javax.jcr.Property;
 import javax.jcr.Session;
+
+import org.exoplatform.ecm.api.model.ObjectData;
 
 /**
  * Created by The eXo Platform SARL

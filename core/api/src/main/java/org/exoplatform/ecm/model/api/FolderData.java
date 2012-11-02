@@ -15,71 +15,51 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.api.model;
+package org.exoplatform.ecm.model.api;
 
-import java.util.List;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:19 PM  
+ * Nov 2, 2012
+ * 2:14:17 PM  
  */
-public class ContentData extends ObjectDataImpl{
+public interface FolderData extends ObjectData {
+  
+  /**
+   * Get type of folder
+   * @return Type of folder such as nt:folder or nt:unstructured
+   */
+  String getFolderType();
+  
+  /**
+   * Create sub folder
+   * @param path Sub folder path.
+   * The parameter allows a path such as /test/test1/test2 or just simple test2
+   * If test or test1 doesn't exist then it will be created automatically, and finally test2.
+   * @return Object FolderData
+   */
+  FolderData addSubFolder(String path);
+  
+  /**
+   * Remove sub folder
+   * @param path Sub folder path
+   */
+  void removeSubFolder(String path);
+  
+  /**
+   * Check to see is there any sub folder inside current folder.
+   * @return <code>True</code> if current folder contain sub folder and
+   *         <code>otherwise</code>
+   */
+  boolean hasSubFolder();
+  
+  /**
+   * Get sub folder form its path
+   * @param path Path of sub folder
+   * @return The FolderData object
+   */
+  FolderData getSubFolder(String path);
 
-  public ContentData(String name, String path) {
-    super(name, path);
-  }
-  
-  public ContentData(String UUID) {
-    super(UUID);
-  }
-  /**
-   * Check the type of content
-   * @return <code>true</code> if current node is document type and
-    *         <code>otherwise</code>
-   */
-  public boolean isDocument() {
-    return false;
-  }
-  
-  /**
-   * Get document type
-   * @return Type of document such as exo:webContent or exo:accessibleMedia...
-   */
-  public String getDocumentType() {
-    return null;
-  }
-  
-  /**
-   * 
-   * @return
-   */
-  public String getDocumentLabel() {
-    return null;
-  }
-  
-  /**
-   * 
-   * @return
-   */
-  public String getTemplate() {
-    return null;
-  }
-
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public ObjectDataImpl getParent() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
-  
-  
 }

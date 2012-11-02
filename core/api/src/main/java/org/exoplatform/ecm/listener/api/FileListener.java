@@ -17,7 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.listener.api;
 
-import org.exoplatform.ecm.api.model.FileData;
+import org.exoplatform.ecm.model.api.FileData;
 
 
 /**

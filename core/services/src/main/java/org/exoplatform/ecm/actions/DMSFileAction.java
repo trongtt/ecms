@@ -24,10 +24,10 @@ import javax.jcr.observation.Event;
 
 import org.apache.commons.chain.Context;
 import org.exoplatform.ecm.api.model.FileData;
-import org.exoplatform.ecm.api.model.FileDataImpl;
 import org.exoplatform.ecm.event.api.DMSEventManager;
 import org.exoplatform.ecm.listener.api.FileListener;
 import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import org.exoplatform.ecm.model.impl.FileDataImpl;
 import org.exoplatform.services.command.action.Action;
 import org.exoplatform.services.ext.action.InvocationContext;
 import org.exoplatform.services.log.ExoLogger;

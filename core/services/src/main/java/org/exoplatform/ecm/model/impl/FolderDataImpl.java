@@ -15,9 +15,9 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.api.model;
+package org.exoplatform.ecm.model.impl;
 
-import java.util.List;
+import org.exoplatform.ecm.api.model.FolderData;
 
 /**
  * Created by The eXo Platform SARL
@@ -26,13 +26,13 @@ import java.util.List;
  * Oct 25, 2012
  * 3:26:46 PM  
  */
-public class FolderData extends ObjectDataImpl {
+public class FolderDataImpl extends ObjectDataImpl implements FolderData {
   
-  public FolderData(String name, String path) {
+  public FolderDataImpl(String name, String path) {
     super(name, path);
   }
   
-  public FolderData(String UUID) {
+  public FolderDataImpl(String UUID) {
     super(UUID);
   }
   /**
@@ -77,18 +77,6 @@ public class FolderData extends ObjectDataImpl {
    * @return The FolderData object
    */
   public FolderData getSubFolder(String path) {
-    return null;
-  }
-
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public ObjectDataImpl getParent() {
-    // TODO Auto-generated method stub
     return null;
   }
 

@@ -15,29 +15,57 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.api.model;
+package org.exoplatform.ecm.model.impl;
 
-import java.io.InputStream;
+import org.exoplatform.ecm.api.model.ContentData;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 2:14:08 PM  
+ * Oct 25, 2012
+ * 3:26:19 PM  
  */
-public interface FileData extends ObjectData {
+public class ContentDataImpl extends ObjectDataImpl implements ContentData {
 
+  public ContentDataImpl(String name, String path) {
+    super(name, path);
+  }
+  
+  public ContentDataImpl(String UUID) {
+    super(UUID);
+  }
   /**
-   * 
-   * @return
+   * Check the type of content
+   * @return <code>true</code> if current node is document type and
+    *         <code>otherwise</code>
    */
-  InputStream getData();
+  public boolean isDocument() {
+    return false;
+  }
+  
+  /**
+   * Get document type
+   * @return Type of document such as exo:webContent or exo:accessibleMedia...
+   */
+  public String getDocumentType() {
+    return null;
+  }
   
   /**
    * 
    * @return
    */
-  String getMimeType();
+  public String getDocumentLabel() {
+    return null;
+  }
   
+  /**
+   * 
+   * @return
+   */
+  public String getTemplate() {
+    return null;
+  }
+
 }

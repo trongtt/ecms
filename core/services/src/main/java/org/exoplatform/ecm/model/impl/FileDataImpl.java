@@ -15,15 +15,36 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.api.model;
+package org.exoplatform.ecm.model.impl;
+
+import java.io.InputStream;
+import java.util.List;
+
+import org.exoplatform.ecm.api.model.FileData;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 2:14:30 PM  
+ * Oct 25, 2012
+ * 3:26:30 PM  
  */
-public interface ContentData extends ObjectData {
+public class FileDataImpl extends ObjectDataImpl implements FileData {
 
+  public FileDataImpl(String workspace, String path) {
+    super(workspace, path);
+  }
+  /**
+   * 
+   * @return
+   */
+  public InputStream getData() {
+    return null;
+  }
+  
+  public String getMimeType() {
+    return null;
+    
+  }
+  
 }
