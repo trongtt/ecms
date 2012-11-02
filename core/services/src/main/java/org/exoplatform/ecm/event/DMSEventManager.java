@@ -19,7 +19,7 @@ package org.exoplatform.ecm.event;
 
 import java.util.Set;
 
-import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
+import org.exoplatform.ecm.listeners.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL

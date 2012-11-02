@@ -15,19 +15,19 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.event;
+package org.exoplatform.ecm.listeners.impl;
 
 import org.exoplatform.ecm.api.model.FileData;
-import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
+import org.exoplatform.ecm.listeners.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
  * Nov 1, 2012
- * 5:24:12 PM  
+ * 10:29:04 PM  
  */
-public class FileUpdateEventListener extends FileListenerPlugin {
+public class FileRemoveEventListener extends FileListenerPlugin {
 
   @Override
   public void createFile(FileData fileData) {
@@ -37,14 +37,13 @@ public class FileUpdateEventListener extends FileListenerPlugin {
 
   @Override
   public void updateFile(FileData event) {
-    System.out.println("\n\nFileUpdateEventListener executed");
-  }
-
-  @Override
-  public void removeFile(FileData event) {
     // TODO Auto-generated method stub
     
   }
 
-  
+  @Override
+  public void removeFile(FileData event) {
+    System.out.println("\n\nFileCreateEventListener executed");
+  }
+
 }

@@ -15,36 +15,37 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.event;
+package org.exoplatform.ecm.listeners;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.exoplatform.ecm.api.model.FileData;
 
-import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 12:23:12 AM  
+ * Oct 31, 2012
+ * 11:23:15 AM  
  */
-public class DMSEventManagerImpl implements DMSEventManager {
-
-  protected Set<FileListenerPlugin> fileListeners = new HashSet<FileListenerPlugin>();
-
-  public DMSEventManagerImpl() {
-  }
+public interface FileListener {
   
-  public void addFileListener(FileListenerPlugin listener) {
-    fileListeners.add(listener);
-  }
+  /**
+   * 
+   * @param event
+   */
+  public void createFile(FileData fileData);
+  
+  /**
+   * 
+   * @param event
+   */
+  public void updateFile(FileData event);
+  
+  /**
+   * 
+   * @param event
+   */
+  public void removeFile(FileData event);
 
-  public void removeFileListener(FileListenerPlugin listener) {
-    fileListeners.remove(listener);
-  }
-
-  public Set<FileListenerPlugin> getFileListeners() {
-    return fileListeners;
-  }
+  
 }

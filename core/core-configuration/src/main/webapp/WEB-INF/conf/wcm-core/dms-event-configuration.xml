@@ -26,17 +26,17 @@
   
 		<component>
 			  <key>org.exoplatform.ecm.event.DMSEventManager</key>
-			  <type>org.exoplatform.ecm.event.DMSEventManagerImpl</type>
+			  <type>org.exoplatform.ecm.event.impl.DMSEventManagerImpl</type>
 					<component-plugins>
 						 <component-plugin>
         <name>FileUpdateEvent</name>
         <set-method>addFileListener</set-method>
-        <type>org.exoplatform.ecm.event.FileCreateEventListener</type>
+        <type>org.exoplatform.ecm.listeners.impl.FileCreateEventListener</type>
       </component-plugin>
 						<component-plugin>
         <name>FileUpdateEvent</name>
         <set-method>addFileListener</set-method>
-        <type>org.exoplatform.ecm.event.FileUpdateEventListener</type>
+        <type>org.exoplatform.ecm.listeners.impl.FileUpdateEventListener</type>
       </component-plugin>
 				</component-plugins>
 		</component> 
@@ -47,7 +47,7 @@
     <component-plugin>
       <name>FileRemoveEvent</name>
       <set-method>addFileListener</set-method>
-      <type>org.exoplatform.ecm.event.FileRemoveEventListener</type>
+      <type>org.exoplatform.ecm.listeners.impl.FileRemoveEventListener</type>
     </component-plugin>
   </external-component-plugins>
 		
