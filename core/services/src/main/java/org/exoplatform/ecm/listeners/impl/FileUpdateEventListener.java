@@ -18,7 +18,7 @@
 package org.exoplatform.ecm.listeners.impl;
 
 import org.exoplatform.ecm.api.model.FileData;
-import org.exoplatform.ecm.listeners.FileListenerPlugin;
+import org.exoplatform.ecm.listener.api.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL

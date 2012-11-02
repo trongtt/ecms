@@ -20,129 +20,103 @@ package org.exoplatform.ecm.api.model;
 import java.util.List;
 
 import javax.jcr.Property;
+import javax.jcr.Session;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:08 PM  
+ * Nov 2, 2012
+ * 2:13:57 PM  
  */
-public abstract class ObjectData {
+public interface ObjectData {
 
-  protected String name;
-  protected String path;
-  protected String UUID;
-  
-  public ObjectData(String name, String path) {
-    this.name = name;
-    this.path = path;
-  }
-  
-  public ObjectData(String UUID) {
-    this.UUID = UUID;
-  }
-  
-  public ObjectData getInstance() {
-    return null;
-  }
+  ObjectData getInstance();
   
   /**
    * Get object name  
    * @return
    */
-  public String getName() {
-    return name;
-  }
+  String getName();
 
   /**
    * Get Object path  
    * @return
    */
-  public String getPath() {
-    return path;
-  }
+  String getPath();
 
   /**
    * Get Object children  
    * @return
    */
-  public abstract List<?> getChildren();
+  List<?> getChildren();
 
   /**
    * Get Object Property  
    * @param pName Property name
    * @return
    */
-  public Property getProperty(String pName) {
-    return null;
-  }
+  Property getProperty(String pName);
 
   /**
    * Get Object properties  
    * @return
    */
-  public List<Property> getProperties() {
-    return null;
-  }
+  List<Property> getProperties();
   
   /**
    * Get Object created date
    * @return
    */
-  public String getCreatedDate() {
-    return null;
-  }
+  String getCreatedDate();
   
   /**
    * Get Object last modified date
    * @return
    */
-  public String getLastModifiedDate() {
-    return null;
-  }
+  String getLastModifiedDate();
   
   /**
    * Get Object Creator
    * @return
    */
-  public String getCreator() {
-    return null;
-  }
-  
+  String getCreator();
   /**
    * Get Object Parent
    */
-  public abstract ObjectData getParent();
+  ObjectData getParent();
   
   /**
    * Get Object Primary Type
    * @return
    */
-  public String getPrimaryType() {
-    return null;
-  }
+  String getPrimaryType();
   
   /**
    * Get Object mixin types
    */
-  public List<String> getMixinTypes() {
-    return null;
-  }
+  List<String> getMixinTypes();
   
   /**
    * Get workspace name where stored current object.
    * @return Name of Workspace
    */
-  public String getWorkspace() {
-    return null;
-  }
+  String getWorkspace();
   
   /**
    * Get Object UUID
    * @return UUID of current Object
    */
-  public String getUUID() {
-    return UUID;
-  }
+  String getUUID();
+  
+  /**
+   * 
+   * @return
+   */
+  Session getSession();
+  
+  /**
+   * 
+   */
+  void save();
 }

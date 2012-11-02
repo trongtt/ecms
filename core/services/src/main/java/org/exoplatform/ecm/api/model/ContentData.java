@@ -26,7 +26,7 @@ import java.util.List;
  * Oct 25, 2012
  * 3:26:19 PM  
  */
-public class ContentData extends ObjectData{
+public class ContentData extends ObjectDataImpl{
 
   public ContentData(String name, String path) {
     super(name, path);
@@ -75,7 +75,7 @@ public class ContentData extends ObjectData{
   }
 
   @Override
-  public ObjectData getParent() {
+  public ObjectDataImpl getParent() {
     // TODO Auto-generated method stub
     return null;
   }

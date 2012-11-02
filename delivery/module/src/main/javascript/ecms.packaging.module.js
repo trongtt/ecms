@@ -49,6 +49,7 @@ function getModule(params) {
     addDependency(new Project("org.exoplatform.ecms", "ecms-core-publication", "jar", module.version)).
     addDependency(new Project("org.exoplatform.ecms", "ecms-core-viewer", "jar", module.version)).
     addDependency(new Project("org.exoplatform.ecms", "ecms-core-connector", "jar", module.version)).
+    addDependency(new Project("org.exoplatform.ecms", "ecms-core-api", "jar", module.version)).
     addDependency(new Project("org.exoplatform.commons", "commons-webui-ext", "jar", "${org.exoplatform.commons.version}")).
     addDependency(new Project("org.exoplatform", "exo-jcr-services", "jar", "${org.exoplatform.jcr-services.version}")).
     addDependency(new Project("com.totsp.feedpod", "itunes-com-podcast", "jar", "${itunes.podcast.version}")) .

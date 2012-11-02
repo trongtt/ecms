@@ -26,7 +26,7 @@ import java.util.List;
  * Oct 25, 2012
  * 3:26:46 PM  
  */
-public class FolderData extends ObjectData {
+public class FolderData extends ObjectDataImpl {
   
   public FolderData(String name, String path) {
     super(name, path);
@@ -87,7 +87,7 @@ public class FolderData extends ObjectData {
   }
 
   @Override
-  public ObjectData getParent() {
+  public ObjectDataImpl getParent() {
     // TODO Auto-generated method stub
     return null;
   }

@@ -15,17 +15,34 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners;
+package org.exoplatform.ecm.api.model;
 
-import org.exoplatform.container.component.BaseComponentPlugin;
+import java.io.InputStream;
+import java.util.List;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 1:09:32 AM  
+ * Oct 25, 2012
+ * 3:26:30 PM  
  */
-public abstract class FileListenerPlugin extends BaseComponentPlugin implements FileListener {
+public class FileDataImpl extends ObjectDataImpl implements FileData {
 
+  public FileDataImpl(String workspace, String path) {
+    super(workspace, path);
+  }
+  /**
+   * 
+   * @return
+   */
+  public InputStream getData() {
+    return null;
+  }
+  
+  public String getMimeType() {
+    return null;
+    
+  }
+  
 }

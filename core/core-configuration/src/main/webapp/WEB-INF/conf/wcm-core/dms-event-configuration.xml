@@ -25,7 +25,7 @@
    xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
   
 		<component>
-			  <key>org.exoplatform.ecm.event.DMSEventManager</key>
+			  <key>org.exoplatform.ecm.event.api.DMSEventManager</key>
 			  <type>org.exoplatform.ecm.event.impl.DMSEventManagerImpl</type>
 					<component-plugins>
 						 <component-plugin>
@@ -43,7 +43,7 @@
 	
 <!--Customer can add their listener by adding the external-component-plugins like this -->				
   <external-component-plugins>
-    <target-component>org.exoplatform.ecm.event.DMSEventManager</target-component>
+    <target-component>org.exoplatform.ecm.event.api.DMSEventManager</target-component>
     <component-plugin>
       <name>FileRemoveEvent</name>
       <set-method>addFileListener</set-method>

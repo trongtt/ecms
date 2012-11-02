@@ -15,37 +15,25 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners;
+package org.exoplatform.ecm.event.api;
 
-import org.exoplatform.ecm.api.model.FileData;
+import java.util.Set;
 
+import org.exoplatform.ecm.listener.api.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 31, 2012
- * 11:23:15 AM  
+ * Nov 1, 2012
+ * 2:32:06 PM  
  */
-public interface FileListener {
+public interface DMSEventManager {
   
-  /**
-   * 
-   * @param event
-   */
-  public void createFile(FileData fileData);
+  public void addFileListener(FileListenerPlugin listener);
   
-  /**
-   * 
-   * @param event
-   */
-  public void updateFile(FileData event);
+  public void removeFileListener(FileListenerPlugin listener);
   
-  /**
-   * 
-   * @param event
-   */
-  public void removeFile(FileData event);
+  public Set<FileListenerPlugin> getFileListeners();
 
-  
 }

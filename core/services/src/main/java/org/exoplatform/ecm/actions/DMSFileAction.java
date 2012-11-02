@@ -24,9 +24,10 @@ import javax.jcr.observation.Event;
 
 import org.apache.commons.chain.Context;
 import org.exoplatform.ecm.api.model.FileData;
-import org.exoplatform.ecm.event.DMSEventManager;
-import org.exoplatform.ecm.listeners.FileListener;
-import org.exoplatform.ecm.listeners.FileListenerPlugin;
+import org.exoplatform.ecm.api.model.FileDataImpl;
+import org.exoplatform.ecm.event.api.DMSEventManager;
+import org.exoplatform.ecm.listener.api.FileListener;
+import org.exoplatform.ecm.listener.api.FileListenerPlugin;
 import org.exoplatform.services.command.action.Action;
 import org.exoplatform.services.ext.action.InvocationContext;
 import org.exoplatform.services.log.ExoLogger;
@@ -49,23 +50,24 @@ public class DMSFileAction implements Action {
     Set<FileListenerPlugin> fileListeners = eventManager.getFileListeners();
     Iterator<FileListenerPlugin> iter = fileListeners.iterator();
     int evt = (Integer)ctx.get(InvocationContext.EVENT);
+    FileData fileData = new FileDataImpl("test", "test");
     while(iter.hasNext()) {
       FileListener listener = iter.next();
       switch(evt) {
       case Event.NODE_ADDED :
-        listener.createFile(new FileData("test", "test"));
+        listener.createFile(fileData);
         break;
       case Event.NODE_REMOVED :
-        listener.removeFile(new FileData("test", "test"));
+        listener.removeFile(fileData);
         break;
       case Event.PROPERTY_ADDED :
-        listener.updateFile(new FileData("test", "test"));
+        listener.updateFile(fileData);
         break;
       case Event.PROPERTY_CHANGED :
-        listener.updateFile(new FileData("test", "test"));
+        listener.updateFile(fileData);
         break;
       case Event.PROPERTY_REMOVED :
-        listener.updateFile(new FileData("test", "test"));
+        listener.updateFile(fileData);
         break;
       default:
         break;

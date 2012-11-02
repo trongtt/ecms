@@ -15,34 +15,29 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners.impl;
+package org.exoplatform.ecm.api.model;
 
-import org.exoplatform.ecm.api.model.FileData;
-import org.exoplatform.ecm.api.model.FileDataImpl;
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import java.io.InputStream;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 1, 2012
- * 5:50:13 PM  
+ * Nov 2, 2012
+ * 2:14:08 PM  
  */
-public class FileCreateEventListener extends FileListenerPlugin {
+public interface FileData extends ObjectData {
 
-  @Override
-  public void createFile(FileData fileData) {
-    System.out.println("\n\nFileCreateEventListener executed");
-  }
-
-  @Override
-  public void updateFile(FileData event) {
-    // TODO Auto-generated method stub
-  }
-
-  @Override
-  public void removeFile(FileData event) {
-    // TODO Auto-generated method stub
-  }
-
+  /**
+   * 
+   * @return
+   */
+  InputStream getData();
+  
+  /**
+   * 
+   * @return
+   */
+  String getMimeType();
+  
 }

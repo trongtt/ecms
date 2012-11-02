@@ -20,8 +20,8 @@ package org.exoplatform.ecm.event.impl;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.exoplatform.ecm.event.DMSEventManager;
-import org.exoplatform.ecm.listeners.FileListenerPlugin;
+import org.exoplatform.ecm.event.api.DMSEventManager;
+import org.exoplatform.ecm.listener.api.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
