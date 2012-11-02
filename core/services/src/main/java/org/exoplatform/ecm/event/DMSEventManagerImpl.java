@@ -37,7 +37,6 @@ public class DMSEventManagerImpl implements DMSEventManager {
   }
   
   public void addFileListener(FileListenerPlugin listener) {
-    System.out.println("\n\n The Event listener "+listener.getName()+" has been registered\n\n");
     fileListeners.add(listener);
   }
 
