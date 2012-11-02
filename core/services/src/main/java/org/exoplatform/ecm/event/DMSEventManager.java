@@ -15,47 +15,25 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.event;
 
-import java.io.InputStream;
-import java.util.List;
+import java.util.Set;
+
+import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:30 PM  
+ * Nov 1, 2012
+ * 2:32:06 PM  
  */
-public class FileData extends ObjectData {
+public interface DMSEventManager {
+  
+  public void addFileListener(FileListenerPlugin listener);
+  
+  public void removeFileListener(FileListenerPlugin listener);
+  
+  public Set<FileListenerPlugin> getFileListeners();
 
-  public FileData(String name, String path) {
-    super(name, path);
-  }
-  /**
-   * 
-   * @return
-   */
-  public InputStream getData() {
-    return null;
-  }
-  
-  public String getMimeType() {
-    return null;
-    
-  }
-  @Override
-  public List<?> getChildren() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-  
-  @Override
-  public ObjectData getParent() {
-    // TODO Auto-generated method stub
-    return null;
-  }
-   
-  
-  
 }

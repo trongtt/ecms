@@ -15,25 +15,35 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.lifecycle;
+package org.exoplatform.ecm.event;
+
+import org.exoplatform.ecm.api.model.FileData;
+import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 31, 2012
- * 12:07:47 PM  
+ * Nov 1, 2012
+ * 10:29:04 PM  
  */
-public class ContentLifeCycleEvent<S> {
+public class FileRemoveEventListener extends FileListenerPlugin {
 
-  protected S source;
-  
-  public ContentLifeCycleEvent(S source) {
-    this.source = source;
+  @Override
+  public void createFile(FileData fileData) {
+    // TODO Auto-generated method stub
+    
   }
-  
-  public S getSource() {
-    return source;
+
+  @Override
+  public void updateFile(FileData event) {
+    // TODO Auto-generated method stub
+    
   }
-  
+
+  @Override
+  public void removeFile(FileData event) {
+    System.out.println("\n\nFileCreateEventListener executed");
+  }
+
 }

@@ -15,16 +15,37 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.lifecycle.file;
+package org.exoplatform.ecm.event;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import org.exoplatform.ecm.listeners.file.FileListenerPlugin;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 31, 2012
- * 11:23:15 AM  
+ * Nov 2, 2012
+ * 12:23:12 AM  
  */
-public interface FileLifeCycleListener {
+public class DMSEventManagerImpl implements DMSEventManager {
 
+  protected Set<FileListenerPlugin> fileListeners = new HashSet<FileListenerPlugin>();
+
+  public DMSEventManagerImpl() {
+  }
   
+  public void addFileListener(FileListenerPlugin listener) {
+    System.out.println("\n\n The Event listener "+listener.getName()+" has been registered\n\n");
+    fileListeners.add(listener);
+  }
+
+  public void removeFileListener(FileListenerPlugin listener) {
+    fileListeners.remove(listener);
+  }
+
+  public Set<FileListenerPlugin> getFileListeners() {
+    return fileListeners;
+  }
 }
