@@ -60,15 +60,17 @@
 	    <description>add actions plugin</description>
 	    <init-params>
 	      <object-param>
-	        <name>actions</name>
+	        <name>DMSFileAction</name>
 	        <object type="org.exoplatform.services.jcr.impl.ext.action.AddActionsPlugin$ActionsConfig">
 	          <field  name="actions">
 	            <collection type="java.util.ArrayList">					
 		              <value>
                   <object type="org.exoplatform.services.jcr.impl.ext.action.ActionConfiguration">
-                    <field  name="eventTypes"><string>addNode,addProperty,changeProperty,removeProperty,removeNode</string></field>                     
-                    <field  name="nodeTypes"><string>nt:file</string></field>
-																				<field  name="actionClassName"><string>org.exoplatform.ecm.actions.DMSFileAction</string></field>
+                    <field name="workspace"><string>collaboration</string></field>
+																				<field name="path"><string>/</string></field>
+																				<field name="eventTypes"><string>addNode,addProperty,changeProperty,removeProperty,removeNode</string></field>                     
+                    <field name="nodeTypes"><string>nt:file</string></field>
+																				<field name="actionClassName"><string>org.exoplatform.ecm.actions.DMSFileAction</string></field>
                   </object>
                 </value>   	              
 	             </collection>

@@ -19,6 +19,10 @@ package org.exoplatform.ecm.model.api;
 
 import java.io.InputStream;
 
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
+
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
@@ -32,12 +36,12 @@ public interface FileData extends ObjectData {
    * 
    * @return
    */
-  InputStream getData();
+  InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException;
   
   /**
    * 
    * @return
    */
-  String getMimeType();
+  String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException;
   
 }

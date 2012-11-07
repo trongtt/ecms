@@ -17,7 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.api.model.FileData;
+import org.exoplatform.ecm.model.api.FileData;
 import org.exoplatform.ecm.listener.api.FileListenerPlugin;
 
 /**
@@ -29,21 +29,21 @@ import org.exoplatform.ecm.listener.api.FileListenerPlugin;
  */
 public class FileRemoveEventListener extends FileListenerPlugin {
 
+  @SuppressWarnings("unused")
   @Override
   public void createFile(FileData fileData) {
-    // TODO Auto-generated method stub
-    
+  //No need to process while removing file
+  }
+
+  @SuppressWarnings("unused")
+  @Override
+  public void updateFile(FileData fileData) {
+    //No need to process while removing file
   }
 
   @Override
-  public void updateFile(FileData event) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void removeFile(FileData event) {
-    System.out.println("\n\nFileCreateEventListener executed");
+  public void removeFile(FileData fileData) {
+    System.out.println("\n\nRemoving file "+fileData.getName()+"\n\n");
   }
 
 }

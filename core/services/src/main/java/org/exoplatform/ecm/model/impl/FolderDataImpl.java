@@ -17,7 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.impl;
 
-import org.exoplatform.ecm.api.model.FolderData;
+import org.exoplatform.ecm.model.api.FolderData;
 
 /**
  * Created by The eXo Platform SARL
@@ -26,15 +26,15 @@ import org.exoplatform.ecm.api.model.FolderData;
  * Oct 25, 2012
  * 3:26:46 PM  
  */
-public class FolderDataImpl extends ObjectDataImpl implements FolderData {
+public class FolderDataImpl extends ObjectDataImpl<FolderData> implements FolderData {
   
   public FolderDataImpl(String name, String path) {
     super(name, path);
   }
-  
-  public FolderDataImpl(String UUID) {
-    super(UUID);
-  }
+
+  public FolderDataImpl(String name, String path, boolean isSystem) {
+    super(name, path, isSystem);
+  }  
   /**
    * Get type of folder
    * @return Type of folder such as nt:folder or nt:unstructured
@@ -79,5 +79,4 @@ public class FolderDataImpl extends ObjectDataImpl implements FolderData {
   public FolderData getSubFolder(String path) {
     return null;
   }
-
 }

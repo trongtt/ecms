@@ -17,12 +17,35 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.jcr.AccessDeniedException;
+import javax.jcr.InvalidItemStateException;
+import javax.jcr.ItemExistsException;
+import javax.jcr.ItemNotFoundException;
+import javax.jcr.LoginException;
+import javax.jcr.NoSuchWorkspaceException;
+import javax.jcr.Node;
+import javax.jcr.NodeIterator;
+import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
+import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.UnsupportedRepositoryOperationException;
+import javax.jcr.ValueFormatException;
+import javax.jcr.lock.LockException;
+import javax.jcr.nodetype.ConstraintViolationException;
+import javax.jcr.nodetype.NoSuchNodeTypeException;
+import javax.jcr.version.VersionException;
 
-import org.exoplatform.ecm.api.model.ObjectData;
+import org.exoplatform.ecm.model.api.ObjectData;
+import org.exoplatform.services.jcr.impl.core.NodeImpl;
+import org.exoplatform.services.log.ExoLogger;
+import org.exoplatform.services.log.Log;
+import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 
 /**
  * Created by The eXo Platform SARL
@@ -31,23 +54,31 @@ import org.exoplatform.ecm.api.model.ObjectData;
  * Oct 25, 2012
  * 3:26:08 PM  
  */
-public class ObjectDataImpl implements ObjectData {
+public class ObjectDataImpl<T> implements ObjectData {
 
-  protected String name;
+  protected static final Log LOG = ExoLogger.getLogger(ObjectData.class); 
+  protected String workspace;
   protected String path;
   protected String UUID;
+  protected boolean isSystem = false;
   
-  public ObjectDataImpl(String name, String path) {
-    this.name = name;
+  public ObjectDataImpl(String workspace, String path) {
+    this.workspace = workspace;
     this.path = path;
   }
   
-  public ObjectDataImpl(String UUID) {
-    this.UUID = UUID;
+  public ObjectDataImpl(String workspace, String path, boolean isSystem) {
+    this.workspace = workspace;
+    this.path = path;
+    this.isSystem = isSystem;
+  }  
+  
+  public ObjectData getInstance() {
+    return this;
   }
   
-  public ObjectDataImpl getInstance() {
-    return null;
+  public Node getJCRNode() throws PathNotFoundException, RepositoryException {
+    return (Node)getSession().getItem(path);
   }
   
   /**
@@ -55,7 +86,7 @@ public class ObjectDataImpl implements ObjectData {
    * @return
    */
   public String getName() {
-    return name;
+    return path.substring(path.lastIndexOf("/") + 1, path.length());
   }
 
   /**
@@ -63,78 +94,118 @@ public class ObjectDataImpl implements ObjectData {
    * @return
    */
   public String getPath() {
-    return path;
+    try {
+      return getJCRNode().getPath();
+    } catch (RepositoryException e) {
+      LOG.error(e);
+    }
+    return null;
   }
 
   /**
    * Get Object children  
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public List<?> getChildren() {
-    return null;
+  public List<ObjectData> getChildren() throws PathNotFoundException, RepositoryException {
+    List<ObjectData> listT = new ArrayList<ObjectData>();
+    NodeIterator nodeIter = getJCRNode().getNodes();
+    while(nodeIter.hasNext()) {
+      Node node = nodeIter.nextNode();
+      listT.add(new ObjectDataImpl<ObjectData>(workspace, node.getPath()));
+    }
+    return listT;
   }
 
   /**
    * Get Object Property  
    * @param pName Property name
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public Property getProperty(String pName) {
-    return null;
+  public Property getProperty(String pName) throws PathNotFoundException, RepositoryException {
+    return getJCRNode().getProperty(pName);
   }
 
   /**
    * Get Object properties  
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public List<Property> getProperties() {
-    return null;
+  public List<Property> getProperties() throws PathNotFoundException, RepositoryException {
+    List<Property> listPro = new ArrayList<Property>();
+    PropertyIterator proIter;
+    proIter = getJCRNode().getProperties();
+    while(proIter.hasNext()) {
+      listPro.add(proIter.nextProperty());
+    }
+    return listPro;
   }
   
   /**
    * Get Object created date
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws ValueFormatException 
    */
-  public String getCreatedDate() {
-    return null;
+  public String getCreatedDate() throws ValueFormatException, PathNotFoundException, RepositoryException {
+    return getJCRNode().getProperty("exo:dateCreated").getString();
+    
   }
   
   /**
    * Get Object last modified date
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws ValueFormatException 
    */
-  public String getLastModifiedDate() {
-    return null;
+  public String getLastModifiedDate() throws ValueFormatException, PathNotFoundException, RepositoryException {
+    return getJCRNode().getProperty("exo:lastModifiedDate").getString();
   }
   
   /**
    * Get Object Creator
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public String getCreator() {
-    return null;
+  public String getCreator() throws PathNotFoundException, RepositoryException {
+    return getJCRNode().getProperty("exo:owner").toString();
   }
   
   /**
    * Get Object Parent
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws AccessDeniedException 
+   * @throws ItemNotFoundException 
    */
-  public ObjectData getParent() {
-    return null;
+  public ObjectData getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException {
+    return new ObjectDataImpl<ObjectData>(workspace, getJCRNode().getParent().getPath());
   }
   
   /**
    * Get Object Primary Type
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public String getPrimaryType() {
-    return null;
+  public String getPrimaryType() throws PathNotFoundException, RepositoryException {
+    return getJCRNode().getPrimaryNodeType().getName();
   }
   
   /**
    * Get Object mixin types
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
    */
-  public List<String> getMixinTypes() {
-    return null;
+  public List<String> getMixinTypes() throws PathNotFoundException, RepositoryException {
+    return new ArrayList<String>(Arrays.asList(((NodeImpl)getJCRNode()).getMixinTypeNames()));
   }
   
   /**
@@ -142,29 +213,61 @@ public class ObjectDataImpl implements ObjectData {
    * @return Name of Workspace
    */
   public String getWorkspace() {
-    return null;
+    return workspace;
   }
   
   /**
    * Get Object UUID
    * @return UUID of current Object
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws UnsupportedRepositoryOperationException 
    */
-  public String getUUID() {
-    return UUID;
+  public String getUUID() throws UnsupportedRepositoryOperationException, PathNotFoundException, RepositoryException {
+    return getJCRNode().getUUID();
   }
   
   /**
    * 
    * @return
+   * @throws RepositoryException 
+   * @throws NoSuchWorkspaceException 
+   * @throws LoginException 
    */
-  public Session getSession() {
-    return null;
+  public Session getSession() throws LoginException, NoSuchWorkspaceException, RepositoryException {
+    if(isSystem) {
+      return WCMCoreUtils.getSystemSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
+    }
+    return WCMCoreUtils.getUserSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
   }
   
   /**
+   * @throws RepositoryException 
+   * @throws NoSuchWorkspaceException 
+   * @throws LoginException 
+   * @throws NoSuchNodeTypeException 
+   * @throws LockException 
+   * @throws VersionException 
+   * @throws InvalidItemStateException 
+   * @throws ConstraintViolationException 
+   * @throws ItemExistsException 
+   * @throws AccessDeniedException 
    * 
    */
-  public void save() {
-    
+  public void save() throws AccessDeniedException, ItemExistsException, ConstraintViolationException, InvalidItemStateException, 
+                            VersionException, LockException, NoSuchNodeTypeException, LoginException, NoSuchWorkspaceException, 
+                            RepositoryException {
+    getSession().save();
+  }
+
+  @Override
+  public void addMixin(String mixin) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, 
+                                            LockException, PathNotFoundException, RepositoryException {
+    getJCRNode().addMixin(mixin);
+  }
+
+  @Override
+  public boolean canAddMixin(String mixin) throws NoSuchNodeTypeException, PathNotFoundException, RepositoryException {
+    return getJCRNode().canAddMixin(mixin);
   }
 }

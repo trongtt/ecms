@@ -18,9 +18,13 @@
 package org.exoplatform.ecm.model.impl;
 
 import java.io.InputStream;
-import java.util.List;
 
-import org.exoplatform.ecm.api.model.FileData;
+import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
+
+import org.exoplatform.ecm.model.api.FileData;
 
 /**
  * Created by The eXo Platform SARL
@@ -29,22 +33,44 @@ import org.exoplatform.ecm.api.model.FileData;
  * Oct 25, 2012
  * 3:26:30 PM  
  */
-public class FileDataImpl extends ObjectDataImpl implements FileData {
+public class FileDataImpl extends ObjectDataImpl<FileData> implements FileData {
 
   public FileDataImpl(String workspace, String path) {
     super(workspace, path);
   }
+  
+  public FileDataImpl(String workspace, String path, boolean isSystem) {
+    super(workspace, path, isSystem);
+  }  
   /**
    * 
    * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws ValueFormatException 
    */
-  public InputStream getData() {
-    return null;
+  public InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException {
+    return getResource().getProperty("jcr:data").getStream();
   }
   
-  public String getMimeType() {
-    return null;
-    
+  /**
+   * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws ValueFormatException 
+   */
+  public String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException {
+    return getResource().getProperty("jcr:mimeType").getString();
   }
   
+  /**
+   * 
+   * @return
+   * @throws PathNotFoundException
+   * @throws RepositoryException
+   */
+  private Node getResource() throws PathNotFoundException, RepositoryException {
+    return getJCRNode().getNode("jcr:content");
+  }
+ 
 }

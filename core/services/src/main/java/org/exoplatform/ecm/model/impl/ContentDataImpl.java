@@ -17,7 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.impl;
 
-import org.exoplatform.ecm.api.model.ContentData;
+import org.exoplatform.ecm.model.api.ContentData;
 
 /**
  * Created by The eXo Platform SARL
@@ -26,15 +26,12 @@ import org.exoplatform.ecm.api.model.ContentData;
  * Oct 25, 2012
  * 3:26:19 PM  
  */
-public class ContentDataImpl extends ObjectDataImpl implements ContentData {
+public class ContentDataImpl extends ObjectDataImpl<ContentData> implements ContentData {
 
   public ContentDataImpl(String name, String path) {
     super(name, path);
   }
   
-  public ContentDataImpl(String UUID) {
-    super(UUID);
-  }
   /**
    * Check the type of content
    * @return <code>true</code> if current node is document type and

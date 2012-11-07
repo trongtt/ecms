@@ -19,8 +19,23 @@ package org.exoplatform.ecm.model.api;
 
 import java.util.List;
 
+import javax.jcr.AccessDeniedException;
+import javax.jcr.InvalidItemStateException;
+import javax.jcr.ItemExistsException;
+import javax.jcr.ItemNotFoundException;
+import javax.jcr.LoginException;
+import javax.jcr.NoSuchWorkspaceException;
+import javax.jcr.Node;
+import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
+import javax.jcr.RepositoryException;
 import javax.jcr.Session;
+import javax.jcr.UnsupportedRepositoryOperationException;
+import javax.jcr.ValueFormatException;
+import javax.jcr.lock.LockException;
+import javax.jcr.nodetype.ConstraintViolationException;
+import javax.jcr.nodetype.NoSuchNodeTypeException;
+import javax.jcr.version.VersionException;
 
 /**
  * Created by The eXo Platform SARL
@@ -49,53 +64,53 @@ public interface ObjectData {
    * Get Object children  
    * @return
    */
-  List<?> getChildren();
+  List<ObjectData> getChildren() throws PathNotFoundException, RepositoryException;
 
   /**
    * Get Object Property  
    * @param pName Property name
    * @return
    */
-  Property getProperty(String pName);
+  Property getProperty(String pName) throws PathNotFoundException, RepositoryException ;
 
   /**
    * Get Object properties  
    * @return
    */
-  List<Property> getProperties();
+  List<Property> getProperties() throws PathNotFoundException, RepositoryException;
   
   /**
    * Get Object created date
    * @return
    */
-  String getCreatedDate();
+  String getCreatedDate()  throws ValueFormatException, PathNotFoundException, RepositoryException;
   
   /**
    * Get Object last modified date
    * @return
    */
-  String getLastModifiedDate();
+  String getLastModifiedDate() throws ValueFormatException, PathNotFoundException, RepositoryException;
   
   /**
    * Get Object Creator
    * @return
    */
-  String getCreator();
+  String getCreator() throws PathNotFoundException, RepositoryException;
   /**
    * Get Object Parent
    */
-  ObjectData getParent();
+  ObjectData getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;
   
   /**
    * Get Object Primary Type
    * @return
    */
-  String getPrimaryType();
+  String getPrimaryType() throws PathNotFoundException, RepositoryException;
   
   /**
    * Get Object mixin types
    */
-  List<String> getMixinTypes();
+  List<String> getMixinTypes() throws PathNotFoundException, RepositoryException;
   
   /**
    * Get workspace name where stored current object.
@@ -107,16 +122,38 @@ public interface ObjectData {
    * Get Object UUID
    * @return UUID of current Object
    */
-  String getUUID();
+  String getUUID() throws UnsupportedRepositoryOperationException, PathNotFoundException, RepositoryException;
   
   /**
    * 
    * @return
    */
-  Session getSession();
+  Session getSession() throws LoginException, NoSuchWorkspaceException, RepositoryException;
+  
+  /**
+   * 
+   * @return
+   */
+  Node getJCRNode() throws PathNotFoundException, RepositoryException;
   
   /**
    * 
    */
-  void save();
+  void save() throws AccessDeniedException, ItemExistsException, ConstraintViolationException, InvalidItemStateException, 
+                     VersionException, LockException, NoSuchNodeTypeException, LoginException, NoSuchWorkspaceException, 
+                     RepositoryException;
+  
+  /**
+   * Add mixin
+   * @param mixin
+   */
+  void addMixin(String mixin) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, 
+                                     LockException, PathNotFoundException, RepositoryException;
+  
+  /**
+   * 
+   * @param mixin
+   * @return
+   */
+  boolean canAddMixin(String mixin) throws NoSuchNodeTypeException, PathNotFoundException, RepositoryException;
 }

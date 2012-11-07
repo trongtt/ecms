@@ -20,18 +20,19 @@ package org.exoplatform.ecm.actions;
 import java.util.Iterator;
 import java.util.Set;
 
+import javax.jcr.Node;
+import javax.jcr.Property;
 import javax.jcr.observation.Event;
 
 import org.apache.commons.chain.Context;
-import org.exoplatform.ecm.api.model.FileData;
 import org.exoplatform.ecm.event.api.DMSEventManager;
 import org.exoplatform.ecm.listener.api.FileListener;
 import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import org.exoplatform.ecm.model.api.FileData;
 import org.exoplatform.ecm.model.impl.FileDataImpl;
 import org.exoplatform.services.command.action.Action;
 import org.exoplatform.services.ext.action.InvocationContext;
-import org.exoplatform.services.log.ExoLogger;
-import org.exoplatform.services.log.Log;
+import org.exoplatform.services.security.IdentityConstants;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 
 /**
@@ -43,14 +44,23 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  */
 public class DMSFileAction implements Action {
 
-  private static final Log LOG = ExoLogger.getLogger(DMSFileAction.class);
   @Override
   public boolean execute(Context ctx) throws Exception {
     DMSEventManager eventManager = WCMCoreUtils.getService(DMSEventManager.class);
     Set<FileListenerPlugin> fileListeners = eventManager.getFileListeners();
     Iterator<FileListenerPlugin> iter = fileListeners.iterator();
     int evt = (Integer)ctx.get(InvocationContext.EVENT);
-    FileData fileData = new FileDataImpl("test", "test");
+    Node node = null;
+    if(ctx.get("currentItem") instanceof Node) {
+      node = (Node)ctx.get("currentItem");
+    } else if(ctx.get("currentItem") instanceof Property) {
+      node = ((Property)ctx.get("currentItem")).getParent();
+    }
+    boolean isSystem = false;
+    if(node.getSession().getUserID().equals(IdentityConstants.SYSTEM)) {
+      isSystem = true; 
+    }
+    FileData fileData = new FileDataImpl(node.getSession().getWorkspace().getName(), node.getPath(), isSystem);
     while(iter.hasNext()) {
       FileListener listener = iter.next();
       switch(evt) {

@@ -17,9 +17,8 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.api.model.FileData;
 import org.exoplatform.ecm.listener.api.FileListenerPlugin;
-import org.exoplatform.ecm.model.impl.FileDataImpl;
+import org.exoplatform.ecm.model.api.FileData;
 
 /**
  * Created by The eXo Platform SARL
@@ -32,17 +31,19 @@ public class FileCreateEventListener extends FileListenerPlugin {
 
   @Override
   public void createFile(FileData fileData) {
-    System.out.println("\n\nFileCreateEventListener executed");
+    System.out.println("\n\nCreating file "+fileData.getName()+"\n\n");
   }
 
+  @SuppressWarnings("unused")
   @Override
   public void updateFile(FileData event) {
-    // TODO Auto-generated method stub
+  //No need to process while creating file
   }
 
+  @SuppressWarnings("unused")
   @Override
   public void removeFile(FileData event) {
-    // TODO Auto-generated method stub
+    //No need to process while creating file
   }
 
 }
