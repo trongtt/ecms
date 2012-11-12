@@ -381,7 +381,7 @@ public class UIChildNodeDefinitionForm extends UIFormInputSetWithAction {
       for(int i = 0; i < childNodeName.length(); i ++){
         char c = childNodeName.charAt(i);
         if(Character.isLetter(c) || Character.isDigit(c) || Character.isSpaceChar(c) || c=='_'
-          || c=='-' || c=='.' || c==':' || c=='@' || c=='^' || c=='[' || c==']' || c==',') {
+          || c=='-' || c=='.' || c==':' || c=='@' || c=='^' || c=='[' || c==']' || c==',' || c=='*') {
           continue ;
         }
         uiApp.addMessage(new ApplicationMessage(
