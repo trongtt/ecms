@@ -17,23 +17,26 @@
  **************************************************************************/
 package org.exoplatform.ecm.event.api;
 
-import java.util.Set;
+import java.util.List;
 
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import org.exoplatform.services.listener.Event;
+import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 1, 2012
- * 2:32:06 PM  
+ * Nov 8, 2012
+ * 1:47:47 PM  
  */
-public interface DMSEventManager {
-  
-  public void addFileListener(FileListenerPlugin listener);
-  
-  public void removeFileListener(FileListenerPlugin listener);
-  
-  public Set<FileListenerPlugin> getFileListeners();
+public interface EventManager<S, D> {
 
+  public void addEventListener(Listener<S, D> listener);
+  
+  public void removeEventListener(Listener<S, D> listener);
+  
+  public void broadcastEvent(Event<S, D> event) throws Exception;
+  
+  public List<Listener<S, D>> getEventListeners(String type);
+  
 }

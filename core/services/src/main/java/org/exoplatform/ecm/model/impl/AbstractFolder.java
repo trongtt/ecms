@@ -15,23 +15,33 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.model.impl;
 
+import org.exoplatform.ecm.model.api.Folder;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 2:14:17 PM  
+ * Oct 25, 2012
+ * 3:26:46 PM  
  */
-public interface FolderData extends ObjectData {
+public abstract class AbstractFolder extends AbtractBaseObject implements Folder {
   
+  public AbstractFolder(String name, String path) {
+    super(name, path);
+  }
+
+  public AbstractFolder(String name, String path, boolean isSystem) {
+    super(name, path, isSystem);
+  }  
   /**
    * Get type of folder
    * @return Type of folder such as nt:folder or nt:unstructured
    */
-  String getFolderType();
+  public String getFolderType() {
+    return null;
+  }
   
   /**
    * Create sub folder
@@ -40,26 +50,33 @@ public interface FolderData extends ObjectData {
    * If test or test1 doesn't exist then it will be created automatically, and finally test2.
    * @return Object FolderData
    */
-  FolderData addSubFolder(String path);
+  public Folder addSubFolder(String path) {
+    return null;
+  }
   
   /**
    * Remove sub folder
    * @param path Sub folder path
    */
-  void removeSubFolder(String path);
+  public void removeSubFolder(String path) {
+    
+  }
   
   /**
    * Check to see is there any sub folder inside current folder.
    * @return <code>True</code> if current folder contain sub folder and
    *         <code>otherwise</code>
    */
-  boolean hasSubFolder();
+  public boolean hasSubFolder() {
+    return false;
+  }
   
   /**
    * Get sub folder form its path
    * @param path Path of sub folder
    * @return The FolderData object
    */
-  FolderData getSubFolder(String path);
-
+  public Folder getSubFolder(String path) {
+    return null;
+  }
 }

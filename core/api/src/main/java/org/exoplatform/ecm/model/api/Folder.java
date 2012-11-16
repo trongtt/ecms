@@ -15,54 +15,51 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.impl;
+package org.exoplatform.ecm.model.api;
 
-import org.exoplatform.ecm.model.api.ContentData;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 25, 2012
- * 3:26:19 PM  
+ * Nov 2, 2012
+ * 2:14:17 PM  
  */
-public class ContentDataImpl extends ObjectDataImpl<ContentData> implements ContentData {
-
-  public ContentDataImpl(String name, String path) {
-    super(name, path);
-  }
+public interface Folder extends BaseObject {
   
   /**
-   * Check the type of content
-   * @return <code>true</code> if current node is document type and
-    *         <code>otherwise</code>
+   * Get type of folder
+   * @return Type of folder such as nt:folder or nt:unstructured
    */
-  public boolean isDocument() {
-    return false;
-  }
+  String getFolderType();
   
   /**
-   * Get document type
-   * @return Type of document such as exo:webContent or exo:accessibleMedia...
+   * Create sub folder
+   * @param path Sub folder path.
+   * The parameter allows a path such as /test/test1/test2 or just simple test2
+   * If test or test1 doesn't exist then it will be created automatically, and finally test2.
+   * @return Object FolderData
    */
-  public String getDocumentType() {
-    return null;
-  }
+  Folder addSubFolder(String path);
   
   /**
-   * 
-   * @return
+   * Remove sub folder
+   * @param path Sub folder path
    */
-  public String getDocumentLabel() {
-    return null;
-  }
+  void removeSubFolder(String path);
   
   /**
-   * 
-   * @return
+   * Check to see is there any sub folder inside current folder.
+   * @return <code>True</code> if current folder contain sub folder and
+   *         <code>otherwise</code>
    */
-  public String getTemplate() {
-    return null;
-  }
+  boolean hasSubFolder();
+  
+  /**
+   * Get sub folder form its path
+   * @param path Path of sub folder
+   * @return The FolderData object
+   */
+  Folder getSubFolder(String path);
 
 }

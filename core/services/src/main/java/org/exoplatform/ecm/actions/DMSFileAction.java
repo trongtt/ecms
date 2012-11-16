@@ -17,21 +17,15 @@
  **************************************************************************/
 package org.exoplatform.ecm.actions;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import javax.jcr.Node;
 import javax.jcr.Property;
-import javax.jcr.observation.Event;
 
 import org.apache.commons.chain.Context;
-import org.exoplatform.ecm.event.api.DMSEventManager;
-import org.exoplatform.ecm.listener.api.FileListener;
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
-import org.exoplatform.ecm.model.api.FileData;
-import org.exoplatform.ecm.model.impl.FileDataImpl;
+import org.exoplatform.ecm.event.api.EventManager;
+import org.exoplatform.ecm.model.impl.DMSFile;
 import org.exoplatform.services.command.action.Action;
 import org.exoplatform.services.ext.action.InvocationContext;
+import org.exoplatform.services.listener.Event;
 import org.exoplatform.services.security.IdentityConstants;
 import org.exoplatform.services.wcm.utils.WCMCoreUtils;
 
@@ -44,11 +38,9 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  */
 public class DMSFileAction implements Action {
 
+  @SuppressWarnings("unchecked")
   @Override
   public boolean execute(Context ctx) throws Exception {
-    DMSEventManager eventManager = WCMCoreUtils.getService(DMSEventManager.class);
-    Set<FileListenerPlugin> fileListeners = eventManager.getFileListeners();
-    Iterator<FileListenerPlugin> iter = fileListeners.iterator();
     int evt = (Integer)ctx.get(InvocationContext.EVENT);
     Node node = null;
     if(ctx.get("currentItem") instanceof Node) {
@@ -60,29 +52,9 @@ public class DMSFileAction implements Action {
     if(node.getSession().getUserID().equals(IdentityConstants.SYSTEM)) {
       isSystem = true; 
     }
-    FileData fileData = new FileDataImpl(node.getSession().getWorkspace().getName(), node.getPath(), isSystem);
-    while(iter.hasNext()) {
-      FileListener listener = iter.next();
-      switch(evt) {
-      case Event.NODE_ADDED :
-        listener.createFile(fileData);
-        break;
-      case Event.NODE_REMOVED :
-        listener.removeFile(fileData);
-        break;
-      case Event.PROPERTY_ADDED :
-        listener.updateFile(fileData);
-        break;
-      case Event.PROPERTY_CHANGED :
-        listener.updateFile(fileData);
-        break;
-      case Event.PROPERTY_REMOVED :
-        listener.updateFile(fileData);
-        break;
-      default:
-        break;
-      }
-    }
+    DMSFile dmsFile = new DMSFile(node.getSession().getWorkspace().getName(), node.getPath(), isSystem);
+    EventManager<DMSFile, Integer> eventManager = WCMCoreUtils.getService(EventManager.class);
+    eventManager.broadcastEvent(new Event<DMSFile, Integer>(dmsFile.getObjectType(), dmsFile, evt));
     return false;
   }
 

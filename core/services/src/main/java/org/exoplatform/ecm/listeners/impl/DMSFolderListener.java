@@ -15,33 +15,43 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.listeners.impl;
 
-import java.io.InputStream;
-
-import javax.jcr.PathNotFoundException;
-import javax.jcr.RepositoryException;
-import javax.jcr.ValueFormatException;
+import org.exoplatform.ecm.listener.api.EventListener;
+import org.exoplatform.ecm.model.api.Folder;
+import org.exoplatform.services.listener.Event;
+import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 2:14:08 PM  
+ * Nov 14, 2012
+ * 2:16:42 PM  
  */
-public interface FileData extends ObjectData {
+public class DMSFolderListener extends Listener<Folder, Integer> implements EventListener<Folder> {
 
-  /**
-   * 
-   * @return
-   */
-  InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException;
-  
-  /**
-   * 
-   * @return
-   */
-  String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException;
-  
+  @Override
+  public void create(Folder folder) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void update(Folder folder) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void remove(Folder folder) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void onEvent(Event<Folder, Integer> event) throws Exception {
+    
+  }
+
 }

@@ -17,32 +17,42 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.model.api.FileData;
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import org.exoplatform.ecm.listener.api.EventListener;
+import org.exoplatform.ecm.model.api.Content;
+import org.exoplatform.services.listener.Event;
+import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 1, 2012
- * 5:24:12 PM  
+ * Nov 14, 2012
+ * 2:17:01 PM  
  */
-public class FileUpdateEventListener extends FileListenerPlugin {
+public class DMSContentListener extends Listener<Content, Integer> implements EventListener<Content>{
 
-  @SuppressWarnings("unused")
   @Override
-  public void createFile(FileData fileData) {
-    //No need to process while editing file
+  public void create(Content content) {
+    // TODO Auto-generated method stub
+    
   }
 
   @Override
-  public void updateFile(FileData fileData) {
-    System.out.println("\n\nEditing file "+fileData.getName()+"\n\n");
+  public void update(Content content) {
+    // TODO Auto-generated method stub
+    
   }
 
-  @SuppressWarnings("unused")
   @Override
-  public void removeFile(FileData fileData) {
-    //No need to process while editing file    
+  public void remove(Content content) {
+    // TODO Auto-generated method stub
+    
   }
+
+  @Override
+  public void onEvent(Event<Content, Integer> event) throws Exception {
+    // TODO Auto-generated method stub
+    
+  }
+
 }

@@ -15,35 +15,24 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners.impl;
+package org.exoplatform.ecm.model.api;
 
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
-import org.exoplatform.ecm.model.api.FileData;
+import org.exoplatform.services.jcr.observation.ExtendedEvent;
+
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 1, 2012
- * 5:50:13 PM  
+ * Nov 13, 2012
+ * 3:05:05 PM  
  */
-public class FileCreateEventListener extends FileListenerPlugin {
+public interface EventType {
 
-  @Override
-  public void createFile(FileData fileData) {
-    System.out.println("\n\nCreating file "+fileData.getName()+"\n\n");
-  }
+  public static final int CREATED = ExtendedEvent.NODE_ADDED;
 
-  @SuppressWarnings("unused")
-  @Override
-  public void updateFile(FileData event) {
-  //No need to process while creating file
-  }
+  public static final int UPDATE = ExtendedEvent.PROPERTY_CHANGED;
 
-  @SuppressWarnings("unused")
-  @Override
-  public void removeFile(FileData event) {
-    //No need to process while creating file
-  }
-
+  public static final int REMOVE = ExtendedEvent.NODE_REMOVED;
+  
 }

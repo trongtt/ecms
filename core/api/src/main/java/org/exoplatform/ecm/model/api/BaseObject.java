@@ -22,7 +22,6 @@ import java.util.List;
 import javax.jcr.AccessDeniedException;
 import javax.jcr.InvalidItemStateException;
 import javax.jcr.ItemExistsException;
-import javax.jcr.ItemNotFoundException;
 import javax.jcr.LoginException;
 import javax.jcr.NoSuchWorkspaceException;
 import javax.jcr.Node;
@@ -44,9 +43,8 @@ import javax.jcr.version.VersionException;
  * Nov 2, 2012
  * 2:13:57 PM  
  */
-public interface ObjectData {
+public interface BaseObject {
 
-  ObjectData getInstance();
   
   /**
    * Get object name  
@@ -59,12 +57,6 @@ public interface ObjectData {
    * @return
    */
   String getPath();
-
-  /**
-   * Get Object children  
-   * @return
-   */
-  List<ObjectData> getChildren() throws PathNotFoundException, RepositoryException;
 
   /**
    * Get Object Property  
@@ -96,10 +88,6 @@ public interface ObjectData {
    * @return
    */
   String getCreator() throws PathNotFoundException, RepositoryException;
-  /**
-   * Get Object Parent
-   */
-  ObjectData getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;
   
   /**
    * Get Object Primary Type

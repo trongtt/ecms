@@ -24,11 +24,9 @@ import java.util.List;
 import javax.jcr.AccessDeniedException;
 import javax.jcr.InvalidItemStateException;
 import javax.jcr.ItemExistsException;
-import javax.jcr.ItemNotFoundException;
 import javax.jcr.LoginException;
 import javax.jcr.NoSuchWorkspaceException;
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Property;
 import javax.jcr.PropertyIterator;
@@ -41,7 +39,7 @@ import javax.jcr.nodetype.ConstraintViolationException;
 import javax.jcr.nodetype.NoSuchNodeTypeException;
 import javax.jcr.version.VersionException;
 
-import org.exoplatform.ecm.model.api.ObjectData;
+import org.exoplatform.ecm.model.api.BaseObject;
 import org.exoplatform.services.jcr.impl.core.NodeImpl;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -54,28 +52,24 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  * Oct 25, 2012
  * 3:26:08 PM  
  */
-public class ObjectDataImpl<T> implements ObjectData {
+public abstract class AbtractBaseObject implements BaseObject {
 
-  protected static final Log LOG = ExoLogger.getLogger(ObjectData.class); 
+  protected static final Log LOG = ExoLogger.getLogger(BaseObject.class); 
   protected String workspace;
   protected String path;
   protected String UUID;
   protected boolean isSystem = false;
   
-  public ObjectDataImpl(String workspace, String path) {
+  public AbtractBaseObject(String workspace, String path) {
     this.workspace = workspace;
     this.path = path;
   }
   
-  public ObjectDataImpl(String workspace, String path, boolean isSystem) {
+  public AbtractBaseObject(String workspace, String path, boolean isSystem) {
     this.workspace = workspace;
     this.path = path;
     this.isSystem = isSystem;
   }  
-  
-  public ObjectData getInstance() {
-    return this;
-  }
   
   public Node getJCRNode() throws PathNotFoundException, RepositoryException {
     return (Node)getSession().getItem(path);
@@ -100,22 +94,6 @@ public class ObjectDataImpl<T> implements ObjectData {
       LOG.error(e);
     }
     return null;
-  }
-
-  /**
-   * Get Object children  
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public List<ObjectData> getChildren() throws PathNotFoundException, RepositoryException {
-    List<ObjectData> listT = new ArrayList<ObjectData>();
-    NodeIterator nodeIter = getJCRNode().getNodes();
-    while(nodeIter.hasNext()) {
-      Node node = nodeIter.nextNode();
-      listT.add(new ObjectDataImpl<ObjectData>(workspace, node.getPath()));
-    }
-    return listT;
   }
 
   /**
@@ -176,17 +154,6 @@ public class ObjectDataImpl<T> implements ObjectData {
    */
   public String getCreator() throws PathNotFoundException, RepositoryException {
     return getJCRNode().getProperty("exo:owner").toString();
-  }
-  
-  /**
-   * Get Object Parent
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws AccessDeniedException 
-   * @throws ItemNotFoundException 
-   */
-  public ObjectData getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException {
-    return new ObjectDataImpl<ObjectData>(workspace, getJCRNode().getParent().getPath());
   }
   
   /**
@@ -270,4 +237,6 @@ public class ObjectDataImpl<T> implements ObjectData {
   public boolean canAddMixin(String mixin) throws NoSuchNodeTypeException, PathNotFoundException, RepositoryException {
     return getJCRNode().canAddMixin(mixin);
   }
+
+  public abstract String getObjectType();
 }

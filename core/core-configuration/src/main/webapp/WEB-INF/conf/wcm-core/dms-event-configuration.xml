@@ -1,84 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--
+<!-- Copyright (C) 2003-2011 eXo Platform SAS. This program is free software: 
+	you can redistribute it and/or modify it under the terms of the GNU Affero 
+	General Public License as published by the Free Software Foundation, either 
+	version 3 of the License, or (at your option) any later version. This program 
+	is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+	without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+	PURPOSE. See the GNU Affero General Public License for more details. You 
+	should have received a copy of the GNU Affero General Public License along 
+	with this program. If not, see <http://www.gnu.org/licenses/>. -->
 
-    Copyright (C) 2003-2011 eXo Platform SAS.
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
+	xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+	<component>
+		<key>org.exoplatform.ecm.event.api.EventManager</key>
+		<type>org.exoplatform.ecm.event.impl.EventManagerImpl</type>
+		<component-plugins>
+			<component-plugin>
+				<name>DMSFile</name>
+				<set-method>addEventListener</set-method>
+				<type>org.exoplatform.ecm.listeners.impl.DMSFileListener</type>
+			</component-plugin>
+			<component-plugin>
+				<name>WCMFile</name>
+				<set-method>addEventListener</set-method>
+				<type>org.exoplatform.ecm.listeners.impl.WCMFileListener</type>
+			</component-plugin>			
+		</component-plugins>
+	</component>
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
+	<external-component-plugins>
+		<target-component>org.exoplatform.services.jcr.impl.ext.action.SessionActionCatalog</target-component>
+		<component-plugin>
+			<name>addActions</name>
+			<set-method>addPlugin</set-method>
+			<type>org.exoplatform.services.jcr.impl.ext.action.AddActionsPlugin</type>
+			<description>DMS File Action</description>
+			<init-params>
+				<object-param>
+					<name>actions</name>
+					<object
+						type="org.exoplatform.services.jcr.impl.ext.action.AddActionsPlugin$ActionsConfig">
+						<field name="actions">
+							<collection type="java.util.ArrayList">
+								<value>
+									<object
+										type="org.exoplatform.services.jcr.impl.ext.action.ActionConfiguration">
+										<field name="workspace">
+											<string>collaboration</string>
+										</field>
+										<field name="path">
+											<string>/</string>
+										</field>
+										<field name="eventTypes">
+											<string>addNode,changeProperty,removeNode</string>
+										</field>
+										<field name="nodeTypes">
+											<string>nt:file</string>
+										</field>
+										<field name="actionClassName">
+											<string>org.exoplatform.ecm.actions.DMSFileAction</string>
+										</field>
+									</object>
+								</value>
+							</collection>
+						</field>
+					</object>
+				</object-param>
+			</init-params>
+		</component-plugin>
+	</external-component-plugins>
 
-    You should have received a copy of the GNU Affero General Public License
-    along with this program. If not, see <http://www.gnu.org/licenses/>.
-
--->
-
-<configuration
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd http://www.exoplatform.org/xml/ns/kernel_1_2.xsd"
-   xmlns="http://www.exoplatform.org/xml/ns/kernel_1_2.xsd">
-  
-		<component>
-			  <key>org.exoplatform.ecm.event.api.DMSEventManager</key>
-			  <type>org.exoplatform.ecm.event.impl.DMSEventManagerImpl</type>
-					<component-plugins>
-						 <component-plugin>
-        <name>FileUpdateEvent</name>
-        <set-method>addFileListener</set-method>
-        <type>org.exoplatform.ecm.listeners.impl.FileCreateEventListener</type>
-      </component-plugin>
-						<component-plugin>
-        <name>FileUpdateEvent</name>
-        <set-method>addFileListener</set-method>
-        <type>org.exoplatform.ecm.listeners.impl.FileUpdateEventListener</type>
-      </component-plugin>
-				</component-plugins>
-		</component> 
-	
-<!--Customer can add their listener by adding the external-component-plugins like this -->				
-  <external-component-plugins>
-    <target-component>org.exoplatform.ecm.event.api.DMSEventManager</target-component>
-    <component-plugin>
-      <name>FileRemoveEvent</name>
-      <set-method>addFileListener</set-method>
-      <type>org.exoplatform.ecm.listeners.impl.FileRemoveEventListener</type>
-    </component-plugin>
-  </external-component-plugins>
-		
-  <external-component-plugins>
-    <target-component>org.exoplatform.services.jcr.impl.ext.action.SessionActionCatalog</target-component>    	 
-    <component-plugin>
-	    <name>addActions</name>
-	    <set-method>addPlugin</set-method>
-	    <type>org.exoplatform.services.jcr.impl.ext.action.AddActionsPlugin</type>
-	    <description>add actions plugin</description>
-	    <init-params>
-	      <object-param>
-	        <name>DMSFileAction</name>
-	        <object type="org.exoplatform.services.jcr.impl.ext.action.AddActionsPlugin$ActionsConfig">
-	          <field  name="actions">
-	            <collection type="java.util.ArrayList">					
-		              <value>
-                  <object type="org.exoplatform.services.jcr.impl.ext.action.ActionConfiguration">
-                    <field name="workspace"><string>collaboration</string></field>
-																				<field name="path"><string>/</string></field>
-																				<field name="eventTypes"><string>addNode,addProperty,changeProperty,removeProperty,removeNode</string></field>                     
-                    <field name="nodeTypes"><string>nt:file</string></field>
-																				<field name="actionClassName"><string>org.exoplatform.ecm.actions.DMSFileAction</string></field>
-                  </object>
-                </value>   	              
-	             </collection>
-	           </field>
-	         </object>
-	       </object-param>
-	     </init-params>
-	   </component-plugin>
-	 </external-component-plugins>
-	
 </configuration>

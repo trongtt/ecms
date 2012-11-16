@@ -15,35 +15,35 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listeners.impl;
+package org.exoplatform.ecm.listener.api;
 
-import org.exoplatform.ecm.model.api.FileData;
-import org.exoplatform.ecm.listener.api.FileListenerPlugin;
+import org.exoplatform.ecm.model.api.BaseObject;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 1, 2012
- * 10:29:04 PM  
+ * Nov 13, 2012
+ * 3:00:06 PM  
  */
-public class FileRemoveEventListener extends FileListenerPlugin {
+public interface EventListener<T extends BaseObject> {
 
-  @SuppressWarnings("unused")
-  @Override
-  public void createFile(FileData fileData) {
-  //No need to process while removing file
-  }
-
-  @SuppressWarnings("unused")
-  @Override
-  public void updateFile(FileData fileData) {
-    //No need to process while removing file
-  }
-
-  @Override
-  public void removeFile(FileData fileData) {
-    System.out.println("\n\nRemoving file "+fileData.getName()+"\n\n");
-  }
-
+  /**
+   * 
+   * @param event
+   */
+  public void create(T object);
+  
+  /**
+   * 
+   * @param event
+   */
+  public void update(T object);
+  
+  /**
+   * 
+   * @param event
+   */
+  public void remove(T object);
+  
 }

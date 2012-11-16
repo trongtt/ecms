@@ -15,37 +15,33 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listener.api;
+package org.exoplatform.ecm.model.api;
 
-import org.exoplatform.ecm.model.api.FileData;
+import java.io.InputStream;
 
+import javax.jcr.PathNotFoundException;
+import javax.jcr.RepositoryException;
+import javax.jcr.ValueFormatException;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Oct 31, 2012
- * 11:23:15 AM  
+ * Nov 2, 2012
+ * 2:14:08 PM  
  */
-public interface FileListener {
-  
-  /**
-   * 
-   * @param event
-   */
-  public void createFile(FileData fileData);
-  
-  /**
-   * 
-   * @param event
-   */
-  public void updateFile(FileData event);
-  
-  /**
-   * 
-   * @param event
-   */
-  public void removeFile(FileData event);
+public interface File extends BaseObject {
 
+  /**
+   * 
+   * @return
+   */
+  InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException;
+  
+  /**
+   * 
+   * @return
+   */
+  String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException;
   
 }

@@ -18,13 +18,16 @@
 package org.exoplatform.ecm.model.impl;
 
 import java.io.InputStream;
+import java.util.List;
 
+import javax.jcr.AccessDeniedException;
+import javax.jcr.ItemNotFoundException;
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 import javax.jcr.ValueFormatException;
 
-import org.exoplatform.ecm.model.api.FileData;
+import org.exoplatform.ecm.model.api.File;
 
 /**
  * Created by The eXo Platform SARL
@@ -33,13 +36,13 @@ import org.exoplatform.ecm.model.api.FileData;
  * Oct 25, 2012
  * 3:26:30 PM  
  */
-public class FileDataImpl extends ObjectDataImpl<FileData> implements FileData {
+public abstract class AbstractFile<T> extends AbtractBaseObject implements File {
 
-  public FileDataImpl(String workspace, String path) {
+  public AbstractFile(String workspace, String path) {
     super(workspace, path);
   }
   
-  public FileDataImpl(String workspace, String path, boolean isSystem) {
+  public AbstractFile(String workspace, String path, boolean isSystem) {
     super(workspace, path, isSystem);
   }  
   /**
@@ -53,6 +56,23 @@ public class FileDataImpl extends ObjectDataImpl<FileData> implements FileData {
     return getResource().getProperty("jcr:data").getStream();
   }
   
+  /**
+   * Get Object children  
+   * @return
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   */
+  public abstract List<T> getChildren() throws PathNotFoundException, RepositoryException;  
+  
+  /**
+   * Get Object Parent
+   * @throws RepositoryException 
+   * @throws PathNotFoundException 
+   * @throws AccessDeniedException 
+   * @throws ItemNotFoundException 
+   */
+  public abstract T getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;  
+ 
   /**
    * @return
    * @throws RepositoryException 

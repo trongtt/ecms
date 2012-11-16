@@ -15,17 +15,40 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.listener.api;
-
-import org.exoplatform.container.component.BaseComponentPlugin;
+package org.exoplatform.ecm.model.api;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
  * Nov 2, 2012
- * 1:09:32 AM  
+ * 2:14:30 PM  
  */
-public abstract class FileListenerPlugin extends BaseComponentPlugin implements FileListener {
+public interface Content extends BaseObject {
+  
+  /**
+   * Check the type of content
+   * @return <code>true</code> if current node is document type and
+    *         <code>otherwise</code>
+   */
+  boolean isDocument();
+  
+  /**
+   * Get document type
+   * @return Type of document such as exo:webContent or exo:accessibleMedia...
+   */
+  String getDocumentType();
+  
+  /**
+   * 
+   * @return
+   */
+  String getDocumentLabel();
+  
+  /**
+   * 
+   * @return
+   */
+  String getTemplate();
 
 }

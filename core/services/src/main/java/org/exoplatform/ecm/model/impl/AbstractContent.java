@@ -15,40 +15,58 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.model.impl;
+
+import org.exoplatform.ecm.model.api.Content;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 2, 2012
- * 2:14:30 PM  
+ * Oct 25, 2012
+ * 3:26:19 PM  
  */
-public interface ContentData extends ObjectData {
+public abstract class AbstractContent extends AbtractBaseObject implements Content {
+
+  public AbstractContent(String name, String path) {
+    super(name, path);
+  }
+  
+  public AbstractContent(String name, String path, boolean isSystem) {
+    super(name, path, isSystem);
+  }
   
   /**
    * Check the type of content
    * @return <code>true</code> if current node is document type and
     *         <code>otherwise</code>
    */
-  boolean isDocument();
+  public boolean isDocument() {
+    return false;
+  }
   
   /**
    * Get document type
    * @return Type of document such as exo:webContent or exo:accessibleMedia...
    */
-  String getDocumentType();
+  public String getDocumentType() {
+    return null;
+  }
   
   /**
    * 
    * @return
    */
-  String getDocumentLabel();
+  public String getDocumentLabel() {
+    return null;
+  }
   
   /**
    * 
    * @return
    */
-  String getTemplate();
+  public String getTemplate() {
+    return null;
+  }
 
 }
