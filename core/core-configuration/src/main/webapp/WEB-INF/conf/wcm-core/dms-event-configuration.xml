@@ -23,11 +23,6 @@
 				<set-method>addEventListener</set-method>
 				<type>org.exoplatform.ecm.listeners.impl.DMSFileListener</type>
 			</component-plugin>
-			<component-plugin>
-				<name>WCMFile</name>
-				<set-method>addEventListener</set-method>
-				<type>org.exoplatform.ecm.listeners.impl.WCMFileListener</type>
-			</component-plugin>			
 		</component-plugins>
 	</component>
 
