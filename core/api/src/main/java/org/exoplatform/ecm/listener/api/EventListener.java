@@ -17,7 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.listener.api;
 
-import org.exoplatform.ecm.model.api.BaseObject;
+import org.exoplatform.services.listener.Event;
 
 /**
  * Created by The eXo Platform SARL
@@ -26,24 +26,24 @@ import org.exoplatform.ecm.model.api.BaseObject;
  * Nov 13, 2012
  * 3:00:06 PM  
  */
-public interface EventListener<T extends BaseObject> {
+public interface EventListener<S, D> {
 
   /**
    * 
    * @param event
    */
-  public void create(T object);
+  public void create(Event<S, D> event);
   
   /**
    * 
    * @param event
    */
-  public void update(T object);
+  public void update(Event<S, D> event);
   
   /**
    * 
    * @param event
    */
-  public void remove(T object);
+  public void remove(Event<S, D> event);
   
 }

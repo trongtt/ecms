@@ -17,7 +17,6 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.api;
 
-
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
@@ -26,40 +25,11 @@ package org.exoplatform.ecm.model.api;
  * 2:14:17 PM  
  */
 public interface Folder extends BaseObject {
-  
-  /**
-   * Get type of folder
-   * @return Type of folder such as nt:folder or nt:unstructured
-   */
-  String getFolderType();
-  
-  /**
-   * Create sub folder
-   * @param path Sub folder path.
-   * The parameter allows a path such as /test/test1/test2 or just simple test2
-   * If test or test1 doesn't exist then it will be created automatically, and finally test2.
-   * @return Object FolderData
-   */
-  Folder addSubFolder(String path);
-  
-  /**
-   * Remove sub folder
-   * @param path Sub folder path
-   */
-  void removeSubFolder(String path);
-  
-  /**
-   * Check to see is there any sub folder inside current folder.
-   * @return <code>True</code> if current folder contain sub folder and
-   *         <code>otherwise</code>
-   */
-  boolean hasSubFolder();
-  
-  /**
-   * Get sub folder form its path
-   * @param path Path of sub folder
-   * @return The FolderData object
-   */
-  Folder getSubFolder(String path);
+
+    /**
+     * Get type of folder
+     * @return Type of folder such as nt:folder or nt:unstructured
+     */
+    public String getFolderType();
 
 }

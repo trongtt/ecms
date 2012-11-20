@@ -29,29 +29,29 @@ import org.exoplatform.services.listener.Listener;
  * Nov 14, 2012
  * 2:16:42 PM  
  */
-public class DMSFolderListener extends Listener<Folder, Integer> implements EventListener<Folder> {
+public class DMSFolderListener extends Listener<Folder, Integer> implements EventListener<Folder, Integer> {
 
-  @Override
-  public void create(Folder folder) {
-    // TODO Auto-generated method stub
-    
-  }
+    @Override
+    public void create(Event<Folder, Integer> event) {
+        // TODO Auto-generated method stub
 
-  @Override
-  public void update(Folder folder) {
-    // TODO Auto-generated method stub
-    
-  }
+    }
 
-  @Override
-  public void remove(Folder folder) {
-    // TODO Auto-generated method stub
-    
-  }
+    @Override
+    public void update(Event<Folder, Integer> event) {
+        // TODO Auto-generated method stub
 
-  @Override
-  public void onEvent(Event<Folder, Integer> event) throws Exception {
-    
-  }
+    }
+
+    @Override
+    public void remove(Event<Folder, Integer> event) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onEvent(Event<Folder, Integer> event) throws Exception {
+
+    }
 
 }

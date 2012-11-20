@@ -17,18 +17,12 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.jcr.AccessDeniedException;
 import javax.jcr.ItemNotFoundException;
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.exoplatform.ecm.model.api.File;
-import org.exoplatform.ecm.model.api.ObjectType;
 
 /**
  * Created by The eXo Platform SARL
@@ -39,33 +33,24 @@ import org.exoplatform.ecm.model.api.ObjectType;
  */
 public class WCMFile extends AbstractFile<WCMFile> implements File {
 
-  public WCMFile(String workspace, String path) {
-    super(workspace, path);
-  }
-  
-  public WCMFile(String workspace, String path, boolean isSystem) {
-    super(workspace, path, isSystem);
-  }
+    public static final String WCM_FILE = "WCMFile";
 
-  @Override
-  public List<WCMFile> getChildren() throws PathNotFoundException, RepositoryException {
-    List<WCMFile> listFile = new ArrayList<WCMFile>();
-    NodeIterator nodeIter = getJCRNode().getNodes();
-    while(nodeIter.hasNext()) {
-      Node node = nodeIter.nextNode();
-      listFile.add(new WCMFile(workspace, node.getPath(), isSystem));
+    public WCMFile(String workspace, String path) {
+        super(workspace, path);
     }
-    return listFile;
-  }
 
-  @Override
-  public WCMFile getParent() throws ItemNotFoundException, AccessDeniedException,
-      PathNotFoundException, RepositoryException {
-    return new WCMFile(workspace, getJCRNode().getParent().getPath(), isSystem);
-  }
+    public WCMFile(String workspace, String path, boolean isSystem) {
+        super(workspace, path, isSystem);
+    }
 
-  @Override
-  public String getObjectType() {
-    return ObjectType.WCM_FILE;
-  }  
+    @Override
+    public WCMFile getParent() throws ItemNotFoundException, AccessDeniedException,
+    PathNotFoundException, RepositoryException {
+        return new WCMFile(workspace, getJCRNode().getParent().getPath(), isSystem);
+    }
+
+    @Override
+    public String getObjectType() {
+        return WCM_FILE;
+    }  
 }

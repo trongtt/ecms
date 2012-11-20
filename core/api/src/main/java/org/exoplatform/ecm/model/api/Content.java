@@ -25,30 +25,30 @@ package org.exoplatform.ecm.model.api;
  * 2:14:30 PM  
  */
 public interface Content extends BaseObject {
-  
-  /**
-   * Check the type of content
-   * @return <code>true</code> if current node is document type and
-    *         <code>otherwise</code>
-   */
-  boolean isDocument();
-  
-  /**
-   * Get document type
-   * @return Type of document such as exo:webContent or exo:accessibleMedia...
-   */
-  String getDocumentType();
-  
-  /**
-   * 
-   * @return
-   */
-  String getDocumentLabel();
-  
-  /**
-   * 
-   * @return
-   */
-  String getTemplate();
+
+    /**
+     * Check the type of content
+     * @return <code>true</code> if current node is document type and
+     *         <code>otherwise</code>
+     */
+    boolean isDocument();
+
+    /**
+     * Get document type
+     * @return Type of document such as exo:webContent or exo:accessibleMedia...
+     */
+    String getDocumentType();
+
+    /**
+     * 
+     * @return
+     */
+    String getDocumentLabel();
+
+    /**
+     * 
+     * @return
+     */
+    String getTemplate();
 
 }

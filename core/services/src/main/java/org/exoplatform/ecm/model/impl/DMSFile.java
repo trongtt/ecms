@@ -17,18 +17,12 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.jcr.AccessDeniedException;
 import javax.jcr.ItemNotFoundException;
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.RepositoryException;
 
 import org.exoplatform.ecm.model.api.File;
-import org.exoplatform.ecm.model.api.ObjectType;
 
 /**
  * Created by The eXo Platform SARL
@@ -38,35 +32,27 @@ import org.exoplatform.ecm.model.api.ObjectType;
  * 1:58:44 PM  
  */
 public class DMSFile extends AbstractFile<DMSFile> implements File {
-  
-  public DMSFile(String workspace, String path) {
-    super(workspace, path);
-  }
-  
-  public DMSFile(String workspace, String path, boolean isSystem) {
-    super(workspace, path, isSystem);
-  }
 
-  @Override
-  public List<DMSFile> getChildren() throws PathNotFoundException, RepositoryException {
-    List<DMSFile> listFile = new ArrayList<DMSFile>();
-    NodeIterator nodeIter = getJCRNode().getNodes();
-    while(nodeIter.hasNext()) {
-      Node node = nodeIter.nextNode();
-      listFile.add(new DMSFile(workspace, node.getPath(), isSystem));
+    public static final String DMS_FILE = "DMSFile";
+    
+    public DMSFile(String workspace, String path) {
+        super(workspace, path);
     }
-    return listFile;
-  }
 
-  @Override
-  public DMSFile getParent() throws ItemNotFoundException, AccessDeniedException,
-      PathNotFoundException, RepositoryException {
-    return new DMSFile(workspace, getJCRNode().getParent().getPath(), isSystem);
-  }
+    public DMSFile(String workspace, String path, boolean isSystem) {
+        super(workspace, path, isSystem);
+    }
 
-  @Override
-  public String getObjectType() {
-    return ObjectType.DMS_FILE;
-  }   
+    @Override
+    public DMSFile getParent() throws ItemNotFoundException, AccessDeniedException,
+    PathNotFoundException, RepositoryException {
+        return new DMSFile(workspace, getJCRNode().getParent().getPath(), isSystem);
+    }
+
+    @Override
+    public String getObjectType() {
+        return DMS_FILE;
+    }
+
 
 }

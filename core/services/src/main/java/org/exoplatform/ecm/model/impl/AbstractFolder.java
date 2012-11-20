@@ -27,56 +27,20 @@ import org.exoplatform.ecm.model.api.Folder;
  * 3:26:46 PM  
  */
 public abstract class AbstractFolder extends AbtractBaseObject implements Folder {
-  
-  public AbstractFolder(String name, String path) {
-    super(name, path);
-  }
 
-  public AbstractFolder(String name, String path, boolean isSystem) {
-    super(name, path, isSystem);
-  }  
-  /**
-   * Get type of folder
-   * @return Type of folder such as nt:folder or nt:unstructured
-   */
-  public String getFolderType() {
-    return null;
-  }
-  
-  /**
-   * Create sub folder
-   * @param path Sub folder path.
-   * The parameter allows a path such as /test/test1/test2 or just simple test2
-   * If test or test1 doesn't exist then it will be created automatically, and finally test2.
-   * @return Object FolderData
-   */
-  public Folder addSubFolder(String path) {
-    return null;
-  }
-  
-  /**
-   * Remove sub folder
-   * @param path Sub folder path
-   */
-  public void removeSubFolder(String path) {
-    
-  }
-  
-  /**
-   * Check to see is there any sub folder inside current folder.
-   * @return <code>True</code> if current folder contain sub folder and
-   *         <code>otherwise</code>
-   */
-  public boolean hasSubFolder() {
-    return false;
-  }
-  
-  /**
-   * Get sub folder form its path
-   * @param path Path of sub folder
-   * @return The FolderData object
-   */
-  public Folder getSubFolder(String path) {
-    return null;
-  }
+    public AbstractFolder(String name, String path) {
+        super(name, path);
+    }
+
+    public AbstractFolder(String name, String path, boolean isSystem) {
+        super(name, path, isSystem);
+    }  
+    /**
+     * Get type of folder
+     * @return Type of folder such as nt:folder or nt:unstructured
+     */
+    public String getFolderType() {
+        return null;
+    }
+
 }

@@ -28,8 +28,6 @@ import javax.jcr.LoginException;
 import javax.jcr.NoSuchWorkspaceException;
 import javax.jcr.Node;
 import javax.jcr.PathNotFoundException;
-import javax.jcr.Property;
-import javax.jcr.PropertyIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.UnsupportedRepositoryOperationException;
@@ -39,7 +37,9 @@ import javax.jcr.nodetype.ConstraintViolationException;
 import javax.jcr.nodetype.NoSuchNodeTypeException;
 import javax.jcr.version.VersionException;
 
+import org.apache.commons.lang.StringUtils;
 import org.exoplatform.ecm.model.api.BaseObject;
+import org.exoplatform.services.cms.folksonomy.NewFolksonomyService;
 import org.exoplatform.services.jcr.impl.core.NodeImpl;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -54,189 +54,409 @@ import org.exoplatform.services.wcm.utils.WCMCoreUtils;
  */
 public abstract class AbtractBaseObject implements BaseObject {
 
-  protected static final Log LOG = ExoLogger.getLogger(BaseObject.class); 
-  protected String workspace;
-  protected String path;
-  protected String UUID;
-  protected boolean isSystem = false;
-  
-  public AbtractBaseObject(String workspace, String path) {
-    this.workspace = workspace;
-    this.path = path;
-  }
-  
-  public AbtractBaseObject(String workspace, String path, boolean isSystem) {
-    this.workspace = workspace;
-    this.path = path;
-    this.isSystem = isSystem;
-  }  
-  
-  public Node getJCRNode() throws PathNotFoundException, RepositoryException {
-    return (Node)getSession().getItem(path);
-  }
-  
-  /**
-   * Get object name  
-   * @return
-   */
-  public String getName() {
-    return path.substring(path.lastIndexOf("/") + 1, path.length());
-  }
+    protected static final Log LOG = ExoLogger.getLogger(BaseObject.class); 
+    protected String workspace;
+    protected String path;
+    protected String UUID;
+    protected boolean isSystem = false;
 
-  /**
-   * Get Object path  
-   * @return
-   */
-  public String getPath() {
-    try {
-      return getJCRNode().getPath();
-    } catch (RepositoryException e) {
-      LOG.error(e);
+    public AbtractBaseObject(String workspace, String path) {
+        this.workspace = workspace;
+        this.path = path;
     }
-    return null;
-  }
 
-  /**
-   * Get Object Property  
-   * @param pName Property name
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public Property getProperty(String pName) throws PathNotFoundException, RepositoryException {
-    return getJCRNode().getProperty(pName);
-  }
+    public AbtractBaseObject(String workspace, String path, boolean isSystem) {
+        this.workspace = workspace;
+        this.path = path;
+        this.isSystem = isSystem;
+    }  
 
-  /**
-   * Get Object properties  
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public List<Property> getProperties() throws PathNotFoundException, RepositoryException {
-    List<Property> listPro = new ArrayList<Property>();
-    PropertyIterator proIter;
-    proIter = getJCRNode().getProperties();
-    while(proIter.hasNext()) {
-      listPro.add(proIter.nextProperty());
+    /**
+     * Get object name  
+     * @return
+     */
+    public String getName() {
+        return path.substring(path.lastIndexOf("/") + 1, path.length());
     }
-    return listPro;
-  }
-  
-  /**
-   * Get Object created date
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws ValueFormatException 
-   */
-  public String getCreatedDate() throws ValueFormatException, PathNotFoundException, RepositoryException {
-    return getJCRNode().getProperty("exo:dateCreated").getString();
+
+    /**
+     * Get Object path  
+     * @return
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * Get Object created date
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws ValueFormatException 
+     */
+    public String getCreatedDate() {
+        try {
+            return getJCRNode().getProperty("exo:dateCreated").getString();
+        } catch (ValueFormatException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get Object last modified date
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws ValueFormatException 
+     */
+    public String getLastModifiedDate() {
+        try {
+            return getJCRNode().getProperty("exo:lastModifiedDate").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return null;
+    }
+
+    /**
+     * Get Object Creator
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     */
+    public String getCreator() {
+        try {
+            return getJCRNode().getProperty("exo:owner").toString();
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return null;
+    }
+
+    /**
+     * Get Object Primary Type
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     */
+    public String getPrimaryType() {
+        try {
+            return getJCRNode().getPrimaryNodeType().getName();
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return null;
+    }
+
+    /**
+     * Get Object mixin types
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     */
+    public List<String> getMixinTypes() {
+        try {
+            return new ArrayList<String>(Arrays.asList(((NodeImpl)getJCRNode()).getMixinTypeNames()));
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return new ArrayList<String>();
+    }
+
+    /**
+     * Get workspace name where stored current object.
+     * @return Name of Workspace
+     */
+    public String getWorkspace() {
+        return workspace;
+    }
+
+    /**
+     * Get Object UUID
+     * @return UUID of current Object
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws UnsupportedRepositoryOperationException 
+     */
+    public String getUUID() {
+        try {
+            return getJCRNode().getUUID();
+        } catch (UnsupportedRepositoryOperationException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @return
+     * @throws RepositoryException 
+     * @throws NoSuchWorkspaceException 
+     * @throws LoginException 
+     */
+    protected Session getSession() throws LoginException, NoSuchWorkspaceException, RepositoryException {
+        if(isSystem) {
+            return WCMCoreUtils.getSystemSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
+        }
+        return WCMCoreUtils.getUserSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
+    }
+
+    /**
+     * @throws RepositoryException 
+     * @throws NoSuchWorkspaceException 
+     * @throws LoginException 
+     * @throws NoSuchNodeTypeException 
+     * @throws LockException 
+     * @throws VersionException 
+     * @throws InvalidItemStateException 
+     * @throws ConstraintViolationException 
+     * @throws ItemExistsException 
+     * @throws AccessDeniedException 
+     * 
+     */
+    public void save() {
+        try {
+            getSession().save();
+        } catch (AccessDeniedException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (ItemExistsException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (ConstraintViolationException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (InvalidItemStateException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (VersionException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (LockException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (NoSuchNodeTypeException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (LoginException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (NoSuchWorkspaceException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+    }
+
+    @Override
+    public void addMixin(String mixin) {
+        try {
+            getJCRNode().addMixin(mixin);
+        } catch (NoSuchNodeTypeException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (VersionException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (ConstraintViolationException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (LockException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+    }
+
+    @Override
+    public boolean canAddMixin(String mixin) {
+        try {
+            return getJCRNode().canAddMixin(mixin);
+        } catch (NoSuchNodeTypeException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return false;
+    }
+
+    @Override
+    public String getTitle() {
+        try {
+            return getJCRNode().getProperty("exo:title").getString();
+        } catch (ValueFormatException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getLastModifier() {
+        try {
+            return getJCRNode().getProperty("exo:lastModifier").getString();
+        } catch (ValueFormatException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getOwner() {
+        try {
+            return getJCRNode().getProperty("exo:owner").getString();
+        } catch (ValueFormatException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
     
-  }
-  
-  /**
-   * Get Object last modified date
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws ValueFormatException 
-   */
-  public String getLastModifiedDate() throws ValueFormatException, PathNotFoundException, RepositoryException {
-    return getJCRNode().getProperty("exo:lastModifiedDate").getString();
-  }
-  
-  /**
-   * Get Object Creator
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public String getCreator() throws PathNotFoundException, RepositoryException {
-    return getJCRNode().getProperty("exo:owner").toString();
-  }
-  
-  /**
-   * Get Object Primary Type
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public String getPrimaryType() throws PathNotFoundException, RepositoryException {
-    return getJCRNode().getPrimaryNodeType().getName();
-  }
-  
-  /**
-   * Get Object mixin types
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public List<String> getMixinTypes() throws PathNotFoundException, RepositoryException {
-    return new ArrayList<String>(Arrays.asList(((NodeImpl)getJCRNode()).getMixinTypeNames()));
-  }
-  
-  /**
-   * Get workspace name where stored current object.
-   * @return Name of Workspace
-   */
-  public String getWorkspace() {
-    return workspace;
-  }
-  
-  /**
-   * Get Object UUID
-   * @return UUID of current Object
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws UnsupportedRepositoryOperationException 
-   */
-  public String getUUID() throws UnsupportedRepositoryOperationException, PathNotFoundException, RepositoryException {
-    return getJCRNode().getUUID();
-  }
-  
-  /**
-   * 
-   * @return
-   * @throws RepositoryException 
-   * @throws NoSuchWorkspaceException 
-   * @throws LoginException 
-   */
-  public Session getSession() throws LoginException, NoSuchWorkspaceException, RepositoryException {
-    if(isSystem) {
-      return WCMCoreUtils.getSystemSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
+    public List<String> getTags() {
+        return new ArrayList<String>();
     }
-    return WCMCoreUtils.getUserSessionProvider().getSession(workspace, WCMCoreUtils.getRepository());
-  }
-  
-  /**
-   * @throws RepositoryException 
-   * @throws NoSuchWorkspaceException 
-   * @throws LoginException 
-   * @throws NoSuchNodeTypeException 
-   * @throws LockException 
-   * @throws VersionException 
-   * @throws InvalidItemStateException 
-   * @throws ConstraintViolationException 
-   * @throws ItemExistsException 
-   * @throws AccessDeniedException 
-   * 
-   */
-  public void save() throws AccessDeniedException, ItemExistsException, ConstraintViolationException, InvalidItemStateException, 
-                            VersionException, LockException, NoSuchNodeTypeException, LoginException, NoSuchWorkspaceException, 
-                            RepositoryException {
-    getSession().save();
-  }
+    
+    public String getRating() {
+        return StringUtils.EMPTY;
+    }
 
-  @Override
-  public void addMixin(String mixin) throws NoSuchNodeTypeException, VersionException, ConstraintViolationException, 
-                                            LockException, PathNotFoundException, RepositoryException {
-    getJCRNode().addMixin(mixin);
-  }
+    /**
+     * 
+     * @return
+     */
+    public abstract String getObjectType();  
 
-  @Override
-  public boolean canAddMixin(String mixin) throws NoSuchNodeTypeException, PathNotFoundException, RepositoryException {
-    return getJCRNode().canAddMixin(mixin);
-  }
-
-  public abstract String getObjectType();
+    /**
+     * 
+     * @return
+     */
+    protected Node getJCRNode() {
+        try {
+            return (Node)getSession().getItem(path);
+        } catch (PathNotFoundException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (LoginException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (NoSuchWorkspaceException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        } catch (RepositoryException e) {
+           if(LOG.isDebugEnabled()) {
+               LOG.error(e);
+           }
+        }
+        return null;
+    }
 }

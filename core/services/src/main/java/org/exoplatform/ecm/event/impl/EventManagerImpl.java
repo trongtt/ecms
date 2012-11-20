@@ -43,59 +43,59 @@ import org.exoplatform.services.naming.InitialContextInitializer;
  */
 public class EventManagerImpl<S, D> extends ListenerService implements EventManager<S, D> {
 
-  private Map<String, List<Listener<S, D>>> listenerMap = new HashMap<String, List<Listener<S, D>>>();
-  
-  private static final Log LOG = ExoLogger.getLogger(EventManagerImpl.class);
+    private Map<String, List<Listener<S, D>>> listenerMap = new HashMap<String, List<Listener<S, D>>>();
 
-  public EventManagerImpl(ExoContainerContext ctx, InitialContextInitializer initializer, InitParams params) {
-    super(ctx, initializer, params);
-  }
+    private static final Log LOG = ExoLogger.getLogger(EventManagerImpl.class);
 
-  @Override
-  public void addEventListener(Listener<S, D> listener) {
-    // Check is Listener or its superclass asynchronous, if so - wrap it in AsynchronousListener.
-    Class<?> listenerClass = listener.getClass();
-    do {
-      if (listenerClass.isAnnotationPresent(Asynchronous.class)) {
-        listener = new AsynchronousListener<S, D>(listener);
-        break;
-      }
-      listenerClass = listenerClass.getSuperclass();
-    } while (listenerClass != null);
-    String type = listener.getName();
-    List<Listener<S, D>> list = listenerMap.get(type);
-    if (list == null) {
-       list = new ArrayList<Listener<S, D>>();
-       listenerMap.put(type, list);
+    public EventManagerImpl(ExoContainerContext ctx, InitialContextInitializer initializer, InitParams params) {
+        super(ctx, initializer, params);
     }
-    list.add(listener);
-    listenerMap.put(type, list);
-  }
 
-  @Override
-  public void removeEventListener(Listener<S, D> listener) {
-    String type = listener.getName();
-    List<Listener<S, D>> listeners = getEventListeners(type);
-    listeners.remove(listener);
-    listenerMap.put(type, listeners);
-  }
+    @Override
+    public void addEventListener(Listener<S, D> listener) {
+        // Check is Listener or its superclass asynchronous, if so - wrap it in AsynchronousListener.
+        Class<?> listenerClass = listener.getClass();
+        do {
+            if (listenerClass.isAnnotationPresent(Asynchronous.class)) {
+                listener = new AsynchronousListener<S, D>(listener);
+                break;
+            }
+            listenerClass = listenerClass.getSuperclass();
+        } while (listenerClass != null);
+        String type = listener.getName();
+        List<Listener<S, D>> list = listenerMap.get(type);
+        if (list == null) {
+            list = new ArrayList<Listener<S, D>>();
+            listenerMap.put(type, list);
+        }
+        list.add(listener);
+        listenerMap.put(type, list);
+    }
 
-  @Override
-  public void broadcastEvent(Event<S, D> event) throws Exception {
-    List<Listener<S, D>> listeners = getEventListeners(event.getEventName());
-    if (listeners.size() == 0) return;
-    for (Listener<S, D> listener : listeners) {
-      try {
-        listener.onEvent(event);
-      } catch (Exception e) {
-        LOG.error("Exception on broadcasting events occures: " + e.getMessage(), e);
-      }
-    }    
-  }
- 
-  @Override
-  public List<Listener<S, D>> getEventListeners(String type) {
-    return listenerMap.get(type);
-  }
+    @Override
+    public void removeEventListener(Listener<S, D> listener) {
+        String type = listener.getName();
+        List<Listener<S, D>> listeners = getEventListeners(type);
+        listeners.remove(listener);
+        listenerMap.put(type, listeners);
+    }
+
+    @Override
+    public void broadcastEvent(Event<S, D> event) throws Exception {
+        List<Listener<S, D>> listeners = getEventListeners(event.getEventName());
+        if (listeners.size() == 0) return;
+        for (Listener<S, D> listener : listeners) {
+            try {
+                listener.onEvent(event);
+            } catch (Exception e) {
+                LOG.error("Exception on broadcasting events occures: " + e.getMessage(), e);
+            }
+        }    
+    }
+
+    @Override
+    public List<Listener<S, D>> getEventListeners(String type) {
+        return listenerMap.get(type);
+    }
 
 }

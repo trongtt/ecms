@@ -18,10 +18,7 @@
 package org.exoplatform.ecm.model.api;
 
 import java.io.InputStream;
-
-import javax.jcr.PathNotFoundException;
-import javax.jcr.RepositoryException;
-import javax.jcr.ValueFormatException;
+import java.util.Date;
 
 /**
  * Created by The eXo Platform SARL
@@ -32,16 +29,64 @@ import javax.jcr.ValueFormatException;
  */
 public interface File extends BaseObject {
 
-  /**
-   * 
-   * @return
-   */
-  InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException;
-  
-  /**
-   * 
-   * @return
-   */
-  String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException;
-  
+    /**
+     * 
+     * @return
+     */
+    public InputStream getData();
+
+    /**
+     * 
+     * @return
+     */
+    public String getMimeType();
+    
+    /**
+     * 
+     */
+    public Date getLastModified();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getEncoding();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getDCCreator();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getDCDescription();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getDCContributor();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getDCPublisher();
+    
+    /**
+     * 
+     * @return
+     */
+    public String getDCSubject();
+    
+    /**
+     * 
+     * @return
+     */
+    public Date getDCDate();
+    
+    
 }

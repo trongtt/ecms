@@ -18,7 +18,7 @@
 package org.exoplatform.ecm.model.impl;
 
 import java.io.InputStream;
-import java.util.List;
+import java.util.Date;
 
 import javax.jcr.AccessDeniedException;
 import javax.jcr.ItemNotFoundException;
@@ -38,59 +38,241 @@ import org.exoplatform.ecm.model.api.File;
  */
 public abstract class AbstractFile<T> extends AbtractBaseObject implements File {
 
-  public AbstractFile(String workspace, String path) {
-    super(workspace, path);
-  }
-  
-  public AbstractFile(String workspace, String path, boolean isSystem) {
-    super(workspace, path, isSystem);
-  }  
-  /**
-   * 
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws ValueFormatException 
-   */
-  public InputStream getData() throws ValueFormatException, PathNotFoundException, RepositoryException {
-    return getResource().getProperty("jcr:data").getStream();
-  }
-  
-  /**
-   * Get Object children  
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   */
-  public abstract List<T> getChildren() throws PathNotFoundException, RepositoryException;  
-  
-  /**
-   * Get Object Parent
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws AccessDeniedException 
-   * @throws ItemNotFoundException 
-   */
-  public abstract T getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;  
- 
-  /**
-   * @return
-   * @throws RepositoryException 
-   * @throws PathNotFoundException 
-   * @throws ValueFormatException 
-   */
-  public String getMimeType() throws ValueFormatException, PathNotFoundException, RepositoryException {
-    return getResource().getProperty("jcr:mimeType").getString();
-  }
-  
-  /**
-   * 
-   * @return
-   * @throws PathNotFoundException
-   * @throws RepositoryException
-   */
-  private Node getResource() throws PathNotFoundException, RepositoryException {
-    return getJCRNode().getNode("jcr:content");
-  }
- 
+    public AbstractFile(String workspace, String path) {
+        super(workspace, path);
+    }
+
+    public AbstractFile(String workspace, String path, boolean isSystem) {
+        super(workspace, path, isSystem);
+    }  
+    /**
+     * 
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws ValueFormatException 
+     */
+    public InputStream getData() {
+        try {
+            return getResource().getProperty("jcr:data").getStream();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Get Object Parent
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws AccessDeniedException 
+     * @throws ItemNotFoundException 
+     */
+    public abstract T getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;  
+
+    /**
+     * @return
+     * @throws RepositoryException 
+     * @throws PathNotFoundException 
+     * @throws ValueFormatException 
+     */
+    public String getMimeType() {
+        try {
+            return getResource().getProperty("jcr:mimeType").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 
+     * @return
+     * @throws PathNotFoundException
+     * @throws RepositoryException
+     */
+    private Node getResource() throws PathNotFoundException, RepositoryException {
+        return getJCRNode().getNode("jcr:content");
+    }
+
+    @Override
+    public Date getLastModified() {
+        try {
+            return getResource().getProperty("jcr:lastModified").getDate().getTime();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getEncoding() {
+        try {
+            return getResource().getProperty("jcr:encoding").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDCCreator() {
+        try {
+            return getResource().getProperty("dc:creator").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDCDescription() {
+        try {
+            return getResource().getProperty("dc:description").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDCContributor() {
+        try {
+            return getResource().getProperty("jcr:contributor").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDCPublisher() {
+        try {
+            return getResource().getProperty("dc:publisher").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getDCSubject() {
+        try {
+            return getResource().getProperty("dc:subject").getString();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Date getDCDate() {
+        try {
+            return getResource().getProperty("dc:date").getDate().getTime();
+        } catch (ValueFormatException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (PathNotFoundException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        } catch (RepositoryException e) {
+            if(LOG.isDebugEnabled()) {
+                LOG.error(e);
+            }
+        }
+        return null;
+    }
+
 }

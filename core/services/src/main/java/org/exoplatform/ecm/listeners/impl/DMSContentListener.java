@@ -29,30 +29,30 @@ import org.exoplatform.services.listener.Listener;
  * Nov 14, 2012
  * 2:17:01 PM  
  */
-public class DMSContentListener extends Listener<Content, Integer> implements EventListener<Content>{
+public class DMSContentListener extends Listener<Content, Integer> implements EventListener<Content, Integer>{
 
-  @Override
-  public void create(Content content) {
-    // TODO Auto-generated method stub
-    
-  }
+    @Override
+    public void create(Event<Content, Integer> event) {
+        // TODO Auto-generated method stub
 
-  @Override
-  public void update(Content content) {
-    // TODO Auto-generated method stub
-    
-  }
+    }
 
-  @Override
-  public void remove(Content content) {
-    // TODO Auto-generated method stub
-    
-  }
+    @Override
+    public void update(Event<Content, Integer> event) {
+        // TODO Auto-generated method stub
 
-  @Override
-  public void onEvent(Event<Content, Integer> event) throws Exception {
-    // TODO Auto-generated method stub
-    
-  }
+    }
+
+    @Override
+    public void remove(Event<Content, Integer> event) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onEvent(Event<Content, Integer> event) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
 
 }

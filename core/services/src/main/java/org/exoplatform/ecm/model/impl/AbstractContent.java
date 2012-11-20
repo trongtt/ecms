@@ -28,45 +28,45 @@ import org.exoplatform.ecm.model.api.Content;
  */
 public abstract class AbstractContent extends AbtractBaseObject implements Content {
 
-  public AbstractContent(String name, String path) {
-    super(name, path);
-  }
-  
-  public AbstractContent(String name, String path, boolean isSystem) {
-    super(name, path, isSystem);
-  }
-  
-  /**
-   * Check the type of content
-   * @return <code>true</code> if current node is document type and
-    *         <code>otherwise</code>
-   */
-  public boolean isDocument() {
-    return false;
-  }
-  
-  /**
-   * Get document type
-   * @return Type of document such as exo:webContent or exo:accessibleMedia...
-   */
-  public String getDocumentType() {
-    return null;
-  }
-  
-  /**
-   * 
-   * @return
-   */
-  public String getDocumentLabel() {
-    return null;
-  }
-  
-  /**
-   * 
-   * @return
-   */
-  public String getTemplate() {
-    return null;
-  }
+    public AbstractContent(String name, String path) {
+        super(name, path);
+    }
+
+    public AbstractContent(String name, String path, boolean isSystem) {
+        super(name, path, isSystem);
+    }
+
+    /**
+     * Check the type of content
+     * @return <code>true</code> if current node is document type and
+     *         <code>otherwise</code>
+     */
+    public boolean isDocument() {
+        return false;
+    }
+
+    /**
+     * Get document type
+     * @return Type of document such as exo:webContent or exo:accessibleMedia...
+     */
+    public String getDocumentType() {
+        return null;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getDocumentLabel() {
+        return null;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public String getTemplate() {
+        return null;
+    }
 
 }

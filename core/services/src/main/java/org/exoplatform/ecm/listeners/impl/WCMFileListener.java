@@ -30,40 +30,39 @@ import org.exoplatform.services.listener.Listener;
  * Nov 12, 2012
  * 5:44:45 PM  
  */
-public class WCMFileListener extends Listener<WCMFile, Integer> implements EventListener<WCMFile>{
+public class WCMFileListener extends Listener<WCMFile, Integer> implements EventListener<WCMFile, Integer>{
 
-  @Override
-  public void create(WCMFile file) {
-    System.out.println("\n\nCreating wcm file ====" +file.getPath()+ "\n\n");    
-  }
+    @Override
+    public void create(Event<WCMFile, Integer> event) {
+        System.out.println("\n\nCreating wcm file ====" +event.getSource().getPath()+ "\n\n");    
+    }
 
-  @Override
-  public void update(WCMFile file) {
-    System.out.println("\n\nUpdating wcm file ====" +file.getPath()+ "\n\n");    
-  }
+    @Override
+    public void update(Event<WCMFile, Integer> event) {
+        System.out.println("\n\nUpdating wcm file ====" +event.getSource().getPath()+ "\n\n");    
+    }
 
-  @Override
-  public void remove(WCMFile file) {
-    System.out.println("\n\nRemoving wcm file ====" +file.getPath()+ "\n\n");    
-  }
+    @Override
+    public void remove(Event<WCMFile, Integer> event) {
+        System.out.println("\n\nRemoving wcm file ====" +event.getSource().getPath()+ "\n\n");    
+    }
 
-  @Override
-  public void onEvent(Event<WCMFile, Integer> event) throws Exception {
-    WCMFile wcmFile = event.getSource();
-    int eventType = event.getData();
-    switch(eventType) {
-    case EventType.CREATED :
-      create(wcmFile);
-      break;
-    case EventType.REMOVE :
-      remove(wcmFile);
-      break;
-    case EventType.UPDATE :
-      update(wcmFile);
-      break;
-    default :
-      break;
-    }    
-  }
+    @Override
+    public void onEvent(Event<WCMFile, Integer> event) throws Exception {
+        int eventType = event.getData();
+        switch(eventType) {
+        case EventType.CREATED :
+            create(event);
+            break;
+        case EventType.REMOVE :
+            remove(event);
+            break;
+        case EventType.UPDATE :
+            update(event);
+            break;
+        default :
+            break;
+        }    
+    }
 
 }

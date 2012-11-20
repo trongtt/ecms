@@ -29,10 +29,10 @@ import org.exoplatform.services.jcr.observation.ExtendedEvent;
  */
 public interface EventType {
 
-  public static final int CREATED = ExtendedEvent.NODE_ADDED;
+    public static final int CREATED = ExtendedEvent.NODE_ADDED;
 
-  public static final int UPDATE = ExtendedEvent.PROPERTY_CHANGED;
+    public static final int UPDATE = ExtendedEvent.PROPERTY_CHANGED;
 
-  public static final int REMOVE = ExtendedEvent.NODE_REMOVED;
-  
+    public static final int REMOVE = ExtendedEvent.NODE_REMOVED;
+
 }
