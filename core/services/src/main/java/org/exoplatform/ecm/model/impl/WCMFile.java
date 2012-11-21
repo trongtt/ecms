@@ -31,6 +31,13 @@ import org.exoplatform.ecm.model.api.File;
  * Nov 12, 2012
  * 1:58:54 PM  
  */
+
+/**
+ * An instance of a file which stored inside WCM (Web Content Management)
+ * Almost of the case this instance initiate inside Content Explorer application 
+ * under the folder /acme/web contents/site artifacts/
+ *
+ */
 public class WCMFile extends AbstractFile<WCMFile> implements File {
 
     public static final String WCM_FILE = "WCMFile";
@@ -43,12 +50,18 @@ public class WCMFile extends AbstractFile<WCMFile> implements File {
         super(workspace, path, isSystem);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public WCMFile getParent() throws ItemNotFoundException, AccessDeniedException,
     PathNotFoundException, RepositoryException {
         return new WCMFile(workspace, getJCRNode().getParent().getPath(), isSystem);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getObjectType() {
         return WCM_FILE;

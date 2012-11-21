@@ -15,7 +15,7 @@
  * along with this program; if not, see<http://www.gnu.org/licenses/>.
  *
  **************************************************************************/
-package org.exoplatform.ecm.model.api;
+package org.exoplatform.ecm.event.impl;
 
 import org.exoplatform.services.jcr.observation.ExtendedEvent;
 
@@ -27,7 +27,7 @@ import org.exoplatform.services.jcr.observation.ExtendedEvent;
  * Nov 13, 2012
  * 3:05:05 PM  
  */
-public interface EventType {
+public class EventType {
 
     public static final int CREATED = ExtendedEvent.NODE_ADDED;
 

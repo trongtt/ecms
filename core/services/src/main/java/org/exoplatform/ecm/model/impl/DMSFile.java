@@ -31,6 +31,12 @@ import org.exoplatform.ecm.model.api.File;
  * Nov 12, 2012
  * 1:58:44 PM  
  */
+
+/**
+ * An instance of a file which stored inside DMS (Document Management System)
+ * Almost of the case this instance initiate inside Content Explorer application 
+ *
+ */
 public class DMSFile extends AbstractFile<DMSFile> implements File {
 
     public static final String DMS_FILE = "DMSFile";
@@ -43,16 +49,21 @@ public class DMSFile extends AbstractFile<DMSFile> implements File {
         super(workspace, path, isSystem);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DMSFile getParent() throws ItemNotFoundException, AccessDeniedException,
     PathNotFoundException, RepositoryException {
         return new DMSFile(workspace, getJCRNode().getParent().getPath(), isSystem);
     }
 
+    /**
+     * {@inheritDoc}
+     */    
     @Override
     public String getObjectType() {
         return DMS_FILE;
     }
-
 
 }

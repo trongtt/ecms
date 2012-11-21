@@ -19,6 +19,7 @@ package org.exoplatform.ecm.model.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.jcr.AccessDeniedException;
@@ -39,7 +40,6 @@ import javax.jcr.version.VersionException;
 
 import org.apache.commons.lang.StringUtils;
 import org.exoplatform.ecm.model.api.BaseObject;
-import org.exoplatform.services.cms.folksonomy.NewFolksonomyService;
 import org.exoplatform.services.jcr.impl.core.NodeImpl;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
@@ -94,9 +94,9 @@ public abstract class AbtractBaseObject implements BaseObject {
      * @throws PathNotFoundException 
      * @throws ValueFormatException 
      */
-    public String getCreatedDate() {
+    public Calendar getCreatedDate() {
         try {
-            return getJCRNode().getProperty("exo:dateCreated").getString();
+            return getJCRNode().getProperty("exo:dateCreated").getDate();
         } catch (ValueFormatException e) {
            if(LOG.isDebugEnabled()) {
                LOG.error(e);
@@ -120,9 +120,9 @@ public abstract class AbtractBaseObject implements BaseObject {
      * @throws PathNotFoundException 
      * @throws ValueFormatException 
      */
-    public String getLastModifiedDate() {
+    public Calendar getLastModifiedDate() {
         try {
-            return getJCRNode().getProperty("exo:lastModifiedDate").getString();
+            return getJCRNode().getProperty("exo:lastModifiedDate").getDate();
         } catch (ValueFormatException e) {
             if(LOG.isDebugEnabled()) {
                 LOG.error(e);

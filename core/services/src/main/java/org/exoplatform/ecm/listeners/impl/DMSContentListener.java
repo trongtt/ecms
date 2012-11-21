@@ -17,10 +17,8 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.listener.api.EventListener;
 import org.exoplatform.ecm.model.api.Content;
 import org.exoplatform.services.listener.Event;
-import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
@@ -29,7 +27,7 @@ import org.exoplatform.services.listener.Listener;
  * Nov 14, 2012
  * 2:17:01 PM  
  */
-public class DMSContentListener extends Listener<Content, Integer> implements EventListener<Content, Integer>{
+public class DMSContentListener extends AbstractEventListener<Content, Integer> {
 
     @Override
     public void create(Event<Content, Integer> event) {

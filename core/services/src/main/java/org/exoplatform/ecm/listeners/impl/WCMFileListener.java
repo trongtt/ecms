@@ -17,11 +17,9 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.listener.api.EventListener;
-import org.exoplatform.ecm.model.api.EventType;
+import org.exoplatform.ecm.event.impl.EventType;
 import org.exoplatform.ecm.model.impl.WCMFile;
 import org.exoplatform.services.listener.Event;
-import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
@@ -30,7 +28,7 @@ import org.exoplatform.services.listener.Listener;
  * Nov 12, 2012
  * 5:44:45 PM  
  */
-public class WCMFileListener extends Listener<WCMFile, Integer> implements EventListener<WCMFile, Integer>{
+public class WCMFileListener extends AbstractEventListener<WCMFile, Integer> {
 
     @Override
     public void create(Event<WCMFile, Integer> event) {

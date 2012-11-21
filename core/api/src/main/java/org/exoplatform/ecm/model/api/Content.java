@@ -27,28 +27,34 @@ package org.exoplatform.ecm.model.api;
 public interface Content extends BaseObject {
 
     /**
-     * Check the type of content
-     * @return <code>true</code> if current node is document type and
+     * Return the state of content
+     * @return <code>true</code> if content is viewable and
      *         <code>otherwise</code>
      */
-    boolean isDocument();
+    public boolean isViewableContent();
 
     /**
-     * Get document type
-     * @return Type of document such as exo:webContent or exo:accessibleMedia...
+     * Return the content type
+     * @return Type of content such as exo:webContent or exo:accessibleMedia...
      */
-    String getDocumentType();
+    public String getContentType();
 
     /**
-     * 
-     * @return
+     * Return the label of content
+     * @return The value of content label.
      */
-    String getDocumentLabel();
+    public String getContentLabel();
 
     /**
-     * 
-     * @return
+     * Return the a absolute path which point to content view template if it is available in workspace.
+     * @return A absolute path to view template
      */
-    String getTemplate();
+    public String getViewTemplate();
+
+    /**
+     * Return the a absolute path which point to content dialog template if it is available in workspace.
+     * @return A absolute path to dialog template
+     */
+    public String getDialogTemplate();
 
 }

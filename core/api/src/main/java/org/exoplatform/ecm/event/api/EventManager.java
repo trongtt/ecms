@@ -29,14 +29,42 @@ import org.exoplatform.services.listener.Listener;
  * Nov 8, 2012
  * 1:47:47 PM  
  */
+/**
+ * This is the central point of the event system where listeners are registered (and/or unregistered) and events fired.
+ * @param <S> This is a generic object of source, it can be a File/Folder/Content or something else 
+ * which should be extended from <code>BaseObject</code>.
+ * @param <D> This is a generic object of data. It can be an event type such as NODE_ADDED/PROPERTY_CHANGED/NODE_REMOVED
+ * which corresponding with JCR events.
+ */
 public interface EventManager<S, D> {
 
-  public void addEventListener(Listener<S, D> listener);
-  
-  public void removeEventListener(Listener<S, D> listener);
-  
-  public void broadcastEvent(Event<S, D> event) throws Exception;
-  
-  public List<Listener<S, D>> getEventListeners(String type);
-  
+    /**
+     * This will be used to register a listener to the event system.  
+     * @param listener An instance of <code>Listener</code> object.
+     */
+    public void addEventListener(Listener<S, D> listener);
+
+    /**
+     * This will be used to unregister a listener out of the event system.  
+     * @param listener An instance of <code>Listener</code> object.
+     */
+    public void removeEventListener(Listener<S, D> listener);
+
+    /**
+     * When an action triggered such as file created/updated then 
+     * it will be broadcast to the dedicated listener to dispatch the event.
+     * @param event The <code>Event</code> object which keep the information to be processed in the listeners.
+     */
+    public void broadcastEvent(Event<S, D> event);
+
+    /**
+     * Return a list of <code>Listener</code> which registered to the event system based on its object type.
+     * For example: If we want to get a list of listeners which registered to listen all the event on an instance of 
+     * <code>File</code> object then the type should be gotten from its method is getObjectType().
+     * 
+     * @param type Type of Object
+     * @return List of listeners which registered
+     */
+    public List<Listener<S, D>> getEventListeners(String type);
+
 }

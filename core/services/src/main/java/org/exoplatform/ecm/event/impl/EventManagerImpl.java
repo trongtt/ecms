@@ -81,7 +81,7 @@ public class EventManagerImpl<S, D> extends ListenerService implements EventMana
     }
 
     @Override
-    public void broadcastEvent(Event<S, D> event) throws Exception {
+    public void broadcastEvent(Event<S, D> event) {
         List<Listener<S, D>> listeners = getEventListeners(event.getEventName());
         if (listeners.size() == 0) return;
         for (Listener<S, D> listener : listeners) {

@@ -27,8 +27,8 @@ package org.exoplatform.ecm.model.api;
 public interface Folder extends BaseObject {
 
     /**
-     * Get type of folder
-     * @return Type of folder such as nt:folder or nt:unstructured
+     * Return the type of <code>Folder</code> such as Content Folder or Document Folder
+     * @return The value of jcr:primaryType property.
      */
     public String getFolderType();
 

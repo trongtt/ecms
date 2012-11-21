@@ -17,6 +17,7 @@
  **************************************************************************/
 package org.exoplatform.ecm.model.api;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -26,100 +27,111 @@ import java.util.List;
  * Nov 2, 2012
  * 2:13:57 PM  
  */
+/**
+ * This Object will be used to get information from a JCR node instead of open a direct access 
+ * to <code>javax.jcr.Node</code> object.
+ * However, it just provide the basic information of an object which could be used in search result or somewhere else.
+ *
+ */
 public interface BaseObject {
 
     /**
-     * Get object name  
-     * @return
+     * Return the name of Object. The name of an object is the
+     * last element in its path, minus any square-bracket index that may exist.
+     * @return The name of this Object.
+     * 
      */
     public String getName();
 
     /**
-     * Get Object path  
-     * @return
+     * * Returns the absolute path to this item.  
+     * @return The path of this Object.
      */
     public String getPath();
 
     /**
-     * 
-     * @return
+     * Return the title value on this Object.
+     * @return The value of exo:title property.
      */
     public String getTitle();
 
     /**
-     * Get Object created date
-     * @return
+     * Return the value of the created date on this Object.
+     * @return The value of exo:dateCreated property.
      */
-    public String getCreatedDate();
+    public Calendar getCreatedDate();
 
     /**
-     * Get Object last modified date
-     * @return
+     * Return the value of the last modified date on this Object.
+     * @return The value of exo:lastModifiedDate property.
      */
-    public String getLastModifiedDate();
+    public Calendar getLastModifiedDate();
 
     /**
-     * 
-     * @return
+     * Return the name of last person who edited this Object. 
+     * @return The value of exo:lastModifier property.
      */
     public String getLastModifier();
 
     /**
-     * Get Object Creator
-     * @return
+     * Return the name of who created this Object.
+     * @return The value of exo:owner property
      */
     public String getOwner();
 
     /**
-     * Get Object Primary Type
-     * @return
+     * Return the primary type of current Object
+     * For example: nt:file, exo:webContent,...
+     * @return The value of jcr:primartyType property.
      */
     public String getPrimaryType();
 
     /**
-     * Get Object mixin types
+     * Return a list of node type name which added to this Object as the mix-in.
+     * @return List<String> A list contains the mix-in name.
      */
     public List<String> getMixinTypes();
 
     /**
-     * Get workspace name where stored current object.
-     * @return Name of Workspace
+     * Return the workspace name where stored current object.
+     * @return The name of current workspace
      */
     public String getWorkspace();
     
     /**
-     * 
-     * @return
+     * Return a list of tags name which added to this Object
+     * @return A list of tagged value.
      */
     public List<String> getTags();
     
     /**
-     * 
-     * @return
+     * Return the rate value for this Object
+     * @return The rating number
      */
     public String getRating();
 
     /**
-     * Get Object UUID
-     * @return UUID of current Object
+     * Return the UUID value of this Object. This one just available when already added the mix:referenceable mix-in node type.
+     * @return The value of exo:uuid property
      */
     public String getUUID();
 
     /**
-     * 
+     * This function used to store all the information to the database.
      */
     public void save();
 
     /**
-     * Add mixin
-     * @param mixin
+     * This function used to add mix-in to this Object.
+     * @param mixin The mix-in node type name.
      */
     public void addMixin(String mixin);
 
     /**
-     * 
-     * @param mixin
-     * @return
+     * Return <code>true</code> if possible to add a mix-in node type to this Object
+     * otherwise return <code>false</code>
+     * @param mixin The mix-in node type name need to be checked
+     * @return <code>true</code> or <code>false</code>
      */
     public boolean canAddMixin(String mixin);
 }

@@ -17,39 +17,22 @@
  **************************************************************************/
 package org.exoplatform.ecm.listeners.impl;
 
-import org.exoplatform.ecm.model.api.Folder;
-import org.exoplatform.services.listener.Event;
+import org.exoplatform.ecm.listener.api.EventListener;
+import org.exoplatform.services.listener.Listener;
 
 /**
  * Created by The eXo Platform SARL
  * Author : Dang Van Minh
  *          minh.dang@exoplatform.com
- * Nov 14, 2012
- * 2:16:42 PM  
+ * Nov 21, 2012
+ * 1:45:40 PM  
  */
-public class DMSFolderListener extends AbstractEventListener<Folder, Integer> {
 
-    @Override
-    public void create(Event<Folder, Integer> event) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void update(Event<Folder, Integer> event) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void remove(Event<Folder, Integer> event) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onEvent(Event<Folder, Integer> event) throws Exception {
-
-    }
-
+/**
+ * An abstract listener to be extended by the dedicated listeners.
+ * @param <S> This is a generic object of source, it can be a File/Folder/Content or something else 
+ * which should be extended from <code>BaseObject</code>.
+ * @param <D> This is a generic object of data. It can be an event type such as NODE_ADDED/PROPERTY_CHANGED/NODE_REMOVED
+ */
+public abstract class AbstractEventListener<S, D> extends Listener<S, D> implements EventListener<S, D> {
 }

@@ -27,66 +27,70 @@ import java.util.Date;
  * Nov 2, 2012
  * 2:14:08 PM  
  */
+
+/**
+ * File object instance.
+ */
 public interface File extends BaseObject {
 
     /**
-     * 
-     * @return
+     * Return the binary data of <code>File</code> instance
+     * @return The value of jcr:data property which stored inside jcr:content node.
      */
     public InputStream getData();
 
     /**
-     * 
-     * @return
+     * Return the MIMETYPE of <code>File</code> instance.
+     * @return The value of jcr:mimeType property which stored inside jcr:content node.
      */
     public String getMimeType();
     
     /**
-     * 
+     * Return the last modified date of <code>File</code> instance.
+     * @return The value of jcr:lastModified property which stored inside jcr:content node.
      */
     public Date getLastModified();
     
     /**
-     * 
-     * @return
+     * Return the encoding type of <code>File</code> instance.
+     * @return The value of jcr:encoding property which stored inside jcr:content node.
      */
     public String getEncoding();
     
     /**
-     * 
-     * @return
+     * Return the creator of <code>File</code> instance.
+     * @return The value of dc:creator property which stored inside dc:elementSet mix-in node type.
      */
     public String getDCCreator();
     
     /**
-     * 
-     * @return
+     * Return the description of <code>File</code> instance.
+     * @return The value of dc:description property which stored inside dc:elementSet mix-in node type.
      */
     public String getDCDescription();
     
     /**
-     * 
-     * @return
+     * Return the contributor of <code>File</code> instance.
+     * @return The value of dc:contributor property which stored inside dc:elementSet mix-in node type.
      */
     public String getDCContributor();
     
     /**
-     * 
-     * @return
+     * Return the publisher of <code>File</code> instance.
+     * @return The value of dc:publisher property which stored inside dc:elementSet mix-in node type.
      */
     public String getDCPublisher();
     
     /**
-     * 
-     * @return
+     * Return the subject of <code>File</code> instance.
+     * @return The value of dc:subject property which stored inside dc:elementSet mix-in node type.
      */
     public String getDCSubject();
     
     /**
-     * 
-     * @return
+     * Return the last updated date of <code>File</code> instance.
+     * @return The value of dc:date property which stored inside dc:elementSet mix-in node type.
      */
     public Date getDCDate();
-    
     
 }

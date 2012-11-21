@@ -45,12 +45,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
     public AbstractFile(String workspace, String path, boolean isSystem) {
         super(workspace, path, isSystem);
     }  
+    
     /**
-     * 
-     * @return
-     * @throws RepositoryException 
-     * @throws PathNotFoundException 
-     * @throws ValueFormatException 
+     * {@inheritDoc}
      */
     public InputStream getData() {
         try {
@@ -81,10 +78,7 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
     public abstract T getParent() throws ItemNotFoundException, AccessDeniedException, PathNotFoundException, RepositoryException;  
 
     /**
-     * @return
-     * @throws RepositoryException 
-     * @throws PathNotFoundException 
-     * @throws ValueFormatException 
+     * {@inheritDoc}
      */
     public String getMimeType() {
         try {
@@ -106,8 +100,8 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
     }
 
     /**
-     * 
-     * @return
+     * Return the child node jcr:content of <code>File</code> instance.
+     * @return The <code>javax.jcr.Node</code> object.
      * @throws PathNotFoundException
      * @throws RepositoryException
      */
@@ -115,6 +109,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return getJCRNode().getNode("jcr:content");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Date getLastModified() {
         try {
@@ -135,6 +132,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getEncoding() {
         try {
@@ -155,6 +155,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDCCreator() {
         try {
@@ -175,6 +178,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDCDescription() {
         try {
@@ -195,6 +201,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDCContributor() {
         try {
@@ -215,6 +224,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDCPublisher() {
         try {
@@ -235,6 +247,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getDCSubject() {
         try {
@@ -255,6 +270,9 @@ public abstract class AbstractFile<T> extends AbtractBaseObject implements File 
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Date getDCDate() {
         try {
