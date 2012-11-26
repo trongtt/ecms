@@ -51,8 +51,19 @@ public class EventManagerImpl<S, D> extends ListenerService implements EventMana
         super(ctx, initializer, params);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addEventListener(Listener<S, D> listener) {
+        addEventListener(listener.getName(), listener);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addEventListener(String eventName, Listener<S, D> listener) {
         // Check is Listener or its superclass asynchronous, if so - wrap it in AsynchronousListener.
         Class<?> listenerClass = listener.getClass();
         do {
@@ -62,24 +73,36 @@ public class EventManagerImpl<S, D> extends ListenerService implements EventMana
             }
             listenerClass = listenerClass.getSuperclass();
         } while (listenerClass != null);
-        String type = listener.getName();
-        List<Listener<S, D>> list = listenerMap.get(type);
+        List<Listener<S, D>> list = listenerMap.get(eventName);
         if (list == null) {
             list = new ArrayList<Listener<S, D>>();
-            listenerMap.put(type, list);
         }
         list.add(listener);
-        listenerMap.put(type, list);
-    }
+        listenerMap.put(eventName, list);
+    }    
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void removeEventListener(Listener<S, D> listener) {
-        String type = listener.getName();
-        List<Listener<S, D>> listeners = getEventListeners(type);
-        listeners.remove(listener);
-        listenerMap.put(type, listeners);
+        removeEventListener(listener.getName(), listener);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeEventListener(String eventName, Listener<S, D> listener) {
+        List<Listener<S, D>> listeners = getEventListeners(eventName);
+        listeners.remove(listener);
+        if(listeners.size() == 0) listenerMap.remove(eventName);
+        listenerMap.put(eventName, listeners);
+    }    
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void broadcastEvent(Event<S, D> event) {
         List<Listener<S, D>> listeners = getEventListeners(event.getEventName());
@@ -93,6 +116,9 @@ public class EventManagerImpl<S, D> extends ListenerService implements EventMana
         }    
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Listener<S, D>> getEventListeners(String type) {
         return listenerMap.get(type);

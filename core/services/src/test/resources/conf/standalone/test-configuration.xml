@@ -23,6 +23,11 @@
   <component>
     <type>org.exoplatform.groovyscript.text.TemplateService</type>
   </component>
+		
+		<component>
+		  <key>org.exoplatform.ecm.event.api.EventManager</key>
+		  <type>org.exoplatform.ecm.event.impl.EventManagerImpl</type>
+		</component>
       
   <component>
     <key>org.exoplatform.webui.ext.UIExtensionManager</key>

@@ -43,12 +43,26 @@ public interface EventManager<S, D> {
      * @param listener An instance of <code>Listener</code> object.
      */
     public void addEventListener(Listener<S, D> listener);
+    
+    /**
+     * This will be used to register a listener to the event system.  
+     * @param listener An instance of <code>Listener</code> object.
+     * @param eventName Name of event which will be used to group listeners.
+     */
+    public void addEventListener(String eventName, Listener<S, D> listener);    
 
     /**
      * This will be used to unregister a listener out of the event system.  
      * @param listener An instance of <code>Listener</code> object.
      */
     public void removeEventListener(Listener<S, D> listener);
+    
+    /**
+     * This will be used to unregister a listener out of the event system.  
+     * @param listener An instance of <code>Listener</code> object.
+     * @param eventName The event name which used to group listeners.
+     */
+    public void removeEventListener(String eventName, Listener<S, D> listener);    
 
     /**
      * When an action triggered such as file created/updated then 
