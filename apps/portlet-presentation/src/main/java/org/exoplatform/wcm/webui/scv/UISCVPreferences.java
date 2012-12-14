@@ -401,7 +401,7 @@ public class UISCVPreferences extends UIForm implements UISelectable{
     }
     if (title==null) title = node.getName();
 
-    return ContentReader.getXSSCompatibilityContent(title);
+    return Text.unescapeIllegalJcrChars(title);
   }
   public void setContentSelectorID(String id) {
     this.contentSelectorID = id;
