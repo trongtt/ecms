@@ -462,6 +462,7 @@ public class DeleteManageComponent extends UIAbstractManagerComponent {
     UIPopupContainer UIPopupContainer = uiExplorer.getChild(UIPopupContainer.class);
     UIConfirmMessage uiConfirmMessage = uiWorkingArea.createUIComponent(UIConfirmMessage.class, null, null);
     UIApplication uiApp = uiExplorer.getAncestorOfType(UIApplication.class);
+    DeleteManageComponent deleteManageComponent = uiWorkingArea.getChild(DeleteManageComponent.class);
 
     //get nodes that have relations referring to them
     List<String> listNodesHaveRelations = null;
@@ -472,18 +473,12 @@ public class DeleteManageComponent extends UIAbstractManagerComponent {
         
         return;
     }
+    boolean isInTrashFolder = deleteManageComponent.isInTrashFolder(nodePath);
+    uiConfirmMessage.setNodeInTrash(isInTrashFolder);
 
     //show confirm message
-    if (listNodesHaveRelations != null && listNodesHaveRelations.size() > 0) { // there
-                                                                               // are
-                                                                               // some
-                                                                               // nodes
-                                                                               // which
-                                                                               // have
-                                                                               // relations
-                                                                               // referring
-                                                                               // to
-                                                                               // them
+    if (listNodesHaveRelations != null && listNodesHaveRelations.size() > 0) { //there are some nodes which have relations referring to them
+                              
       // in the deleting node list
       // build node list to string to add into the confirm message
       StringBuffer sb = new StringBuffer();
@@ -496,30 +491,59 @@ public class DeleteManageComponent extends UIAbstractManagerComponent {
       //show message
       if (nodePath.indexOf(";") < 0) {  //in case: delete one node that has relations
         uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-has-relations");
-            uiConfirmMessage.setArguments(new String[] {nodePath});
+        uiConfirmMessage.setArguments(new String[] {nodePath});
 
       } else if (listNodesHaveRelations.size() > 1) {  //in case: delete multiple node, there are many nodes have relations
         uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-multi-many-nodes-have-relations");
-            uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length), strNodesHaveRelations});
+        uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length), strNodesHaveRelations});
 
       } else {   //in case: delete multiple node, there is only one node has relations
         uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-multi-one-node-has-relations");
-            uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length), strNodesHaveRelations});
+        uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length), strNodesHaveRelations});
       }
     } else {  //there isn't any node which has relations referring to it in the deleting node list
-      if(nodePath.indexOf(";") > -1) {   //delete multi
-        uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-multi");
-        uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length)});
-      } else {    //delete one
-        uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete");
-        uiConfirmMessage.setArguments(new String[] {nodePath});
-      }
+       if (isInTrashFolder) {
+      	 if (nodePath.indexOf(";") > -1) { // delete multi
+      		 uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-permanently-multi");
+      		 uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length)});
+      	 } else{//delete one
+      	 	 uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-permanently");
+      	 	 uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length)});   
+        }
+       } else{
+      	 if(nodePath.indexOf(";") > -1) {   //delete multi
+      		uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete-multi");
+      		uiConfirmMessage.setArguments(new String[] {Integer.toString(nodePath.split(";").length)});
+      	} else {    //delete one
+      	 	uiConfirmMessage.setMessageKey("UIWorkingArea.msg.confirm-delete");
+      	 	uiConfirmMessage.setArguments(new String[] {nodePath});
+    	   }
+       }
     }
 
     uiConfirmMessage.setNodePath(nodePath);
     UIPopupContainer.activate(uiConfirmMessage, 500, 180);
     event.getRequestContext().addUIComponentToUpdateByAjax(UIPopupContainer);
   }
+  
+  private boolean isInTrashFolder(String nodePath) throws Exception {
+	UIJCRExplorer uiExplorer = getAncestorOfType(UIJCRExplorer.class);
+	String wsName = null;
+	Session session = null;
+	String[] nodePaths = nodePath.split(";");
+	 for(int i=0; i<nodePaths.length; i++) {
+	  Matcher matcher = UIWorkingArea.FILE_EXPLORER_URL_SYNTAX.matcher(nodePaths[i]);
+	  if (matcher.find()) {
+	   wsName = matcher.group(1);
+	   nodePath = matcher.group(2);
+	   session = uiExplorer.getSessionByWorkspace(wsName);
+	   Node node = uiExplorer.getNodeByPath(nodePath, session, false);
+	   return Utils.isInTrash(node);
+	  }
+	}
+	return false;
+}
+  
 
   /**
    * This function uses to get a node list that have relations referring to them in the deleting node list

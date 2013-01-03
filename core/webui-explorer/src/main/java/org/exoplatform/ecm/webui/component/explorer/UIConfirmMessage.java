@@ -45,6 +45,7 @@ public class UIConfirmMessage extends UIComponent implements UIPopupComponent {
   private String[] args_ = {};
   protected boolean isOK_ = false;
   protected String nodePath_;
+  private boolean isNodeInTrash = false;
 
   public UIConfirmMessage() throws Exception {
   }
@@ -63,6 +64,13 @@ public class UIConfirmMessage extends UIComponent implements UIPopupComponent {
 
   public String[] getActions() {
     return new String[] {"OK", "Close"};
+  }
+  public boolean isNodeInTrash() {
+	return isNodeInTrash;
+  }
+
+  public void setNodeInTrash(boolean isNodeInTrash) {
+    this.isNodeInTrash = isNodeInTrash;
   }
 
   static  public class OKActionListener extends EventListener<UIConfirmMessage> {
@@ -92,4 +100,6 @@ public class UIConfirmMessage extends UIComponent implements UIPopupComponent {
   public void deActivate() throws Exception {
 
   }
+
+  
 }
