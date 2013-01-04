@@ -860,6 +860,7 @@ EcmContentSelector.prototype.insertContent = function(objNode) {
 			}
 		} else {      						
 			var newImg = new Image();
+                        url = decodeURIComponent(url);
 			newImg.src = url;
       newImg.onload = function() {
 				var height = newImg.height;
@@ -869,12 +870,10 @@ EcmContentSelector.prototype.insertContent = function(objNode) {
 				parent.getElementById(eXo.ecm.ECS.components).style.display="block";
 				parent.getElementById(editor.name+"_txtWidth").value=width;	
 				parent.getElementById(editor.name+"_txtHeight").value=height;        
-        var elements = parent.getElementsByTagName('*');
-       	for(var i=0;i<elements.length;i++)	{        
-					if(elements[i].type && elements[i].type=="text") {          
-						if(elements[i].id && elements[i].id==editor.name+"_txtUrl") elements[i].value = url;
-					}
-				}       
+        var element = parent.getElementById(editor.name+"_txtUrl");
+	if(element.type && element.type=="text") {          
+						element.value = url;
+					}    
 				window.close();
 				editor.OnAfterSetHTML = window.close();				
 			}
