@@ -47,6 +47,7 @@ import org.exoplatform.services.jcr.RepositoryService;
 import org.exoplatform.services.jcr.config.WorkspaceEntry;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.jcr.ext.common.SessionProvider;
+import org.exoplatform.services.jcr.util.Text;
 import org.exoplatform.services.seo.PageMetadataModel;
 import org.exoplatform.services.seo.SEOConfig;
 import org.exoplatform.services.seo.SEOService;
@@ -667,6 +668,22 @@ public class SEOServiceImpl implements SEOService {
       path = path.substring(0, path.length() - 1);
     return path;
   }
+  private String getNodePath(String nodePath) throws Exception {
+    ArrayList<String> encodeNameArr = new ArrayList<String>();
+	if(!nodePath.equals("/")) {
+	for(String name : nodePath.split("/")) {
+	  if(name.length() > 0) {
+	    encodeNameArr.add(Text.escapeIllegalJcrChars(name));
+	  }
+	}
+	StringBuilder encodedPath = new StringBuilder();
+	for(String encodedName : encodeNameArr) {
+	  encodedPath.append("/").append(encodedName);
+	}
+	nodePath = encodedPath.toString();
+  }
+   return nodePath;
+  }
 
   public Node getContentNode(String seoPath) throws Exception {
     Node seoNode = null;
@@ -696,7 +713,7 @@ public class SEOServiceImpl implements SEOService {
             if (isWs) {
               Session session = WCMCoreUtils.getUserSessionProvider()
                   .getSession(ws, manageRepo);
-              nodePath = nodePath.replaceAll("//", "/");
+              nodePath = getNodePath(nodePath.replaceAll("//", "/"));
               if (session.getItem(nodePath) != null) {
                 if (session.getItem(nodePath).isNode()) {
                   seoNode = (Node) session.getItem(nodePath);
